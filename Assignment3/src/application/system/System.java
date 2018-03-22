@@ -1,15 +1,7 @@
 package application.system;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
-import application.MyApplication;
 import application.offer.*;
 import application.users.*;
 
@@ -33,15 +25,6 @@ public class System implements Serializable{
 		bannedUsers = new ArrayList<RegisteredUser>();
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
-		
-		File data = new File(System.filename);
-		
-		if (data.exists()) {
-			this.loadData(filename);
-		} else {
-			this.loadUserInfo()
-		}
-		
 	}
 	/*
 	 * StringTokenizer str = new StringTokenizer(line, '.')
