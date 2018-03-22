@@ -1,18 +1,22 @@
 package application.system;
+import java.io.Serializable;
 import java.util.*;
 
-import application.offer.Offer;
-import application.offer.OfferType;
-import application.users.Admin;
-import application.users.RegisteredUser;
+import application.offer.*;
+import application.users.*;
 
-public class System {
+public class System implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7941697892854198940L;
 	private List<Admin> admins;
 	private static Admin loggedAdmin;
 	private List<Offer> offers;
 	private List<RegisteredUser> bannedUsers;
 	private List<RegisteredUser> authorizedUsers;
-	private static RegisteredUser loggedUser;	
+	private static RegisteredUser loggedUser;
+	private String filename = "data.obj";
 	
 	public System() {
 		admins = new ArrayList<Admin>();

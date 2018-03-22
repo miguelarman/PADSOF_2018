@@ -2,6 +2,7 @@
  * 
  */
 package application.opinion;
+
 import java.util.*;
 
 import application.users.RegisteredUser;
@@ -11,9 +12,10 @@ import application.users.RegisteredUser;
  *
  */
 public class Comment extends Opinion {
-	
+
 	private String text;
 	private List<Opinion> replies;
+
 	/**
 	 * @param commenter
 	 * @param text
@@ -25,7 +27,8 @@ public class Comment extends Opinion {
 		this.replies = new ArrayList<Opinion>();
 	}
 
-	
-	
+	public Float getAvgRating() {
+		return (float) -1.0;
+	}
 
 }

@@ -1,15 +1,9 @@
-/**
- * 
- */
 package application.opinion;
 
 import application.system.System;
 import application.users.RegisteredUser;
 
-/**
- * @author eps
- *
- */
+
 public abstract class Opinion {
 	
 	private RegisteredUser commenter;
@@ -24,5 +18,7 @@ public abstract class Opinion {
 	public Boolean addReply(Comment c) {
 		return false;
 	}
+	
+	
 
 }

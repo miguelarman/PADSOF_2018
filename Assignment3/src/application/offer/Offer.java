@@ -72,5 +72,9 @@ public abstract class Offer {
 	public void rateOffer(String opinion, int rating) {
 		
 	}
+	
+	public Float getAvgRating() {
+		return (float) -1.0;
+	}
 
 }
