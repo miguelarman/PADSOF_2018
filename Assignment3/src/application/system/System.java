@@ -1,7 +1,15 @@
 package application.system;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
 
+import application.MyApplication;
 import application.offer.*;
 import application.users.*;
 
@@ -16,7 +24,7 @@ public class System implements Serializable{
 	private List<RegisteredUser> bannedUsers;
 	private List<RegisteredUser> authorizedUsers;
 	private static RegisteredUser loggedUser;
-	private String filename = "data.obj";
+	private static String filename = "data.obj";
 	
 	public System() {
 		admins = new ArrayList<Admin>();
@@ -25,6 +33,14 @@ public class System implements Serializable{
 		bannedUsers = new ArrayList<RegisteredUser>();
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
+		
+		File data = new File(System.filename);
+		
+		if (data.exists()) {
+			this.loadData(filename);
+		} else {
+			this.loadUserInfo()
+		}
 		
 	}
 	/*
@@ -105,9 +121,17 @@ public class System implements Serializable{
 		
 	}
 	
-	public Boolean logout() {
-		return true;
+	public void logout() {
 		
+		ObjectOutputStream oos;
+		try {
+			oos = new ObjectOutputStream( new FileOutputStream(System.filename));
+			oos.writeObject(this);
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -130,5 +154,44 @@ public class System implements Serializable{
 	public Boolean unbanUser(RegisteredUser user) {
 		return true;
 		
+	}
+	
+	
+	private static System openSystem() {
+		System mySystem = null;
+		
+		File data = new File(System.filename);
+		if (data.exists()) {
+			mySystem = System.loadData();
+			return mySystem;
+		} else {
+			mySystem = new System();
+			return mySystem;
+		}
+	}
+	
+	
+	private static System loadData() {
+		
+		System system = null;
+		
+		ObjectInputStream is;
+		try {
+			is = new ObjectInputStream(new FileInputStream(System.filename));
+			system = (System) is.readObject();
+			is.close();
+			return system;
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return system;
 	}
 }
