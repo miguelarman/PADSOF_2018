@@ -14,16 +14,16 @@ public class Reservation {
 	
 	private Date bookingDate;
 	private Guest client;
-	private Offer reservedOffer;
+	private Offer bookedOffer;
 	/**
 	 * @param bookingDate
 	 * @param client
-	 * @param reservedOffer
+	 * @param bookedOffer
 	 */
-	public Reservation(Date bookingDate, Guest client, Offer reservedOffer) {
+	public Reservation(Date bookingDate, Guest client, Offer bookedOffer) {
 		this.bookingDate = bookingDate;
 		this.client = client;
-		this.reservedOffer = reservedOffer;
+		this.bookedOffer = bookedOffer;
 	}
 	/**
 	 * @return the bookingDate
@@ -38,10 +38,10 @@ public class Reservation {
 		return client;
 	}
 	/**
-	 * @return the reservedOffer
+	 * @return the bookedOffer
 	 */
-	public Offer getReservedOffer() {
-		return reservedOffer;
+	public Offer getBookedOffer() {
+		return bookedOffer;
 	}
 	
 	public Boolean cancelReservation() {
