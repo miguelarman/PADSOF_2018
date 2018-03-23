@@ -11,15 +11,24 @@ public class Comment extends Opinion {
 	private List<Opinion> replies;
 
 	
-	public Comment(RegisteredUser commenter, String text) {
+	public Comment(String text) {
 		super();
 		this.text = text;
 		this.replies = new ArrayList<Opinion>();
 	}
 
 	public Float getAvgRating() {
-		// TODO
-		return (float) -1.0;
+		Float avg = (float) 0;
+		int amount = 0;
+		
+		for (Opinion o : this.replies) {
+			if (o.getClass() == Rating.class) {
+				avg += ((Rating) o).getRating();
+				amount++;
+			}
+		}
+		
+		return avg / amount;
 	}
 
 }

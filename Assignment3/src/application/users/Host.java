@@ -2,7 +2,6 @@ package application.users;
 import java.util.*;
 
 import application.offer.House;
-import application.users.RegisteredUser.Rol;
 
 
 public class Host extends RegisteredUser {

@@ -2,7 +2,9 @@ package application.offer;
 
 import java.util.*;
 
+import application.opinion.Comment;
 import application.opinion.Opinion;
+import application.opinion.Rating;
 
 
 public abstract class Offer {
@@ -46,15 +48,18 @@ public abstract class Offer {
 	}
 	
 	
-	
 	public abstract void payOffer();
 	
 	public void rateOffer(String opinion) {
-		// TODO
+		Opinion o = new Comment(opinion);
+		
+		this.opinions.add(o);
 	}
 	
-	public void rateOffer(int rating) {
-		// TODO
+	public void rateOffer(Float rating) {
+		Opinion o = new Rating(rating);
+		
+		this.opinions.add(o);
 	}
 	
 	public void rateOffer(String opinion, int rating) {
@@ -62,8 +67,19 @@ public abstract class Offer {
 	}
 	
 	public Float getAvgRating() {
-		// TODO
-		return (float) -1.0;
+		
+		Float rating = (float) 0;
+		int amount = 0;
+		
+		for (Opinion o : this.opinions) {
+			if (o.getClass() == Rating.class) {
+				rating += ((Rating) o).getRating();
+				
+				amount++;
+			}
+		}
+		
+		return rating / amount;
 	}
 
 	public abstract Double getAmount();

@@ -21,13 +21,13 @@ public class House {
 	
 	
 	// que es esto?
-	public void addC(String nombre, String valor) {
+	/*public void addC(String nombre, String valor) {
 		this.chs.put(nombre, valor);
 		for(String key : this.chs.keySet()) {
 			String v = this.chs.get(key);
 		}
 		this.chs.containsKey("Profe");
-	}
+	}*/
 
 
 	
