@@ -1,4 +1,5 @@
 package application.system;
+
 import java.io.*;
 import java.util.*;
 
@@ -6,9 +7,7 @@ import application.offer.*;
 import application.users.*;
 
 public class System implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 7941697892854198940L;
 	private List<Admin> admins;
 	private static Admin loggedAdmin;
@@ -26,6 +25,8 @@ public class System implements Serializable{
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
 	}
+	
+	
 	/*
 	 * StringTokenizer str = new StringTokenizer(line, '.')
 	 * str.castToken()?;
@@ -65,43 +66,41 @@ public class System implements Serializable{
 		System.loggedUser = loggedUser;
 	}
 	
+	
+	
 	public List<Offer> searchZipCode(Integer zip) {
-		return null;
-		
-		
+		// TODO
+		return null;	
 	}
 	
 	public List<Offer> searchStartingDate(Date date1, Date date2) {
+		// TODO
 		return null;
-		
 	}
 	
 	public List<Offer> searchOfferType(OfferType type) {
+		// TODO
 		return null;
-		
-		
 	}
 	
 	public List<Offer> searchBooked() {
+		// TODO
 		return null;
-		
-		
 	}
 	
 	public List<Offer> searchPaid() {
+		// TODO
 		return null;
-		
 	}
 	
 	public List<Offer> searchAvgRating(Float minRating) {
+		// TODO
 		return null;
-		
-		
 	}
 	
 	public Boolean login(String id, String passwd) {
+		// TODO
 		return true;
-		
 	}
 	
 	public void logout() {
@@ -116,27 +115,27 @@ public class System implements Serializable{
 			e.printStackTrace();
 		}
 		
+		// quitar el usuario que esta logueado
 	}
 	
 	public Boolean addOffer(Offer offer) {
+		// TODO
 		return true;
-		
 	}
 	
 	public Boolean removeOffer(Offer offer) {
+		// TODO
 		return true;
-		
-		
 	}
 	
 	public Boolean banUser(RegisteredUser user) {
+		// TODO
 		return true;
-		
 	}
 	
 	public Boolean unbanUser(RegisteredUser user) {
+		// TODO
 		return true;
-		
 	}
 	
 	
@@ -151,6 +150,8 @@ public class System implements Serializable{
 			mySystem = new System();
 			return mySystem;
 		}
+		
+		// TODO mas comprobaciones o cosas?
 	}
 	
 	
@@ -176,5 +177,7 @@ public class System implements Serializable{
 		}
 		
 		return system;
+		
+		// TODO mas comprobaciones o cosas?
 	}
 }

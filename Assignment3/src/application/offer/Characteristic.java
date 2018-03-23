@@ -1,12 +1,8 @@
-/**
- * 
- */
+// TODO hay que borrar esto
+
 package application.offer;
 
-/**
- * @author eps
- *
- */
+
 public class Characteristic {
 
 }

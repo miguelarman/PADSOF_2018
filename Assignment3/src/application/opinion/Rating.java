@@ -7,4 +7,10 @@ public class Rating extends Opinion {
 		super();
 		this.rating = rating;
 	}
+	
+	public Float getRating() {
+		return this.rating;
+	}
+	
+	// TODO
 }

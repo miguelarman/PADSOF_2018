@@ -1,15 +1,10 @@
-/**
- * 
- */
 package application.offer;
+
 import java.util.*;
 
 import application.opinion.Opinion;
 
-/**
- * @author eps
- *
- */
+
 public abstract class Offer {
 	private Date startingDate;
 	private Float price;
@@ -18,15 +13,8 @@ public abstract class Offer {
 	private OfferStatus status;
 	private House offeredHouse;
 	private List<Opinion> opinions;
-	/**
-	 * @param startingDate
-	 * @param price
-	 * @param deposit
-	 * @param description
-	 * @param state
-	 * @param offeredHouse
-	 * @param opinions
-	 */
+	
+	
 	public Offer(Date startingDate, Float price, Float deposit, String description, OfferStatus status,
 			House offeredHouse) {
 		this.startingDate = startingDate;
@@ -37,6 +25,8 @@ public abstract class Offer {
 		this.offeredHouse = offeredHouse;
 		this.opinions = new ArrayList<Opinion>();
 	}
+	
+	
 	
 	public void modifyOffer(Date startingDate) {
 		this.startingDate = startingDate;
@@ -57,24 +47,27 @@ public abstract class Offer {
 	
 	
 	
-	public void payOffer() {
-		
-	}
+	public abstract void payOffer();
 	
 	public void rateOffer(String opinion) {
-		
+		// TODO
 	}
 	
 	public void rateOffer(int rating) {
-		
+		// TODO
 	}
 	
 	public void rateOffer(String opinion, int rating) {
-		
+		// TODO
 	}
 	
 	public Float getAvgRating() {
+		// TODO
 		return (float) -1.0;
 	}
+
+	public abstract Double getAmount();
+	
+	// TODO mas metodos?
 
 }

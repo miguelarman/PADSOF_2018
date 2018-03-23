@@ -8,9 +8,7 @@ public abstract class Opinion {
 	
 	private RegisteredUser commenter;
 
-	/**
-	 * @param commenter
-	 */
+	
 	public Opinion() {
 		this.commenter = System.getLoggedUser();
 	}
@@ -19,6 +17,8 @@ public abstract class Opinion {
 		return false;
 	}
 	
+	
+	// TODO
 	
 
 }
