@@ -100,7 +100,26 @@ public class System implements Serializable{
 	
 	public Boolean login(String id, String passwd) {
 		// TODO
-		return true;
+		
+		for (RegisteredUser user : this.bannedUsers) {
+			if (user.getName() == id && user.getPasswd() == passwd) {
+				// el usuario esta baneado
+			}
+		}
+		
+		for (RegisteredUser user : this.authorizedUsers) {
+			if (user.getName() == id) {
+				if (user.getPasswd() == passwd) {
+					// login como ese usuario
+				} else {
+					// contrasena incorrecta. exception?
+				}
+			}
+		}
+		
+		// el usuario no existe. exception?
+		
+		return false;
 	}
 	
 	public void logout() {
@@ -115,7 +134,8 @@ public class System implements Serializable{
 			e.printStackTrace();
 		}
 		
-		// quitar el usuario que esta logueado
+		System.loggedAdmin = null;
+		System.loggedUser = null;
 	}
 	
 	public Boolean addOffer(Offer offer) {
