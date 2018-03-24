@@ -1,5 +1,8 @@
+//Creo que host ya estaría acabado. Revisar addHouse.
+
 package application.users;
 import java.util.*;
+import exceptions.*;
 
 import application.offer.House;
 
@@ -24,8 +27,15 @@ public class Host extends RegisteredUser {
 		return Rol.HOST;
 	}
 	
-	public Boolean addHouse(House house) {
-		// TODO 
+	public Boolean addHouse(Integer zipCode, String city, HashMap<String, String> chs) throws HouseAlreadyCreatedException {
+		House house = new House(zipCode, city, chs, this);
+		for(House h: houses) {
+			if(h.equals(house)) {
+				throw new HouseAlreadyCreatedException();
+			}
+		}
+		houses.add(house);
+		
 		return true;
 	}
 }

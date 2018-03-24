@@ -1,8 +1,12 @@
+//Creo que ya esta terminado.
+
 package application.offer;
 
 import java.util.*;
 
 import application.users.Host;
+
+import exceptions.ChsAlreadyIncludedException;
 
 public class House {
 	
@@ -12,22 +16,25 @@ public class House {
 	private Host host;
 
 
-	public House(Integer zipCode, String city, List<Characteristic> chs, Host host) {
+	public House(Integer zipCode, String city, HashMap<String, String> chs, Host host) {
 		this.zipCode = zipCode;
 		this.city = city;
 		this.chs = new HashMap<String, String>();
 		this.host = host;
 	}
 	
-	
-	// que es esto?
-	/*public void addC(String nombre, String valor) {
-		this.chs.put(nombre, valor);
-		for(String key : this.chs.keySet()) {
-			String v = this.chs.get(key);
+	//metodo para añadir caracteristicas al hashmap
+	public void addCharacteristic(String key, String value) throws ChsAlreadyIncludedException {
+		if(this.chs.containsKey(key)) {
+			if(value.equals(this.chs.get(key))) {
+				throw new ChsAlreadyIncludedException();
+			}
 		}
-		this.chs.containsKey("Profe");
-	}*/
+		else {
+			this.chs.put(key, value);
+			return;
+		}
+	}
 
 
 	
