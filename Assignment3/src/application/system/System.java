@@ -6,6 +6,8 @@ import java.util.*;
 import application.offer.*;
 import application.users.*;
 
+import exceptions.*;
+
 public class System implements Serializable{
 	
 	private static final long serialVersionUID = 7941697892854198940L;
@@ -150,7 +152,7 @@ public class System implements Serializable{
 	
 	// System data functions
 	
-	/*public void login(String id, String passwd) throws LoginException {
+	public void login(String id, String passwd) throws LoginException {
 		
 		for (RegisteredUser user : this.bannedUsers) {
 			if (user.getName() == id) {
@@ -161,19 +163,8 @@ public class System implements Serializable{
 		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getName() == id) {
 				if (user.getPasswd() == passwd) {
-					System.loggedAdmin = null;
 					System.loggedUser = user;
-				} else {
-					throw new LoginException("Incorrect password");
-				}
-			}
-		}
-		
-		for (Admin a : this.admins) {
-			if (a.getId() == id) {
-				if (a.getPasswd() == passwd) {
-					System.loggedAdmin = a;
-					System.loggedUser = null;
+					return;
 				} else {
 					throw new LoginException("Incorrect password");
 				}
@@ -195,15 +186,15 @@ public class System implements Serializable{
 			e.printStackTrace();
 		}
 		
-		System.loggedAdmin = null;
 		System.loggedUser = null;
-	}*/
+	}
 	
 	/*
 	 * StringTokenizer str = new StringTokenizer(line, '.')
 	 * str.castToken()?;
 	 * str.nextToken();
 	 * str.hashMoreTokens();*/
+	
 	private static System openSystem() {
 		System mySystem = null;
 		File data = new File(System.filename);
@@ -213,38 +204,9 @@ public class System implements Serializable{
 			return mySystem;
 		} else {
 			mySystem = new System();
-			try {
-				BufferedReader br = new BufferedReader(new FileReader(new File("users.txt")));
-				for(String x = br.readLine(); x != null; x = br.readLine()) {
-					StringTokenizer str = new StringTokenizer(x, ";");
-					String[] info = new String[str.countTokens()];
-					for(i=0; i < info.length; i++) {
-						info[i] = str.nextToken();
-					}
-					StringTokenizer n = new StringTokenizer(info[2], ",");
-					if(info[0].equals("A")) {
-						RegisteredUser a = new Admin(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
-						mySystem.authorizedUsers.add(a);
-					}
-					else if (info[0].equals("H")){
-						RegisteredUser h = new Host(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
-						mySystem.authorizedUsers.add(h);
-						
-					}
-					else if (info[0].equals("G")){
-						RegisteredUser g = new Guest(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
-						mySystem.authorizedUsers.add(g);
-					}
-				}
-				br.close();
-				return mySystem;
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchElementException e) {
-				
-				e.printStackTrace();
-			}
+			
+			mySystem = System.initializeSystem();
+			
 			// si entra aquí es porque no existe el fichero con los datos, es decir, si no
 			// se ha hecho logout antes, lo que quiere decir que es la primera vez, por lo
 			// que hay que cargar los datos de los usuarioscdel fichero que nos dan, en vez
@@ -256,6 +218,51 @@ public class System implements Serializable{
 	}
 	
 	
+	private static System initializeSystem() {
+		
+		System system = new System();
+		int i;
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(new File("users.txt")));
+			for(String x = br.readLine(); x != null; x = br.readLine()) {
+				StringTokenizer str = new StringTokenizer(x, ";");
+				String[] info = new String[str.countTokens()];
+				for(i=0; i < info.length; i++) {
+					info[i] = str.nextToken();
+				}
+				StringTokenizer n = new StringTokenizer(info[2], ",");
+				if(info[0].equals("A")) {
+					RegisteredUser a = new Admin(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+					system.authorizedUsers.add(a);
+				}
+				else if (info[0].equals("H")){
+					RegisteredUser h = new Host(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+					system.authorizedUsers.add(h);
+					
+				}
+				else if (info[0].equals("G")){
+					RegisteredUser g = new Guest(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+					system.authorizedUsers.add(g);
+				}
+			}
+			
+			br.close();
+			
+			return system;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchElementException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return system;
+	}
+
+
 	private static System loadData() {
 		
 		System system = null;
