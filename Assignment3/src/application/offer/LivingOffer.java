@@ -18,4 +18,12 @@ public class LivingOffer extends Offer {
 	public OfferType getType() {
 		return OfferType.LIVING;
 	}
+	
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

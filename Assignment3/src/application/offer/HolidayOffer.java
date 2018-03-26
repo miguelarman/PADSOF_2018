@@ -17,4 +17,13 @@ public class HolidayOffer extends Offer {
 	public OfferType getType() {
 		return OfferType.HOLIDAY;
 	}
+	
+	
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

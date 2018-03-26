@@ -29,4 +29,12 @@ public class Admin {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
+	
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

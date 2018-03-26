@@ -18,7 +18,10 @@ public abstract class Opinion {
 	}
 	
 	
-	// TODO
-	
-
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

@@ -44,4 +44,11 @@ public abstract class RegisteredUser {
 	public void changeCreditCard(String creditCard) {
 		this.creditCard = creditCard;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

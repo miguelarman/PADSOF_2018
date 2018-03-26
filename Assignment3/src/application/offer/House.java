@@ -52,7 +52,10 @@ public class House {
 	}
 	
 	
-	// TODO
-	
-
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

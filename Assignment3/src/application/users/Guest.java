@@ -39,5 +39,10 @@ public class Guest extends RegisteredUser {
 		this.reservedOffers.remove(reservation);		
 	}
 	
-
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

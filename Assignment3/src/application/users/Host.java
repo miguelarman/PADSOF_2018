@@ -39,4 +39,11 @@ public class Host extends RegisteredUser {
 		
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }
