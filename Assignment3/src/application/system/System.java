@@ -296,8 +296,5 @@ public class System implements Serializable{
 		return true;
 	}
 	
-	
-	
-	
 	// TODO metodo cancelReservation
 }

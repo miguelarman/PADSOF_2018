@@ -35,8 +35,6 @@ public class Reservation {
 	
 	
 	public void cancelReservation() {
-		
-		// TODO
 				
 		Guest user = this.client;
 		
