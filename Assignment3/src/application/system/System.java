@@ -189,32 +189,18 @@ public class System implements Serializable{
 		System.loggedUser = null;
 	}
 	
-	/*
-	 * StringTokenizer str = new StringTokenizer(line, '.')
-	 * str.castToken()?;
-	 * str.nextToken();
-	 * str.hashMoreTokens();*/
 	
 	private static System openSystem() {
 		System mySystem = null;
 		File data = new File(System.filename);
-		int i;
+
 		if (data.exists()) {
 			mySystem = System.loadData();
 			return mySystem;
-		} else {
-			mySystem = new System();
-			
+		} else {			
 			mySystem = System.initializeSystem();
-			
-			// si entra aquí es porque no existe el fichero con los datos, es decir, si no
-			// se ha hecho logout antes, lo que quiere decir que es la primera vez, por lo
-			// que hay que cargar los datos de los usuarioscdel fichero que nos dan, en vez
-			// de desde el fichero que actualicemos cada vez (cuya direccion es System.filename)
 			return mySystem;
 		}
-		
-		// TODO mas comprobaciones o cosas?
 	}
 	
 	
@@ -225,23 +211,23 @@ public class System implements Serializable{
 		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(new File("users.txt")));
+			
 			for(String x = br.readLine(); x != null; x = br.readLine()) {
 				StringTokenizer str = new StringTokenizer(x, ";");
 				String[] info = new String[str.countTokens()];
-				for(i=0; i < info.length; i++) {
+				
+				for(i = 0; i < info.length; i++) {
 					info[i] = str.nextToken();
 				}
 				StringTokenizer n = new StringTokenizer(info[2], ",");
 				if(info[0].equals("A")) {
 					RegisteredUser a = new Admin(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
 					system.authorizedUsers.add(a);
-				}
-				else if (info[0].equals("H")){
+				} else if (info[0].equals("H")){
 					RegisteredUser h = new Host(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
 					system.authorizedUsers.add(h);
 					
-				}
-				else if (info[0].equals("G")){
+				} else if (info[0].equals("G")){
 					RegisteredUser g = new Guest(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
 					system.authorizedUsers.add(g);
 				}
@@ -255,7 +241,7 @@ public class System implements Serializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchElementException e) {
-			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
