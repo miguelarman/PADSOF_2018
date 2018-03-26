@@ -2,6 +2,7 @@ package application.system;
 
 import java.io.*;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import application.offer.*;
 import application.users.*;
@@ -270,12 +271,41 @@ public class System implements Serializable{
 			e.printStackTrace();
 		}
 		
+		
+
+		// Deleting expired offers
+		
+		for (Offer o : system.offers) {
+			Date startingDate = o.getDate();
+			Date currentDate = new Date();
+			
+			if (startingDate.before(currentDate)) { // The offer has expired
+				if (o.getStatus() != OfferStatus.PAID) {
+					system.removeOffer(o);
+				}
+			}
+		}
+		
+		
+		// Deleting expired Reservations
+
+		for (RegisteredUser user : system.authorizedUsers) {
+			if (user.getRol() == RegisteredUser.Rol.GUEST) {
+				for (Reservation r : ((Guest) user).getReservedOffers()) {
+					Date bookingDate = r.getBookingDate();
+					Date currentDate = new Date();
+					
+					long diffInMillies = Math.abs(currentDate.getTime() - bookingDate.getTime());
+				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+					
+					if (diff >= 5) { // User has exceeded 5 days without paying
+						r.cancelReservation();
+					}
+				}
+			}
+		}
+		
 		return system;
-
-		// TODO comprobar segun se arranca las reservas que han caducado y eliminarlas y
-		// poner las ofertas como disponibles
-
-		// TODO mas comprobaciones o cosas?
 	}
 	
 	
