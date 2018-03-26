@@ -5,13 +5,10 @@ import java.util.*;
 
 import application.offer.*;
 import application.users.*;
-import exceptions.LoginException;
 
 public class System implements Serializable{
 	
 	private static final long serialVersionUID = 7941697892854198940L;
-	private List<Admin> admins;
-	private static Admin loggedAdmin;
 	private List<Offer> offers;
 	private List<RegisteredUser> bannedUsers;
 	private List<RegisteredUser> authorizedUsers;
@@ -19,30 +16,15 @@ public class System implements Serializable{
 	private static String filename = "data.obj";
 	
 	public System() {
-		admins = new ArrayList<Admin>();
-		loggedAdmin = null;
 		offers = new ArrayList<Offer>();
 		bannedUsers = new ArrayList<RegisteredUser>();
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
 	}
 	
-	
-	/*
-	 * StringTokenizer str = new StringTokenizer(line, '.')
-	 * str.castToken()?;
-	 * str.nextToken();
-	 * str.hashMoreTokens();*/
-	
+		
 	// Getters
 
-	public List<Admin> getAdmins() {
-		return admins;
-	}
-
-	public static Admin getLoggedAdmin() {
-		return loggedAdmin;
-	}
 
 	public List<Offer> getOffers() {
 		return offers;
@@ -60,9 +42,6 @@ public class System implements Serializable{
 		return loggedUser;
 	}
 
-	public void setLoggedAdmin(Admin loggedAdmin) {
-		System.loggedAdmin = loggedAdmin;
-	}
 
 	public void setLoggedUser(RegisteredUser loggedUser) {
 		System.loggedUser = loggedUser;
@@ -171,7 +150,7 @@ public class System implements Serializable{
 	
 	// System data functions
 	
-	public void login(String id, String passwd) throws LoginException {
+	/*public void login(String id, String passwd) throws LoginException {
 		
 		for (RegisteredUser user : this.bannedUsers) {
 			if (user.getName() == id) {
@@ -218,21 +197,54 @@ public class System implements Serializable{
 		
 		System.loggedAdmin = null;
 		System.loggedUser = null;
-	}
+	}*/
 	
-	
-	
+	/*
+	 * StringTokenizer str = new StringTokenizer(line, '.')
+	 * str.castToken()?;
+	 * str.nextToken();
+	 * str.hashMoreTokens();*/
 	private static System openSystem() {
 		System mySystem = null;
-		
 		File data = new File(System.filename);
+		int i;
 		if (data.exists()) {
 			mySystem = System.loadData();
 			return mySystem;
 		} else {
 			mySystem = new System();
-			// ALBERTO
-			
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(new File("users.txt")));
+				for(String x = br.readLine(); x != null; x = br.readLine()) {
+					StringTokenizer str = new StringTokenizer(x, ";");
+					String[] info = new String[str.countTokens()];
+					for(i=0; i < info.length; i++) {
+						info[i] = str.nextToken();
+					}
+					StringTokenizer n = new StringTokenizer(info[2], ",");
+					if(info[0].equals("A")) {
+						RegisteredUser a = new Admin(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+						mySystem.authorizedUsers.add(a);
+					}
+					else if (info[0].equals("H")){
+						RegisteredUser h = new Host(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+						mySystem.authorizedUsers.add(h);
+						
+					}
+					else if (info[0].equals("G")){
+						RegisteredUser g = new Guest(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+						mySystem.authorizedUsers.add(g);
+					}
+				}
+				br.close();
+				return mySystem;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NoSuchElementException e) {
+				
+				e.printStackTrace();
+			}
 			// si entra aquí es porque no existe el fichero con los datos, es decir, si no
 			// se ha hecho logout antes, lo que quiere decir que es la primera vez, por lo
 			// que hay que cargar los datos de los usuarioscdel fichero que nos dan, en vez
@@ -292,6 +304,13 @@ public class System implements Serializable{
 	public void unbanUser(RegisteredUser user) {
 		this.authorizedUsers.add(user);
 		this.bannedUsers.remove(user);
+	}
+
+
+	@Override
+	public String toString() {
+		return "System [offers=" + offers + ", bannedUsers=" + bannedUsers + ", authorizedUsers=" + authorizedUsers
+				+ "]";
 	}
 	
 	// TODO metodo cancelReservation
