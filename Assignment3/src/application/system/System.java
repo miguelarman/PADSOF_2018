@@ -5,6 +5,7 @@ import java.util.*;
 
 import application.offer.*;
 import application.users.*;
+import exceptions.LoginException;
 
 public class System implements Serializable{
 	
@@ -33,6 +34,7 @@ public class System implements Serializable{
 	 * str.nextToken();
 	 * str.hashMoreTokens();*/
 	
+	// Getters
 
 	public List<Admin> getAdmins() {
 		return admins;
@@ -68,58 +70,138 @@ public class System implements Serializable{
 	
 	
 	
+	
+	// Searches
+	
 	public List<Offer> searchZipCode(Integer zip) {
-		// TODO
-		return null;	
+		
+		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			House house = o.getHouse();
+			
+			if (house.getZipCode() == zip) {
+				if (o.getStatus() == OfferStatus.APPROVED) {
+					searchResult.add(o);
+				}
+			}
+		}
+		
+		
+		return searchResult;	
 	}
 	
 	public List<Offer> searchStartingDate(Date date1, Date date2) {
-		// TODO
-		return null;
+		
+		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getDate().after(date1) && o.getDate().before(date2)) {
+				if (o.getStatus() == OfferStatus.APPROVED) {
+					searchResult.add(o);
+				}
+			}
+		}
+		
+		return searchResult;
 	}
 	
 	public List<Offer> searchOfferType(OfferType type) {
-		// TODO
-		return null;
+
+		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getType() == type) {
+				if (o.getStatus() == OfferStatus.APPROVED) {
+					searchResult.add(o);
+				}
+			}
+		}
+		
+		return searchResult;
 	}
 	
+	
 	public List<Offer> searchBooked() {
-		// TODO
-		return null;
+
+		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getStatus() == OfferStatus.BOOKED) {
+				if (o.getStatus() == OfferStatus.APPROVED) {
+					searchResult.add(o);
+				}
+			}
+		}
+		
+		return searchResult;
 	}
 	
 	public List<Offer> searchPaid() {
-		// TODO
-		return null;
+
+		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getStatus() == OfferStatus.PAID) {
+				if (o.getStatus() == OfferStatus.APPROVED) {
+					searchResult.add(o);
+				}
+			}
+		}
+		
+		return searchResult;
 	}
 	
 	public List<Offer> searchAvgRating(Float minRating) {
-		// TODO
-		return null;
+
+		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getAvgRating() >= minRating) {
+				if (o.getStatus() == OfferStatus.APPROVED) {
+					searchResult.add(o);
+				}
+			}
+		}
+		
+		return searchResult;
 	}
 	
-	public Boolean login(String id, String passwd) {
-		// TODO
+	
+	
+	// System data functions
+	
+	public void login(String id, String passwd) throws LoginException {
 		
 		for (RegisteredUser user : this.bannedUsers) {
 			if (user.getName() == id) {
-				// el usuario esta baneado
+				throw new LoginException("The user (" + id + ") is banned");
 			}
 		}
 		
 		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getName() == id) {
 				if (user.getPasswd() == passwd) {
-					// login como ese usuario
+					System.loggedAdmin = null;
+					System.loggedUser = user;
 				} else {
-					// contrasena incorrecta. exception?
+					throw new LoginException("Incorrect password");
 				}
 			}
 		}
 		
-		// el usuario no existe. exception?
+		for (Admin a : this.admins) {
+			if (a.getId() == id) {
+				if (a.getPasswd() == passwd) {
+					System.loggedAdmin = a;
+					System.loggedUser = null;
+				} else {
+					throw new LoginException("Incorrect password");
+				}
+			}
+		}
 		
-		return false;
+		throw new LoginException("User does not seem to exist");
 	}
 	
 	public void logout() {
@@ -138,25 +220,6 @@ public class System implements Serializable{
 		System.loggedUser = null;
 	}
 	
-	public Boolean addOffer(Offer offer) {
-		// TODO
-		return true;
-	}
-	
-	public Boolean removeOffer(Offer offer) {
-		// TODO
-		return true;
-	}
-	
-	public Boolean banUser(RegisteredUser user) {
-		// TODO
-		return true;
-	}
-	
-	public Boolean unbanUser(RegisteredUser user) {
-		// TODO
-		return true;
-	}
 	
 	
 	private static System openSystem() {
@@ -168,6 +231,12 @@ public class System implements Serializable{
 			return mySystem;
 		} else {
 			mySystem = new System();
+			// ALBERTO
+			
+			// si entra aquí es porque no existe el fichero con los datos, es decir, si no
+			// se ha hecho logout antes, lo que quiere decir que es la primera vez, por lo
+			// que hay que cargar los datos de los usuarioscdel fichero que nos dan, en vez
+			// de desde el fichero que actualicemos cada vez (cuya direccion es System.filename)
 			return mySystem;
 		}
 		
@@ -203,6 +272,32 @@ public class System implements Serializable{
 
 		// TODO mas comprobaciones o cosas?
 	}
+	
+	
+	
+	
+	public Boolean addOffer(Offer offer) {
+		// TODO
+		return true;
+	}
+	
+	public Boolean removeOffer(Offer offer) {
+		// TODO
+		return true;
+	}
+	
+	public Boolean banUser(RegisteredUser user) {
+		// TODO
+		return true;
+	}
+	
+	public Boolean unbanUser(RegisteredUser user) {
+		// TODO
+		return true;
+	}
+	
+	
+	
 	
 	// TODO metodo cancelReservation
 }

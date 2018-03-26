@@ -13,4 +13,9 @@ public class LivingOffer extends Offer {
 		this.numberOfMonths = numberOfMonths;
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public OfferType getType() {
+		return OfferType.LIVING;
+	}
 }

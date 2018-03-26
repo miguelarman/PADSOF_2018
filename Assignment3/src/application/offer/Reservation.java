@@ -34,11 +34,18 @@ public class Reservation {
 	
 	
 	
-	public Boolean cancelReservation() {
+	public void cancelReservation() {
 		
 		// TODO
-		return true;
+				
+		Guest user = this.client;
 		
+		user.deleteReservation(this);
+		
+		// esto no se si sirve para algo pero por si acaso lo pongo todo a null
+		this.bookedOffer = null;
+		this.client = null;
+		this.bookingDate = null;
 	}
 	
 	

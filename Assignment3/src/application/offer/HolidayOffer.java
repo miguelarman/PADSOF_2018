@@ -12,4 +12,9 @@ public class HolidayOffer extends Offer {
 		this.finishDate = finishDate;
 		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public OfferType getType() {
+		return OfferType.HOLIDAY;
+	}
 }

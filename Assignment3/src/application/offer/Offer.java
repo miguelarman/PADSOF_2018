@@ -36,6 +36,20 @@ public abstract class Offer {
 	}
 	
 	
+	public House getHouse() {
+		return this.offeredHouse;
+	}
+	
+	public OfferStatus getStatus() {
+		return this.status;
+	}
+	
+	public Date getDate() {
+		return this.startingDate;
+	}
+	
+	
+	
 	
 	public void modifyOffer(Date startingDate) {
 		this.startingDate = startingDate;
@@ -58,7 +72,7 @@ public abstract class Offer {
 	public void payOffer() throws PaymentException {
 		Double amount = this.getAmount();
 		
-		// TODO
+		// TODO rellenar el asunto
 		String subject = "------------";
 		
 		RegisteredUser user = System.getLoggedUser();
@@ -117,6 +131,8 @@ public abstract class Offer {
 	public Double getAmount() {
 		return this.price + this.deposit;
 	}
+	
+	public abstract OfferType getType();
 	
 	// TODO mas metodos?
 

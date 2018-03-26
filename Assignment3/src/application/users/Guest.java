@@ -1,6 +1,7 @@
 package application.users;
 import java.util.*;
 
+import application.offer.OfferStatus;
 import application.offer.Reservation;
 
 
@@ -23,15 +24,19 @@ public class Guest extends RegisteredUser {
 		return reservedOffers;
 	}
 	
-	public Boolean addReservation(Reservation reservation) {
-		// TODO
-		return true;
+	public void addReservation(Reservation reservation) {
+		// TODO comprobar algo de las fechas?
+		// TODO comprobar el estado de la oferta?
+		
+		this.reservedOffers.add(reservation);
 	}
 	
-	public Boolean deleteReservation(Reservation reservation) {
-		// TODO
-		return true;
+	public void deleteReservation(Reservation reservation) {
+		// TODO mirar algo con las fechas?
 		
+		reservation.getBookedOffer().modifyOffer(OfferStatus.APPROVED);
+		
+		this.reservedOffers.remove(reservation);		
 	}
 	
 
