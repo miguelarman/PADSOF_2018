@@ -12,5 +12,10 @@ public class Rating extends Opinion {
 		return this.rating;
 	}
 	
-	// TODO
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

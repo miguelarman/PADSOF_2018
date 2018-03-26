@@ -10,6 +10,4 @@ public class Admin extends RegisteredUser{
 	public Rol getRol() {
 		return Rol.ADMIN;
 	}
-	
-	// TODO
 }

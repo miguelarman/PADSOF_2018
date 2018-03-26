@@ -292,9 +292,8 @@ public class System implements Serializable{
 		this.offers.add(offer);
 	}
 	
-	public Boolean removeOffer(Offer offer) {
-		// TODO
-		return true;
+	public void removeOffer(Offer offer) {
+		this.offers.remove(offer);
 	}
 	
 	public void banUser(RegisteredUser user) {

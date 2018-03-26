@@ -3,8 +3,10 @@ package application.offer;
 import java.util.*;
 
 import application.users.Guest;
+
 import exceptions.BookingException;
 import exceptions.PaymentException;
+
 import application.system.System;
 
 
@@ -58,13 +60,19 @@ public class Reservation {
 				this.bookedOffer.payOffer();
 			} catch (PaymentException e) {
 				// TODO Auto-generated catch block
+				
+				// TODO aqui debemos analizar la excepcion, en vez de imprimirla
+				
 				e.printStackTrace();
 			}
 		}
-		
-		// TODO comprobar las excepciones que lanza payoffer
 	}
 	
-	// TODO no se si faltan mas metodos
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 
 }
