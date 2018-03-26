@@ -276,9 +276,8 @@ public class System implements Serializable{
 	
 	
 	
-	public Boolean addOffer(Offer offer) {
-		// TODO
-		return true;
+	public void addOffer(Offer offer) {
+		this.offers.add(offer);
 	}
 	
 	public Boolean removeOffer(Offer offer) {
@@ -286,14 +285,14 @@ public class System implements Serializable{
 		return true;
 	}
 	
-	public Boolean banUser(RegisteredUser user) {
-		// TODO
-		return true;
+	public void banUser(RegisteredUser user) {
+		this.authorizedUsers.remove(user);
+		this.bannedUsers.add(user);
 	}
 	
-	public Boolean unbanUser(RegisteredUser user) {
-		// TODO
-		return true;
+	public void unbanUser(RegisteredUser user) {
+		this.authorizedUsers.add(user);
+		this.bannedUsers.remove(user);
 	}
 	
 	// TODO metodo cancelReservation
