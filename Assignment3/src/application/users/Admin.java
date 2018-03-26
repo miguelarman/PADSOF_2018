@@ -29,6 +29,4 @@ public class Admin {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
-	
-	// TODO
 }

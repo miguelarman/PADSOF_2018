@@ -28,5 +28,12 @@ public class Comment extends Opinion {
 		
 		return avg / amount;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 
 }

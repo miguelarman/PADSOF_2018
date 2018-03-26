@@ -15,7 +15,6 @@ public class Host extends RegisteredUser {
 	public Host(String name, String surname, String passwd, String creditCard) {
 		super(name, surname, passwd, creditCard);
 		houses = new ArrayList<House>();
-		// TODO Auto-generated constructor stub
 	}
 
 	
@@ -29,11 +28,13 @@ public class Host extends RegisteredUser {
 	
 	public Boolean addHouse(Integer zipCode, String city, HashMap<String, String> chs) throws HouseAlreadyCreatedException {
 		House house = new House(zipCode, city, chs, this);
+		
 		for(House h: houses) {
 			if(h.equals(house)) {
 				throw new HouseAlreadyCreatedException();
 			}
 		}
+		
 		houses.add(house);
 		
 		return true;

@@ -83,7 +83,7 @@ public abstract class Offer {
 		String ccard = user.getCreditCard();
 		
 		try {
-			TeleChargeAndPaySystem.charge(ccard, subject, amount);
+			TeleChargeAndPaySystem.charge(ccard, subject, amount); // Igual en los catch siguentes debemos lanzar un PaymentException
 		} catch (InvalidCardNumberException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,6 +110,8 @@ public abstract class Offer {
 	
 	public void rateOffer(String opinion, int rating) {
 		// TODO
+		
+		// no se como hacer para poner a la vez un comentario de texto y numerico
 	}
 	
 	public Float getAvgRating() {
@@ -134,6 +136,14 @@ public abstract class Offer {
 	
 	public abstract OfferType getType();
 	
-	// TODO mas metodos?
+	
+	
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 
 }
