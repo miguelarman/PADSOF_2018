@@ -5,19 +5,26 @@ import java.util.*;
 import application.opinion.Comment;
 import application.opinion.Opinion;
 import application.opinion.Rating;
+import application.system.System;
+import application.users.RegisteredUser;
+import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.OrderRejectedException;
+import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+import exceptions.PaymentException;
 
 
 public abstract class Offer {
 	private Date startingDate;
-	private Float price;
-	private Float deposit;
+	private Double price;
+	private Double deposit;
 	private String description;
 	private OfferStatus status;
 	private House offeredHouse;
 	private List<Opinion> opinions;
 	
 	
-	public Offer(Date startingDate, Float price, Float deposit, String description, OfferStatus status,
+	public Offer(Date startingDate, Double price, Double deposit, String description, OfferStatus status,
 			House offeredHouse) {
 		this.startingDate = startingDate;
 		this.price = price;
@@ -34,7 +41,7 @@ public abstract class Offer {
 		this.startingDate = startingDate;
 	}
 	
-	public void modifyOffer(Float price, Float deposit) {
+	public void modifyOffer(Double price, Double deposit) {
 		this.price = price;
 		this.deposit = deposit;
 	}
@@ -48,7 +55,32 @@ public abstract class Offer {
 	}
 	
 	
-	public abstract void payOffer();
+	public void payOffer() throws PaymentException {
+		Double amount = this.getAmount();
+		
+		// TODO
+		String subject = "------------";
+		
+		RegisteredUser user = System.getLoggedUser();
+		if (user == null) {
+			throw new PaymentException("Could not get logged user from System");
+		}
+		
+		String ccard = user.getCreditCard();
+		
+		try {
+			TeleChargeAndPaySystem.charge(ccard, subject, amount);
+		} catch (InvalidCardNumberException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FailedInternetConnectionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (OrderRejectedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public void rateOffer(String opinion) {
 		Opinion o = new Comment(opinion);
@@ -82,7 +114,9 @@ public abstract class Offer {
 		return rating / amount;
 	}
 
-	public abstract Double getAmount();
+	public Double getAmount() {
+		return this.price + this.deposit;
+	}
 	
 	// TODO mas metodos?
 

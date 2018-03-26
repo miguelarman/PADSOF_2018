@@ -2,8 +2,6 @@ package application.opinion;
 
 import java.util.*;
 
-import application.users.RegisteredUser;
-
 
 public class Comment extends Opinion {
 

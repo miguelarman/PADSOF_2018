@@ -3,7 +3,8 @@ package application.offer;
 import java.util.*;
 
 import application.users.Guest;
-import exceptions.UserTriesToPayReservationWithoutBookingException;
+import exceptions.BookingException;
+import exceptions.PaymentException;
 import application.system.System;
 
 
@@ -41,14 +42,19 @@ public class Reservation {
 	}
 	
 	
-	public void payReservation() throws UserTriesToPayReservationWithoutBookingException {
+	public void payReservation() throws BookingException {
 
 		// comprobar que el usuario que intenta pagar la reserva es el que esta logueado y es el que la ha reservado
 		
 		if (!this.client.equals(System.getLoggedUser())) {
-			throw new UserTriesToPayReservationWithoutBookingException();
+			throw new BookingException("In order to pay a reservation you must be the one that has booked it");
 		} else {
-			this.bookedOffer.payOffer();
+			try {
+				this.bookedOffer.payOffer();
+			} catch (PaymentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		// TODO comprobar las excepciones que lanza payoffer

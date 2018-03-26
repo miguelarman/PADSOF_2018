@@ -102,7 +102,7 @@ public class System implements Serializable{
 		// TODO
 		
 		for (RegisteredUser user : this.bannedUsers) {
-			if (user.getName() == id && user.getPasswd() == passwd) {
+			if (user.getName() == id) {
 				// el usuario esta baneado
 			}
 		}
@@ -197,7 +197,12 @@ public class System implements Serializable{
 		}
 		
 		return system;
-		
+
+		// TODO comprobar segun se arranca las reservas que han caducado y eliminarlas y
+		// poner las ofertas como disponibles
+
 		// TODO mas comprobaciones o cosas?
 	}
+	
+	// TODO metodo cancelReservation
 }
