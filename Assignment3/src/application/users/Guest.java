@@ -10,8 +10,8 @@ public class Guest extends RegisteredUser {
 	private List<Reservation> reservedOffers;
 
 	
-	public Guest(String name, String surname, String passwd, String creditCard) {
-		super(name, surname, passwd, creditCard);
+	public Guest(String name, String surname, String passwd, String creditCard, String NIF) {
+		super(name, surname, passwd, creditCard, NIF);
 		reservedOffers = new ArrayList<Reservation>();
 	}
 	

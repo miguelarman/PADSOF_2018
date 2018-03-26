@@ -12,8 +12,8 @@ public class Host extends RegisteredUser {
 	private List<House> houses;
 
 	
-	public Host(String name, String surname, String passwd, String creditCard) {
-		super(name, surname, passwd, creditCard);
+	public Host(String name, String surname, String passwd, String creditCard, String NIF) {
+		super(name, surname, passwd, creditCard, NIF);
 		houses = new ArrayList<House>();
 		// TODO Auto-generated constructor stub
 	}
