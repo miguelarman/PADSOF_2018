@@ -1,6 +1,6 @@
 package application.opinion;
 
-import application.system.System;
+import application.app.App;
 import application.users.RegisteredUser;
 
 
@@ -10,7 +10,7 @@ public abstract class Opinion {
 
 	
 	public Opinion() {
-		this.commenter = System.getLoggedUser();
+		this.commenter = App.getLoggedUser();
 	}
 	
 	public Boolean addReply(Comment c) {

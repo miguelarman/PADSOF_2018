@@ -1,4 +1,4 @@
-package application.system;
+package application.app;
 
 import java.io.*;
 import java.util.*;
@@ -9,7 +9,7 @@ import application.users.*;
 
 import exceptions.*;
 
-public class System implements Serializable{
+public class App implements Serializable{
 	
 	private static final long serialVersionUID = 7941697892854198940L;
 	private List<Offer> offers;
@@ -18,7 +18,7 @@ public class System implements Serializable{
 	private static RegisteredUser loggedUser;
 	private static String filename = "data.obj";
 	
-	public System() {
+	public App() {
 		offers = new ArrayList<Offer>();
 		bannedUsers = new ArrayList<RegisteredUser>();
 		authorizedUsers = new ArrayList<RegisteredUser>();
@@ -47,7 +47,7 @@ public class System implements Serializable{
 
 
 	public void setLoggedUser(RegisteredUser loggedUser) {
-		System.loggedUser = loggedUser;
+		App.loggedUser = loggedUser;
 	}
 	
 	
@@ -151,7 +151,7 @@ public class System implements Serializable{
 	
 	
 	
-	// System data functions
+	// Appdata functions
 	
 	public void login(String id, String passwd) throws LoginException {
 		
@@ -164,7 +164,7 @@ public class System implements Serializable{
 		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getName() == id) {
 				if (user.getPasswd() == passwd) {
-					System.loggedUser = user;
+					App.loggedUser = user;
 					return;
 				} else {
 					throw new LoginException("Incorrect password");
@@ -179,7 +179,7 @@ public class System implements Serializable{
 		
 		ObjectOutputStream oos;
 		try {
-			oos = new ObjectOutputStream( new FileOutputStream(System.filename));
+			oos = new ObjectOutputStream( new FileOutputStream(App.filename));
 			oos.writeObject(this);
 			oos.close();
 		} catch (IOException e) {
@@ -187,27 +187,27 @@ public class System implements Serializable{
 			e.printStackTrace();
 		}
 		
-		System.loggedUser = null;
+		App.loggedUser = null;
 	}
 	
 	
-	private static System openSystem() {
-		System mySystem = null;
-		File data = new File(System.filename);
+	public static App openApp() {
+		App myApp= null;
+		File data = new File(App.filename);
 
 		if (data.exists()) {
-			mySystem = System.loadData();
-			return mySystem;
+			myApp= App.loadData();
+			return myApp;
 		} else {			
-			mySystem = System.initializeSystem();
-			return mySystem;
+			myApp= App.initializeApp();
+			return myApp;
 		}
 	}
 	
 	
-	private static System initializeSystem() {
+	private static App initializeApp() {
 		
-		System system = new System();
+		App app= new App();
 		int i;
 		
 		try {
@@ -223,20 +223,20 @@ public class System implements Serializable{
 				StringTokenizer n = new StringTokenizer(info[2], ",");
 				if(info[0].equals("A")) {
 					RegisteredUser a = new Admin(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
-					system.authorizedUsers.add(a);
+					app.authorizedUsers.add(a);
 				} else if (info[0].equals("H")){
 					RegisteredUser h = new Host(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
-					system.authorizedUsers.add(h);
+					app.authorizedUsers.add(h);
 					
 				} else if (info[0].equals("G")){
 					RegisteredUser g = new Guest(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
-					system.authorizedUsers.add(g);
+					app.authorizedUsers.add(g);
 				}
 			}
 			
 			br.close();
 			
-			return system;
+			return app;
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -246,20 +246,20 @@ public class System implements Serializable{
 			e.printStackTrace();
 		}
 		
-		return system;
+		return app;
 	}
 
 
-	private static System loadData() {
+	private static App loadData() {
 		
-		System system = null;
+		App app= null;
 		
 		ObjectInputStream is;
 		try {
-			is = new ObjectInputStream(new FileInputStream(System.filename));
-			system = (System) is.readObject();
+			is = new ObjectInputStream(new FileInputStream(App.filename));
+			app = (App) is.readObject();
 			is.close();
-			return system;
+			return app;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -275,13 +275,13 @@ public class System implements Serializable{
 
 		// Deleting expired offers
 		
-		for (Offer o : system.offers) {
+		for (Offer o : app.offers) {
 			Date startingDate = o.getDate();
 			Date currentDate = new Date();
 			
 			if (startingDate.before(currentDate)) { // The offer has expired
 				if (o.getStatus() != OfferStatus.PAID) {
-					system.removeOffer(o);
+					app.removeOffer(o);
 				}
 			}
 		}
@@ -289,7 +289,7 @@ public class System implements Serializable{
 		
 		// Deleting expired Reservations
 
-		for (RegisteredUser user : system.authorizedUsers) {
+		for (RegisteredUser user : app.authorizedUsers) {
 			if (user.getRol() == RegisteredUser.Rol.GUEST) {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
 					Date bookingDate = r.getBookingDate();
@@ -305,7 +305,7 @@ public class System implements Serializable{
 			}
 		}
 		
-		return system;
+		return app;
 	}
 	
 	
@@ -332,7 +332,7 @@ public class System implements Serializable{
 
 	@Override
 	public String toString() {
-		return "System [offers=" + offers + ", bannedUsers=" + bannedUsers + ", authorizedUsers=" + authorizedUsers
+		return "App[offers=" + offers + ", bannedUsers=" + bannedUsers + ", authorizedUsers=" + authorizedUsers
 				+ "]";
 	}
 	

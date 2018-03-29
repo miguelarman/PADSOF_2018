@@ -9,7 +9,7 @@ public class HolidayOffer extends Offer {
 	public HolidayOffer(Date startingDate, Double price, Double deposit, String description, OfferStatus status,
 			House offeredHouse, Date finishDate) {
 		super(startingDate, price, deposit, description, status, offeredHouse);
-		this.finishDate = finishDate;
+		this.setFinishDate(finishDate);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -20,6 +20,14 @@ public class HolidayOffer extends Offer {
 	
 	
 	
+	public Date getFinishDate() {
+		return finishDate;
+	}
+
+	public void setFinishDate(Date finishDate) {
+		this.finishDate = finishDate;
+	}
+
 	@Override
 	public String toString() {
 		// TODO

@@ -2,12 +2,11 @@ package application.offer;
 
 import java.util.*;
 
+import application.app.App;
 import application.users.Guest;
 
 import exceptions.BookingException;
 import exceptions.PaymentException;
-
-import application.system.System;
 
 
 public class Reservation {
@@ -53,7 +52,7 @@ public class Reservation {
 
 		// comprobar que el usuario que intenta pagar la reserva es el que esta logueado y es el que la ha reservado
 		
-		if (!this.client.equals(System.getLoggedUser())) {
+		if (!this.client.equals(App.getLoggedUser())) {
 			throw new BookingException("In order to pay a reservation you must be the one that has booked it");
 		} else {
 			try {

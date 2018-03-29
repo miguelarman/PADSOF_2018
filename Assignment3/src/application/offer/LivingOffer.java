@@ -20,6 +20,14 @@ public class LivingOffer extends Offer {
 	}
 	
 	
+	public int getNumberOfMonths() {
+		return numberOfMonths;
+	}
+
+	public void setNumberOfMonths(int numberOfMonths) {
+		this.numberOfMonths = numberOfMonths;
+	}
+
 	@Override
 	public String toString() {
 		// TODO

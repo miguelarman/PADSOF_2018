@@ -2,10 +2,10 @@ package application.offer;
 
 import java.util.*;
 
+import application.app.App;
 import application.opinion.Comment;
 import application.opinion.Opinion;
 import application.opinion.Rating;
-import application.system.System;
 import application.users.RegisteredUser;
 import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
@@ -29,7 +29,6 @@ public abstract class Offer {
 		this.startingDate = startingDate;
 		this.price = price;
 		this.deposit = deposit;
-		this.description = description;
 		this.status = OfferStatus.PENDING;
 		this.offeredHouse = offeredHouse;
 		this.opinions = new ArrayList<Opinion>();
@@ -51,6 +50,10 @@ public abstract class Offer {
 	
 	
 	
+	public String getDescription() {
+		return description;
+	}
+
 	public void modifyOffer(Date startingDate) {
 		this.startingDate = startingDate;
 	}
@@ -75,7 +78,7 @@ public abstract class Offer {
 		// TODO rellenar el asunto
 		String subject = "------------";
 		
-		RegisteredUser user = System.getLoggedUser();
+		RegisteredUser user = App.getLoggedUser();
 		if (user == null) {
 			throw new PaymentException("Could not get logged user from System");
 		}
