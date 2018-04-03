@@ -17,12 +17,14 @@ public class App implements Serializable {
 	private List<RegisteredUser> authorizedUsers;
 	private static RegisteredUser loggedUser;
 	private static String filename = "data.obj";
+	private HashMap<Offer, Date> changesRequests;
 	
 	public App() {
 		offers = new ArrayList<Offer>();
 		bannedUsers = new ArrayList<RegisteredUser>();
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
+		changesRequests = new HashMap<Offer, Date>();
 	}
 	
 		
@@ -252,7 +254,7 @@ public class App implements Serializable {
 
 	private static App loadData() {
 		
-		App app= null;
+		App app = null;
 		
 		ObjectInputStream is;
 		try {
@@ -305,7 +307,9 @@ public class App implements Serializable {
 			}
 		}
 		
-		// TODO comprobar solicitudes de cambio que han expirado y eliminar esas ofertas
+		// Deleting expired offers pending changes
+		
+		app.deleteExpiredPendingOffers();
 		
 		return app;
 	}
@@ -313,6 +317,41 @@ public class App implements Serializable {
 	
 	
 	
+	private void deleteExpiredPendingOffers() {
+		List<Offer> offers = this.getPendingOffers();
+		
+		for (Offer o : offers) {
+			
+			Date changesDate = this.changesRequests.get(o);
+			Date currentDate = new Date();
+			
+			long diffInMillies = Math.abs(currentDate.getTime() - changesDate.getTime());
+		    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			
+			if (diff >= 5) { // User has exceeded 5 days without paying
+				// Deletes the request from the app
+				this.changesRequests.remove(o);
+				
+				// Removes the offer from the system
+				this.removeOffer(o);
+			}
+		}
+	}
+
+
+	private List<Offer> getPendingOffers() {
+		List<Offer> offers = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getStatus() == OfferStatus.PENDING) {
+				offers.add(o);
+			}
+		}
+		
+		return offers;
+	}
+
+
 	public void addOffer(Offer offer) {
 		this.offers.add(offer);
 	}

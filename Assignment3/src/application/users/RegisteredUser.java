@@ -19,7 +19,7 @@ public abstract class RegisteredUser {
 	 *
 	 */
 	public enum Rol {
-		HOST, GUEST, ADMIN, ERROR;		
+		HOST, GUEST, ADMIN, MULTIROL, ERROR;		
 	}
 	
 	
