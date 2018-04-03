@@ -1,7 +1,6 @@
 package application.offer;
 
 import java.time.LocalDate;
-import java.util.*;
 
 import application.app.App;
 import application.users.Guest;
