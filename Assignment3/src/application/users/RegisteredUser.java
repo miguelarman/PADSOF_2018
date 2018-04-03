@@ -1,5 +1,9 @@
 package application.users;
 
+import java.util.List;
+
+import application.offer.House;
+import application.offer.Reservation;
 
 /**
  * This class contains everything related to the users and their types. This
@@ -19,7 +23,7 @@ public abstract class RegisteredUser {
 	 *
 	 */
 	public enum Rol {
-		HOST, GUEST, ADMIN, ERROR;		
+		HOST, GUEST, ADMIN, MULTIROL, ERROR;		
 	}
 	
 	
@@ -43,6 +47,8 @@ public abstract class RegisteredUser {
 	 * NIF of the user
 	 */
 	private String NIF;
+	protected List<Reservation> reservedOffers;
+	protected List<House> houses;
 
 	
 	/**

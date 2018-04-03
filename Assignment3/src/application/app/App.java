@@ -9,7 +9,7 @@ import application.users.*;
 
 import exceptions.*;
 
-public class App implements Serializable{
+public class App implements Serializable {
 	
 	private static final long serialVersionUID = 7941697892854198940L;
 	private List<Offer> offers;
@@ -17,12 +17,14 @@ public class App implements Serializable{
 	private List<RegisteredUser> authorizedUsers;
 	private static RegisteredUser loggedUser;
 	private static String filename = "data.obj";
+	private HashMap<Offer, Date> changesRequests;
 	
 	public App() {
 		offers = new ArrayList<Offer>();
 		bannedUsers = new ArrayList<RegisteredUser>();
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
+		changesRequests = new HashMap<Offer, Date>();
 	}
 	
 		
@@ -258,7 +260,7 @@ public class App implements Serializable{
 
 	private static App loadData() {
 		
-		App app= null;
+		App app = null;
 		
 		ObjectInputStream is;
 		try {
@@ -280,22 +282,36 @@ public class App implements Serializable{
 		
 
 		// Deleting expired offers
+		app.deleteExpiredOffers();
 		
-		for (Offer o : app.offers) {
+		// Deleting expired Reservations
+		app.deleteExpiredReservations();
+		
+		// Deleting expired offers pending changes
+		app.deleteExpiredPendingOffers();
+		
+		return app;
+	}
+	
+	
+	
+	
+	private void deleteExpiredOffers() {
+		for (Offer o : this.offers) {
 			Date startingDate = o.getDate();
 			Date currentDate = new Date();
 			
 			if (startingDate.before(currentDate)) { // The offer has expired
 				if (o.getStatus() != OfferStatus.PAID) {
-					app.removeOffer(o);
+					this.removeOffer(o);
 				}
 			}
 		}
-		
-		
-		// Deleting expired Reservations
+	}
 
-		for (RegisteredUser user : app.authorizedUsers) {
+
+	private void deleteExpiredReservations() {
+		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getRol() == RegisteredUser.Rol.GUEST) {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
 					Date bookingDate = r.getBookingDate();
@@ -310,13 +326,44 @@ public class App implements Serializable{
 				}
 			}
 		}
-		
-		return app;
 	}
-	
-	
-	
-	
+
+
+	private void deleteExpiredPendingOffers() {
+		List<Offer> offers = this.getPendingOffers();
+		
+		for (Offer o : offers) {
+			
+			Date changesDate = this.changesRequests.get(o);
+			Date currentDate = new Date();
+			
+			long diffInMillies = Math.abs(currentDate.getTime() - changesDate.getTime());
+		    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+			
+			if (diff >= 5) { // User has exceeded 5 days without paying
+				// Deletes the request from the app
+				this.changesRequests.remove(o);
+				
+				// Removes the offer from the system
+				this.removeOffer(o);
+			}
+		}
+	}
+
+
+	private List<Offer> getPendingOffers() {
+		List<Offer> offers = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getStatus() == OfferStatus.PENDING) {
+				offers.add(o);
+			}
+		}
+		
+		return offers;
+	}
+
+
 	public void addOffer(Offer offer) {
 		this.offers.add(offer);
 	}

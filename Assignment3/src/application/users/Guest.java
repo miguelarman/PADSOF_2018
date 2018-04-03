@@ -1,14 +1,10 @@
 package application.users;
 import java.util.*;
 
-import application.offer.OfferStatus;
-import application.offer.Reservation;
+import application.offer.*;
 
 
-public class Guest extends RegisteredUser {
-	
-	private List<Reservation> reservedOffers;
-
+public class Guest extends RegisteredUser implements GuestI{
 	
 	public Guest(String name, String surname, String passwd, String creditCard, String NIF) {
 		super(name, surname, passwd, creditCard, NIF);
@@ -18,12 +14,8 @@ public class Guest extends RegisteredUser {
 	public Rol getRol() {
 		return Rol.GUEST;
 	}
-
 	
-	public List<Reservation> getReservedOffers() {
-		return reservedOffers;
-	}
-	
+	@Override
 	public void addReservation(Reservation reservation) {
 		// TODO comprobar algo de las fechas?
 		// TODO comprobar el estado de la oferta?
@@ -31,6 +23,7 @@ public class Guest extends RegisteredUser {
 		this.reservedOffers.add(reservation);
 	}
 	
+	@Override
 	public void deleteReservation(Reservation reservation) {
 		// TODO mirar algo con las fechas?
 		
@@ -39,4 +32,16 @@ public class Guest extends RegisteredUser {
 		this.reservedOffers.remove(reservation);		
 	}
 	
+
+	@Override
+	public List<Reservation> getReservedOffers() {
+		return this.reservedOffers;
+	}
+	
+	@Override
+	public String toString() {
+		// TODO
+		
+		return null;
+	}
 }

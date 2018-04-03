@@ -4,16 +4,16 @@ package application.offer;
 
 import java.util.*;
 
-import application.users.Host;
+import application.users.*;
 
-import exceptions.ChsAlreadyIncludedException;
+import exceptions.HouseException;
 
 public class House {
 	
 	private Integer zipCode;
 	private String city;
 	private HashMap<String, String> chs;
-	private Host host;
+	private RegisteredUser host;
 
 
 	public House(Integer zipCode, String city, Host host) {
@@ -23,11 +23,18 @@ public class House {
 		this.host = host;
 	}
 	
+	public House(Integer zipCode, String city, HashMap<String, String> chs, MultiRoleUser host) {
+		this.zipCode = zipCode;
+		this.city = city;
+		this.chs = new HashMap<String, String>();
+		this.host = host;
+	}
+	
 	//metodo para añadir caracteristicas al hashmap
-	public void addCharacteristic(String key, String value) throws ChsAlreadyIncludedException {
+	public void addCharacteristic(String key, String value) throws HouseException {
 		if(this.chs.containsKey(key)) {
 			if(value.equals(this.chs.get(key))) {
-				throw new ChsAlreadyIncludedException();
+				throw new HouseException("Already contains that characteristic");
 			}
 		}
 		else {
@@ -47,7 +54,7 @@ public class House {
 		return city;
 	}
 
-	public Host getHost() {
+	public RegisteredUser getHost() {
 		return host;
 	}
 	
