@@ -12,10 +12,4 @@ public class Admin extends RegisteredUser {
 	}
 	
 	
-	@Override
-	public String toString() {
-		// TODO
-		
-		return null;
-	}
 }

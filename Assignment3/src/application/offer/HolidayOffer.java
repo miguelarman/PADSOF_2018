@@ -1,15 +1,14 @@
 package application.offer;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class HolidayOffer extends Offer {
 
-	private Date finishDate;
+	private LocalDate finishDate;
 
-	public HolidayOffer(Date startingDate, Double price, Double deposit, String description, OfferStatus status,
-			House offeredHouse, Date finishDate) {
-		super(startingDate, price, deposit, description, status, offeredHouse);
-		this.setFinishDate(finishDate);
+	public HolidayOffer(LocalDate startingLocalDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishLocalDate) {
+		super(startingLocalDate, price, deposit, description, offeredHouse);
+		this.finishDate = finishLocalDate;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -20,18 +19,12 @@ public class HolidayOffer extends Offer {
 	
 	
 	
-	public Date getFinishDate() {
+	public LocalDate getFinishLocalDate() {
 		return finishDate;
 	}
 
-	public void setFinishDate(Date finishDate) {
+	public void setFinishDate(LocalDate finishDate) {
 		this.finishDate = finishDate;
 	}
 
-	@Override
-	public String toString() {
-		// TODO
-		
-		return null;
-	}
 }

@@ -26,8 +26,8 @@ public class Host extends RegisteredUser {
 		return Rol.HOST;
 	}
 	
-	public Boolean addHouse(Integer zipCode, String city, HashMap<String, String> chs) throws HouseAlreadyCreatedException {
-		House house = new House(zipCode, city, chs, this);
+	public Boolean addHouse(Integer zipCode, String city) throws HouseAlreadyCreatedException {
+		House house = new House(zipCode, city, this);
 		
 		for(House h: houses) {
 			if(h.equals(house)) {
@@ -40,10 +40,4 @@ public class Host extends RegisteredUser {
 		return true;
 	}
 	
-	@Override
-	public String toString() {
-		// TODO
-		
-		return null;
-	}
 }

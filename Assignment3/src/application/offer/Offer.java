@@ -1,5 +1,6 @@
 package application.offer;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import application.app.App;
@@ -15,7 +16,7 @@ import exceptions.PaymentException;
 
 
 public abstract class Offer {
-	private Date startingDate;
+	private LocalDate startingDate;
 	private Double price;
 	private Double deposit;
 	private String description;
@@ -24,8 +25,7 @@ public abstract class Offer {
 	private List<Opinion> opinions;
 	
 	
-	public Offer(Date startingDate, Double price, Double deposit, String description, OfferStatus status,
-			House offeredHouse) {
+	public Offer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse) {
 		this.startingDate = startingDate;
 		this.price = price;
 		this.deposit = deposit;
@@ -43,7 +43,7 @@ public abstract class Offer {
 		return this.status;
 	}
 	
-	public Date getDate() {
+	public LocalDate getDate() {
 		return this.startingDate;
 	}
 	
@@ -54,7 +54,7 @@ public abstract class Offer {
 		return description;
 	}
 
-	public void modifyOffer(Date startingDate) {
+	public void modifyOffer(LocalDate startingDate) {
 		this.startingDate = startingDate;
 	}
 	
