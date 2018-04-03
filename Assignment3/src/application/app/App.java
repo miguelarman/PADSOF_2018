@@ -2,7 +2,8 @@ package application.app;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import application.offer.*;
 import application.users.*;
@@ -17,14 +18,14 @@ public class App implements Serializable {
 	private List<RegisteredUser> authorizedUsers;
 	private static RegisteredUser loggedUser;
 	private static String filename = "data.obj";
-	private HashMap<Offer, Date> changesRequests;
+	private HashMap<Offer, LocalDate> changesRequests;
 	
 	public App() {
 		offers = new ArrayList<Offer>();
 		bannedUsers = new ArrayList<RegisteredUser>();
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
-		changesRequests = new HashMap<Offer, Date>();
+		changesRequests = new HashMap<Offer, LocalDate>();
 	}
 	
 		
@@ -75,12 +76,12 @@ public class App implements Serializable {
 		return searchResult;	
 	}
 	
-	public List<Offer> searchStartingDate(Date date1, Date date2) {
+	public List<Offer> searchStartingDate(LocalDate date1, LocalDate date2) {
 		
 		List<Offer> searchResult = new ArrayList<Offer>();
 		
 		for (Offer o : this.offers) {
-			if (o.getDate().after(date1) && o.getDate().before(date2)) {
+			if (o.getDate().isAfter(date1) && o.getDate().isBefore(date2)) {
 				if (o.getStatus() == OfferStatus.APPROVED) {
 					searchResult.add(o);
 				}
@@ -298,10 +299,10 @@ public class App implements Serializable {
 	
 	private void deleteExpiredOffers() {
 		for (Offer o : this.offers) {
-			Date startingDate = o.getDate();
-			Date currentDate = new Date();
+			LocalDate startingDate = o.getDate();
+			LocalDate currentDate = LocalDate.now();
 			
-			if (startingDate.before(currentDate)) { // The offer has expired
+			if (startingDate.isBefore(currentDate)) { // The offer has expired
 				if (o.getStatus() != OfferStatus.PAID) {
 					this.removeOffer(o);
 				}
@@ -314,13 +315,12 @@ public class App implements Serializable {
 		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getRol() == RegisteredUser.Rol.GUEST) {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
-					Date bookingDate = r.getBookingDate();
-					Date currentDate = new Date();
+					LocalDate bookingDate = r.getBookingDate();
+					LocalDate currentDate = LocalDate.now();
+									    
+				    long daysBetween = ChronoUnit.DAYS.between(bookingDate, currentDate);
 					
-					long diffInMillies = Math.abs(currentDate.getTime() - bookingDate.getTime());
-				    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-					
-					if (diff >= 5) { // User has exceeded 5 days without paying
+					if (daysBetween >= 5) { // User has exceeded 5 days without paying
 						r.cancelReservation();
 					}
 				}
@@ -334,13 +334,12 @@ public class App implements Serializable {
 		
 		for (Offer o : offers) {
 			
-			Date changesDate = this.changesRequests.get(o);
-			Date currentDate = new Date();
+			LocalDate changesDate = this.changesRequests.get(o);
+			LocalDate currentDate = LocalDate.now();
+		    
+		    long daysBetween = ChronoUnit.DAYS.between(changesDate, currentDate);
 			
-			long diffInMillies = Math.abs(currentDate.getTime() - changesDate.getTime());
-		    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-			
-			if (diff >= 5) { // User has exceeded 5 days without paying
+			if (daysBetween >= 5) { // User has exceeded 5 days without paying
 				// Deletes the request from the app
 				this.changesRequests.remove(o);
 				
