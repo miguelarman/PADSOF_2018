@@ -61,8 +61,8 @@ public class House {
 	
 	@Override
 	public String toString() {
-		// TODO
-		
-		return null;
+		String string = "";
+		string += "ZIP Code: " + zipCode + "\n";
+		string += "City: " + city + "\n";
 	}
 }
