@@ -17,6 +17,9 @@ public abstract class Opinion {
 		return false;
 	}
 	
+	public RegisteredUser getCommenter() {
+		return this.commenter;
+	}
 	
 	@Override
 	public String toString() {

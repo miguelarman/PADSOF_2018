@@ -4,7 +4,7 @@ package application.offer;
 
 import java.util.*;
 
-import application.users.Host;
+import application.users.*;
 
 import exceptions.HouseException;
 
@@ -13,10 +13,17 @@ public class House {
 	private Integer zipCode;
 	private String city;
 	private HashMap<String, String> chs;
-	private Host host;
+	private RegisteredUser host;
 
 
 	public House(Integer zipCode, String city, HashMap<String, String> chs, Host host) {
+		this.zipCode = zipCode;
+		this.city = city;
+		this.chs = new HashMap<String, String>();
+		this.host = host;
+	}
+	
+	public House(Integer zipCode, String city, HashMap<String, String> chs, MultiRoleUser host) {
 		this.zipCode = zipCode;
 		this.city = city;
 		this.chs = new HashMap<String, String>();
@@ -47,7 +54,7 @@ public class House {
 		return city;
 	}
 
-	public Host getHost() {
+	public RegisteredUser getHost() {
 		return host;
 	}
 	

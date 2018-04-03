@@ -276,22 +276,36 @@ public class App implements Serializable {
 		
 
 		// Deleting expired offers
+		app.deleteExpiredOffers();
 		
-		for (Offer o : app.offers) {
+		// Deleting expired Reservations
+		app.deleteExpiredReservations();
+		
+		// Deleting expired offers pending changes
+		app.deleteExpiredPendingOffers();
+		
+		return app;
+	}
+	
+	
+	
+	
+	private void deleteExpiredOffers() {
+		for (Offer o : this.offers) {
 			Date startingDate = o.getDate();
 			Date currentDate = new Date();
 			
 			if (startingDate.before(currentDate)) { // The offer has expired
 				if (o.getStatus() != OfferStatus.PAID) {
-					app.removeOffer(o);
+					this.removeOffer(o);
 				}
 			}
 		}
-		
-		
-		// Deleting expired Reservations
+	}
 
-		for (RegisteredUser user : app.authorizedUsers) {
+
+	private void deleteExpiredReservations() {
+		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getRol() == RegisteredUser.Rol.GUEST) {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
 					Date bookingDate = r.getBookingDate();
@@ -306,17 +320,9 @@ public class App implements Serializable {
 				}
 			}
 		}
-		
-		// Deleting expired offers pending changes
-		
-		app.deleteExpiredPendingOffers();
-		
-		return app;
 	}
-	
-	
-	
-	
+
+
 	private void deleteExpiredPendingOffers() {
 		List<Offer> offers = this.getPendingOffers();
 		
