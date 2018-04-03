@@ -1,8 +1,7 @@
 package application.users;
 import java.util.*;
 
-import application.offer.OfferStatus;
-import application.offer.Reservation;
+import application.offer.*;
 
 
 public class Guest extends RegisteredUser {

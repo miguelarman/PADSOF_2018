@@ -5,8 +5,7 @@ import java.util.*;
 import application.app.App;
 import application.users.Guest;
 
-import exceptions.BookingException;
-import exceptions.PaymentException;
+import exceptions.*;
 
 
 public class Reservation {

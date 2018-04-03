@@ -3,14 +3,11 @@ package application.offer;
 import java.util.*;
 
 import application.app.App;
-import application.opinion.Comment;
-import application.opinion.Opinion;
-import application.opinion.Rating;
+import application.opinion.*;
 import application.users.RegisteredUser;
-import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
-import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import es.uam.eps.padsof.telecard.OrderRejectedException;
-import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+
+import es.uam.eps.padsof.telecard.*;
+
 import exceptions.PaymentException;
 
 
@@ -97,6 +94,8 @@ public abstract class Offer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		// TODO pagar al host
 	}
 	
 	public void rateOffer(String opinion) {

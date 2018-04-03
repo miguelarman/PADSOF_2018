@@ -6,7 +6,7 @@ import java.util.*;
 
 import application.users.Host;
 
-import exceptions.ChsAlreadyIncludedException;
+import exceptions.HouseException;
 
 public class House {
 	
@@ -24,10 +24,10 @@ public class House {
 	}
 	
 	//metodo para añadir caracteristicas al hashmap
-	public void addCharacteristic(String key, String value) throws ChsAlreadyIncludedException {
+	public void addCharacteristic(String key, String value) throws HouseException {
 		if(this.chs.containsKey(key)) {
 			if(value.equals(this.chs.get(key))) {
-				throw new ChsAlreadyIncludedException();
+				throw new HouseException("Already contains that characteristic");
 			}
 		}
 		else {

@@ -9,7 +9,7 @@ import application.users.*;
 
 import exceptions.*;
 
-public class App implements Serializable{
+public class App implements Serializable {
 	
 	private static final long serialVersionUID = 7941697892854198940L;
 	private List<Offer> offers;
@@ -304,6 +304,8 @@ public class App implements Serializable{
 				}
 			}
 		}
+		
+		// TODO comprobar solicitudes de cambio que han expirado y eliminar esas ofertas
 		
 		return app;
 	}
