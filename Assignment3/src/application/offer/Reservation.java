@@ -1,5 +1,6 @@
 package application.offer;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import application.app.App;
@@ -10,17 +11,17 @@ import exceptions.*;
 
 public class Reservation {
 	
-	private Date bookingDate;
+	private LocalDate bookingDate;
 	private Guest client;
 	private Offer bookedOffer;
 
-	public Reservation(Date bookingDate, Guest client, Offer bookedOffer) {
+	public Reservation(LocalDate bookingDate, Guest client, Offer bookedOffer) {
 		this.bookingDate = bookingDate;
 		this.client = client;
 		this.bookedOffer = bookedOffer;
 	}
 	
-	public Date getBookingDate() {
+	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
 	

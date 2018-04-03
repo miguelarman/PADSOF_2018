@@ -20,8 +20,9 @@ public class Host extends RegisteredUser implements HostI {
 		return Rol.HOST;
 	}
 	
-	public void addHouse(Integer zipCode, String city, HashMap<String, String> chs) throws HostException {
-		House house = new House(zipCode, city, chs, this);
+	public void addHouse(Integer zipCode, String city) throws HostException {
+		House house = new House(zipCode, city, this);
+
 		
 		for(House h: houses) {
 			if(h.equals(house)) {
@@ -37,10 +38,4 @@ public class Host extends RegisteredUser implements HostI {
 		return this.houses;
 	}
 	
-	@Override
-	public String toString() {
-		// TODO
-		
-		return null;
-	}
 }

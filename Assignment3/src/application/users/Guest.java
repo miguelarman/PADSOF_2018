@@ -32,6 +32,7 @@ public class Guest extends RegisteredUser implements GuestI{
 		this.reservedOffers.remove(reservation);		
 	}
 	
+
 	@Override
 	public List<Reservation> getReservedOffers() {
 		return this.reservedOffers;

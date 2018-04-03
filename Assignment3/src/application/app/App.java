@@ -223,16 +223,22 @@ public class App implements Serializable {
 					info[i] = str.nextToken();
 				}
 				StringTokenizer n = new StringTokenizer(info[2], ",");
+				String surname = n.nextToken();
+				String name = n.nextToken();
 				if(info[0].equals("A")) {
-					RegisteredUser a = new Admin(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+					RegisteredUser a = new Admin(name, surname, info[3], info[4], info[1]);
 					app.authorizedUsers.add(a);
 				} else if (info[0].equals("H")){
-					RegisteredUser h = new Host(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+					
+					RegisteredUser h = new Host(name, surname, info[3], info[4], info[1]);
 					app.authorizedUsers.add(h);
 					
 				} else if (info[0].equals("G")){
-					RegisteredUser g = new Guest(n.nextToken(), n.nextToken(n.nextToken()), info[3], info[4], info[1]);
+					RegisteredUser g = new Guest(name, surname, info[3], info[4], info[1]);
 					app.authorizedUsers.add(g);
+				} else if (info[0].equals("HG")) {
+					//RegisteredUser m = new Multi(name, surname, info[3], info[4], info[1]); TODO mirar el nombre del multrol
+					//app.authorizedUsers.add(m);
 				}
 			}
 			

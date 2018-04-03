@@ -16,7 +16,7 @@ public class House {
 	private RegisteredUser host;
 
 
-	public House(Integer zipCode, String city, HashMap<String, String> chs, Host host) {
+	public House(Integer zipCode, String city, Host host) {
 		this.zipCode = zipCode;
 		this.city = city;
 		this.chs = new HashMap<String, String>();
