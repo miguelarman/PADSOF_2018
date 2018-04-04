@@ -374,6 +374,8 @@ public class App implements Serializable {
 	public void banUser(RegisteredUser user) {
 		this.authorizedUsers.remove(user);
 		this.bannedUsers.add(user);
+		
+		// TODO hacer logout aqui o donde se llame a esta funcion
 	}
 	
 	public void unbanUser(RegisteredUser user) {
