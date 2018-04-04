@@ -373,6 +373,18 @@ public class App implements Serializable {
 			is = new ObjectInputStream(new FileInputStream(App.filename));
 			app = (App) is.readObject();
 			is.close();
+			
+			LocalDate currentDate = LocalDate.now();
+
+			// Deleting expired offers
+			app.deleteExpiredOffers(currentDate);
+			
+			// Deleting expired Reservations
+			app.deleteExpiredReservations(currentDate);
+			
+			// Deleting expired offers pending changes
+			app.deleteExpiredPendingOffers(currentDate);
+			
 			return app;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -385,16 +397,7 @@ public class App implements Serializable {
 			e.printStackTrace();
 		}
 		
-		LocalDate currentDate = LocalDate.now();
-
-		// Deleting expired offers
-		app.deleteExpiredOffers(currentDate);
 		
-		// Deleting expired Reservations
-		app.deleteExpiredReservations(currentDate);
-		
-		// Deleting expired offers pending changes
-		app.deleteExpiredPendingOffers(currentDate);
 		
 		return app;
 	}

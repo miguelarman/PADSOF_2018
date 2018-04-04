@@ -1,5 +1,6 @@
 package application.offer;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import application.app.App;
@@ -8,7 +9,7 @@ import application.users.Guest;
 import exceptions.*;
 
 
-public class Reservation {
+public class Reservation implements Serializable{
 	
 	private LocalDate bookingDate;
 	private Guest client;
