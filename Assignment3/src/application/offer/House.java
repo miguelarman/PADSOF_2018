@@ -23,7 +23,7 @@ public class House {
 		this.host = host;
 	}
 	
-	public House(Integer zipCode, String city, HashMap<String, String> chs, MultiRoleUser host) {
+	public House(Integer zipCode, String city, MultiRoleUser host) {
 		this.zipCode = zipCode;
 		this.city = city;
 		this.chs = new HashMap<String, String>();
@@ -64,5 +64,6 @@ public class House {
 		String string = "";
 		string += "ZIP Code: " + zipCode + "\n";
 		string += "City: " + city + "\n";
+		string += "Characteristics: " + chara;
 	}
 }
