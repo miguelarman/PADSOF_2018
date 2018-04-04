@@ -17,6 +17,6 @@ public class IncorrectPasswordException extends Exception {
 	
 	@Override
 	public String toString() {
-		return "The password " + this.password + " is not correct for the user " + this.user.getName();
+		return "The password " + this.password + " is not correct for the user " + this.user.getNIF();
 	}
 }

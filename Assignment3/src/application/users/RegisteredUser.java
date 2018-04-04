@@ -140,7 +140,9 @@ public abstract class RegisteredUser implements Serializable{
 	 * Method that returns all the data of a RegisteredUser in a String with printable format
 	 */
 	public String toString() {
-		return "RegisteredUser [name=" + name + ", surname=" + surname + ", passwd=" + passwd + ", creditCard="
-				+ creditCard + ", NIF=" + NIF + "]";
+		String string = "";
+		string = "Name: " + name + "\n" + "Surname: " + surname + "\n" + "Password: " + passwd + "\n"+  "CreditCard: "
+				+ creditCard + "\n" + "NIF: " + NIF + "\n";
+		return string;
 	}
 }

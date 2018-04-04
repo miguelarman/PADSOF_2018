@@ -16,7 +16,7 @@ import exceptions.*;
  *
  */
 
-public class App implements Serializable, Cloneable {
+public class App implements Serializable {
 	
 	/**
 	 * ID needed for the class to be Serializable
@@ -248,14 +248,14 @@ public class App implements Serializable, Cloneable {
 	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException {
 		
 		for (RegisteredUser user : this.bannedUsers) { //Checks if the user trying to log in is banned
-			if (user.getName() == id) {
+			if (user.getNIF().equals(id)) {
 				throw new UserIsBannedException(user);
 			}
 		}
 		
 		for (RegisteredUser user : this.authorizedUsers) { 
-			if (user.getName() == id) { //Checks if that NIF is stored as a authorized user NIF
-				if (user.getPasswd() == passwd) { //Checks if the user's password matches with the one stored in the system
+			if (user.getNIF().equals(id)) { //Checks if that NIF is stored as a authorized user NIF
+				if (user.getPasswd().equals(passwd)) { //Checks if the user's password matches with the one stored in the system
 					App.loggedUser = user; //Sets the user as logged
 					return;
 				} else {
@@ -485,8 +485,30 @@ public class App implements Serializable, Cloneable {
 
 	@Override
 	public String toString() {
-		return "App[offers=" + offers + ", bannedUsers=" + bannedUsers + ", authorizedUsers=" + authorizedUsers
-				+ "]";
+		String string = "";
+		int i = 1;
+		string += "Offers:\n";
+		for(Offer o: offers) {
+			string += "\n(" + i + ")" + "\n";
+			string += o;
+			i++;
+		}
+		i = 1;
+		string += "\nBannedUsers:\n";
+		for(RegisteredUser r: bannedUsers) {
+			string += "\n(" + i + ")" + "\n";
+			string += r;
+			i++;
+		}
+		i = 1;
+		string += "\nAuthorizedUsers:\n";
+		for(RegisteredUser a: authorizedUsers) {
+			string += "\n(" + i + ")" + "\n";
+			string += a;
+			i++;
+		}
+		string+= "\nLoggedUser:\n" + App.getLoggedUser() + "\n";
+		return string;
 	}
 	
 	// TODO metodo cancelReservation

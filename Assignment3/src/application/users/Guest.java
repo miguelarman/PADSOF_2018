@@ -43,10 +43,4 @@ public class Guest extends RegisteredUser implements GuestI{
 		return this.reservedOffers;
 	}
 	
-	@Override
-	public String toString() {
-		// TODO
-		
-		return null;
-	}
 }

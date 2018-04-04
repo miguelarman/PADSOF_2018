@@ -17,18 +17,46 @@ public class Demo {
 		System.out.println(a);
 		try {
 			a.login("12345678X", "jejexd"); //Trying to login with an incorrect id
-			a.login("51999111", "asdfg"); //Trying to login with an incorrect password
-			a.login("51999111X", "swordFish"); //Login with an authorized user (host)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
 		} catch (UserIsBannedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (IncorrectPasswordException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (UnexistentUserException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
+		
+		try {
+			a.login("51999111X", "asdfg");
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} //Trying to login with an incorrect password
+		
+		try {
+			a.login("51999111X", "swordFish");
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} //Login with an authorized user (host)
+		
 		System.out.println(a);
 
 	}
