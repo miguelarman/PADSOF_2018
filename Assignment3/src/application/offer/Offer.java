@@ -7,9 +7,9 @@ import application.app.App;
 import application.opinion.*;
 import application.users.RegisteredUser;
 
-import es.uam.eps.padsof.telecard.*;
+import exceptions.NoUserLoggedException;
 
-import exceptions.PaymentException;
+import es.uam.eps.padsof.telecard.*;
 
 
 public abstract class Offer {
@@ -69,7 +69,7 @@ public abstract class Offer {
 	}
 	
 	
-	public void payOffer() throws PaymentException {
+	public void payOffer() throws NoUserLoggedException {
 		Double amount = this.getAmount();
 		
 		// TODO rellenar el asunto
@@ -77,7 +77,7 @@ public abstract class Offer {
 		
 		RegisteredUser user = App.getLoggedUser();
 		if (user == null) {
-			throw new PaymentException("Could not get logged user from System");
+			throw new NoUserLoggedException();
 		}
 		
 		String ccard = user.getCreditCard();

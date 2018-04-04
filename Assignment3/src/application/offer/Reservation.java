@@ -47,20 +47,17 @@ public class Reservation {
 	}
 	
 	
-	public void payReservation() throws BookingException {
+	public void payReservation() throws NotTheReserverException {
 
 		// comprobar que el usuario que intenta pagar la reserva es el que esta logueado y es el que la ha reservado
 		
 		if (!this.client.equals(App.getLoggedUser())) {
-			throw new BookingException("In order to pay a reservation you must be the one that has booked it");
+			throw new NotTheReserverException(this, App.getLoggedUser());
 		} else {
 			try {
 				this.bookedOffer.payOffer();
-			} catch (PaymentException e) {
+			} catch (NoUserLoggedException e) {
 				// TODO Auto-generated catch block
-				
-				// TODO aqui debemos analizar la excepcion, en vez de imprimirla
-				
 				e.printStackTrace();
 			}
 		}

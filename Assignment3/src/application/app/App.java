@@ -245,11 +245,11 @@ public class App implements Serializable {
 	 * @param passwd - Password of the user trying to log in
 	 * @throws LoginException - When 
 	 */
-	public void login(String id, String passwd) throws LoginException {
+	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException {
 		
 		for (RegisteredUser user : this.bannedUsers) { //Checks if the user trying to log in is banned
 			if (user.getName() == id) {
-				throw new LoginException("The user (" + id + ") is banned");
+				throw new UserIsBannedException(user);
 			}
 		}
 		
@@ -259,12 +259,12 @@ public class App implements Serializable {
 					App.loggedUser = user; //Sets the user as logged
 					return;
 				} else {
-					throw new LoginException("Incorrect password");
+					throw new IncorrectPasswordException(user, passwd);
 				}
 			}
 		}
 		
-		throw new LoginException("User does not seem to exist");
+		throw new UnexistentUserException(id);
 	}
 	
 	/**
@@ -293,14 +293,14 @@ public class App implements Serializable {
 	 * @return the system ready to function
 	 */
 	public static App openApp() {
-		App myApp= null;
+		App myApp = null;
 		File data = new File(App.filename);
 
 		if (data.exists()) {
-			myApp= App.loadData(); 
+			myApp = App.loadData();
 			return myApp;
 		} else {			
-			myApp= App.initializeApp();
+			myApp = App.initializeApp();
 			return myApp;
 		}
 	}
@@ -312,7 +312,7 @@ public class App implements Serializable {
 	 */
 	private static App initializeApp() {
 		
-		App app= new App();
+		App app = new App();
 		int i;
 		
 		try {
