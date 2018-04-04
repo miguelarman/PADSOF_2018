@@ -1,5 +1,6 @@
 package application.offer;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -12,7 +13,11 @@ import exceptions.NoUserLoggedException;
 import es.uam.eps.padsof.telecard.*;
 
 
-public abstract class Offer {
+public abstract class Offer implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8222183165622361142L;
 	private LocalDate startingDate;
 	private Double price;
 	private Double deposit;

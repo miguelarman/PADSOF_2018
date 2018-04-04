@@ -4,6 +4,10 @@ import java.time.LocalDate;
 
 public class HolidayOffer extends Offer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4991181617749951314L;
 	private LocalDate finishDate;
 
 	public HolidayOffer(LocalDate startingLocalDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishLocalDate) {

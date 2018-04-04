@@ -11,6 +11,10 @@ import exceptions.*;
 
 public class Reservation implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 738403020803075461L;
 	private LocalDate bookingDate;
 	private Guest client;
 	private Offer bookedOffer;

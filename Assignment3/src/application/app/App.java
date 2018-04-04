@@ -388,12 +388,15 @@ public class App implements Serializable {
 			return app;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Could not find the file to read the data in loadData()");
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Encountered an IOException when loading data");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Encountered an ClassNotFoundException when loading data");
 			e.printStackTrace();
 		}
 		

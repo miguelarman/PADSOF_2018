@@ -2,13 +2,18 @@
 
 package application.offer;
 
+import java.io.Serializable;
 import java.util.*;
 
 import application.users.*;
 import exceptions.DuplicateCharacteristicException;
 
-public class House {
+public class House implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3389804622762131198L;
 	private Integer zipCode;
 	private String city;
 	private HashMap<String, String> chs;

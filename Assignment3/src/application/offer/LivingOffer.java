@@ -5,6 +5,10 @@ import java.time.LocalDate;
 
 public class LivingOffer extends Offer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7159402346910731073L;
 	private int numberOfMonths;
 
 	public LivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) {
