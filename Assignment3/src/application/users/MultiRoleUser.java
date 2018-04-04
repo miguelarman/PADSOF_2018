@@ -8,6 +8,10 @@ import exceptions.HouseAlreadyCreatedException;
 
 public class MultiRoleUser extends RegisteredUser implements GuestI, HostI {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5855113958154503955L;
 	// Internal private users used to reuse as much code as possible
 	private Guest guestRole;
 	private Host hostRole;

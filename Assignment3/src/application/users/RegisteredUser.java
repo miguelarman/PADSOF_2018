@@ -1,5 +1,6 @@
 package application.users;
 
+import java.io.Serializable;
 import java.util.List;
 
 import application.offer.House;
@@ -13,8 +14,14 @@ import application.offer.Reservation;
  * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) and Alberto Gonzalez (alberto.gonzalezk@gmail.com)
  *
  */
-public abstract class RegisteredUser {
+public abstract class RegisteredUser implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9222090974779634707L;
+
+
 	/**
 	 * This enumeration is used to differenciate between al the types of users,
 	 * without having to check the class of a Java Object

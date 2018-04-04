@@ -8,8 +8,13 @@ import exceptions.*;
 import application.offer.House;
 
 
-public class Host extends RegisteredUser implements HostI {
+public class Host extends RegisteredUser implements HostI{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7067070176031856975L;
+
 	public Host(String name, String surname, String passwd, String creditCard, String NIF) {
 		super(name, surname, passwd, creditCard, NIF);
 		houses = new ArrayList<House>();
