@@ -217,11 +217,11 @@ public class App implements Serializable {
 	
 	// Appdata functions
 	
-	public void login(String id, String passwd) throws LoginException {
+	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException {
 		
 		for (RegisteredUser user : this.bannedUsers) {
 			if (user.getName() == id) {
-				throw new LoginException("The user (" + id + ") is banned");
+				throw new UserIsBannedException(user);
 			}
 		}
 		
@@ -231,12 +231,12 @@ public class App implements Serializable {
 					App.loggedUser = user;
 					return;
 				} else {
-					throw new LoginException("Incorrect password");
+					throw new IncorrectPasswordException(user, passwd);
 				}
 			}
 		}
 		
-		throw new LoginException("User does not seem to exist");
+		throw new UnexistentUserException(id);
 	}
 	
 	public void logout() {
@@ -256,14 +256,14 @@ public class App implements Serializable {
 	
 	
 	public static App openApp() {
-		App myApp= null;
+		App myApp = null;
 		File data = new File(App.filename);
 
 		if (data.exists()) {
-			myApp= App.loadData();
+			myApp = App.loadData();
 			return myApp;
 		} else {			
-			myApp= App.initializeApp();
+			myApp = App.initializeApp();
 			return myApp;
 		}
 	}
@@ -271,7 +271,7 @@ public class App implements Serializable {
 	
 	private static App initializeApp() {
 		
-		App app= new App();
+		App app = new App();
 		int i;
 		
 		try {

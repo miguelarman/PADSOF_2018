@@ -5,8 +5,7 @@ package application.offer;
 import java.util.*;
 
 import application.users.*;
-
-import exceptions.HouseException;
+import exceptions.DuplicateCharacteristicException;
 
 public class House {
 	
@@ -31,10 +30,10 @@ public class House {
 	}
 	
 	//metodo para añadir caracteristicas al hashmap
-	public void addCharacteristic(String key, String value) throws HouseException {
+	public void addCharacteristic(String key, String value) throws DuplicateCharacteristicException {
 		if(this.chs.containsKey(key)) {
 			if(value.equals(this.chs.get(key))) {
-				throw new HouseException("Already contains that characteristic");
+				throw new DuplicateCharacteristicException(this, key);
 			}
 		}
 		else {

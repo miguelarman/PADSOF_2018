@@ -2,9 +2,9 @@ package application.users;
 
 import java.util.List;
 
-import application.offer.House;
-import application.offer.Reservation;
-import exceptions.HostException;
+import application.offer.*;
+
+import exceptions.HouseAlreadyCreatedException;
 
 public class MultiRoleUser extends RegisteredUser implements GuestI, HostI {
 	
@@ -24,7 +24,7 @@ public class MultiRoleUser extends RegisteredUser implements GuestI, HostI {
 	}
 
 	@Override
-	public void addHouse(Integer zipCode, String city) throws HostException {
+	public void addHouse(Integer zipCode, String city) throws HouseAlreadyCreatedException {
 		this.hostRole.addHouse(zipCode, city);
 	}
 
