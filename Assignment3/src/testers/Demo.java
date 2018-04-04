@@ -9,12 +9,22 @@ public class Demo {
 
 	public static void main(String[] args) {
 		App a = App.openApp();
+		
 		//Checking if the system is opened correctly the first time
-		System.out.println(a); 
+		System.out.println("====================");
+		System.out.println(a);
+		System.out.println("====================");
+		
 		a.logout();
+		
 		//Checking if the system is opened correctly when it has already created
 		a = App.openApp();
+		
+		System.out.println("====================");
 		System.out.println(a);
+		System.out.println("====================");
+		
+		
 		try {
 			a.login("12345678X", "jejexd"); //Trying to login with an incorrect id
 			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
@@ -57,7 +67,8 @@ public class Demo {
 			System.out.println(e);
 		} //Login with an authorized user (host)
 		
+		System.out.println("====================");
 		System.out.println(a);
-
+		System.out.println("====================");
 	}
 }

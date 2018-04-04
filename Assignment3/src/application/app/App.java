@@ -5,6 +5,7 @@ import java.util.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import application.dates.ModifiableDate;
 import application.offer.*;
 import application.users.*;
 
@@ -388,17 +389,14 @@ public class App implements Serializable {
 			e.printStackTrace();
 		}
 		
-		
-		LocalDate currentDate = LocalDate.now();
-
 		// Deleting expired offers
-		app.deleteExpiredOffers(currentDate);
+		app.deleteExpiredOffers();
 		
 		// Deleting expired Reservations
-		app.deleteExpiredReservations(currentDate);
+		app.deleteExpiredReservations();
 		
 		// Deleting expired offers pending changes
-		app.deleteExpiredPendingOffers(currentDate);
+		app.deleteExpiredPendingOffers();
 		
 		return app;
 	}
@@ -407,13 +405,11 @@ public class App implements Serializable {
 	 * This method removes the offers in the System whose starting date has arrived
 	 * without anyone paying for it. It is called every time the system is loaded
 	 * from the binary files
-	 * 
-	 * @param currentDate The current date, which will be used to sort which offers are
-	 * going to be removed from the system
 	 */
-	private void deleteExpiredOffers(LocalDate currentDate) {
+	private void deleteExpiredOffers() {
 		for (Offer o : this.offers) {
 			LocalDate startingDate = o.getDate();
+			LocalDate currentDate = App.getCurrentDate();
 			
 			if (startingDate.isBefore(currentDate)) { // The offer has expired
 				if (o.getStatus() != OfferStatus.PAID) {
@@ -427,15 +423,13 @@ public class App implements Serializable {
 	 * This method removes the reservations in the System whose starting date has arrived
 	 * without anyone paying for it. It is called every time the system is loaded
 	 * from the binary files
-	 * 
-	 * @param currentDate The current date, which will be used to sort which reservations
-	 * are going to be removed from the system
 	 */
-	private void deleteExpiredReservations(LocalDate currentDate) {
+	private void deleteExpiredReservations() {
 		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getRol() == RegisteredUser.Rol.GUEST) {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
 					LocalDate bookingDate = r.getBookingDate();
+					LocalDate currentDate = App.getCurrentDate();
 									    
 				    long daysBetween = ChronoUnit.DAYS.between(bookingDate, currentDate);
 					
@@ -450,16 +444,13 @@ public class App implements Serializable {
 	/**
 	 * This method removes the offers in the System that have not been modified in
 	 * fice days after an admin suggested changes
-	 * 
-	 * @param currentDate The current date, which will be used to sort which offers are
-	 * going to be removed from the system
 	 */
-	private void deleteExpiredPendingOffers(LocalDate currentDate) {
+	private void deleteExpiredPendingOffers() {
 		List<Offer> offers = this.getPendingOffers();
 		
 		for (Offer o : offers) {
-			
 			LocalDate changesDate = this.changesRequests.get(o);
+			LocalDate currentDate = App.getCurrentDate();
 		    
 		    long daysBetween = ChronoUnit.DAYS.between(changesDate, currentDate);
 			
@@ -473,12 +464,17 @@ public class App implements Serializable {
 		}
 	}
 
-
+	/**
+	 * Method that returns all the offers in the system that are pending for
+	 * approval
+	 * 
+	 * @return The list of offers that are pending
+	 */
 	private List<Offer> getPendingOffers() {
 		List<Offer> offers = new ArrayList<Offer>();
 		
 		for (Offer o : this.offers) {
-			if (o.getStatus() == OfferStatus.PENDING) {
+			if (o.getStatus() == OfferStatus.PENDING_FOR_APPROVAL) {
 				offers.add(o);
 			}
 		}
@@ -486,65 +482,140 @@ public class App implements Serializable {
 		return offers;
 	}
 
-
+	/**
+	 * Method that add an offer to the App
+	 * 
+	 * @param offer Offer to be added
+	 */
 	public void addOffer(Offer offer) {
 		this.offers.add(offer);
 	}
 	
+	/**
+	 * Method that removes an offer from the App
+	 * 
+	 * @param offer Offer to be removed
+	 */
 	public void removeOffer(Offer offer) {
 		this.offers.remove(offer);
 	}
 	
+	/**
+	 * Method that bans a user from the App
+	 * 
+	 * @param user User to be banned
+	 */
 	public void banUser(RegisteredUser user) {
 		this.authorizedUsers.remove(user);
 		this.bannedUsers.add(user);
 		
 		// TODO hacer logout aqui o donde se llame a esta funcion
+		// TODO comprobar si es admin el que llama a esta funcion
 	}
 	
+	/**
+	 * Method that unbans a user from the app
+	 * 
+	 * @param user User to be unbanned
+	 */
 	public void unbanUser(RegisteredUser user) {
 		this.authorizedUsers.add(user);
 		this.bannedUsers.remove(user);
+
+		// TODO comprobar si es admin el que llama a esta funcion
 	}
 	
+	/**
+	 * Method used by Admins to suggest changes in an Offer in order to approve it
+	 * 
+	 * @param o Offer that the admin has reviewed
+	 * @param description Description of the suggestion of changes
+	 */
 	public void suggestChanges(Offer o, String description) {
-		// TODO
+		if (o.getStatus() != OfferStatus.PENDING_FOR_APPROVAL) { // Can only suggest changes to an offer pending for
+																 // approval
+			return;
+		}
+		
+		o.modifyOffer(OfferStatus.PENDING_FOR_CHANGES);
+		
+		this.changesRequests.put(o, App.getCurrentDate());
+	}
+
+
+	/**
+	 * Method used by an Admin to mark an offer as approved
+	 * 
+	 * @param o Offer to be approved
+	 */
+	public void approveOffer(Offer o) throws OfferIsPendingForChangesExceptions{
+		
+		if (o.getStatus() == OfferStatus.PENDING_FOR_CHANGES) {
+			throw new OfferIsPendingForChangesExceptions(o);
+		}
+		o.modifyOffer(OfferStatus.APPROVED); // Mark the offer as approved
+		
+		this.changesRequests.remove(o); // Remove the changes suggestion from the HashMap
 	}
 	
-	public void modifyOffer(Offer o) {
-		//TODO especifico de cada atributo
+	/**
+	 * Method used by a Guest in order to request approval of an Offer after changes
+	 * have been made
+	 * 
+	 * @param o Offer to be reviewed
+	 */
+	public void requestRevision(Offer o) {
+		if (o.getStatus() != OfferStatus.PENDING_FOR_CHANGES) { // Cannot request this if the offer has been approved
+			return;
+		}
+		
+		o.modifyOffer(OfferStatus.PENDING_FOR_APPROVAL); // Mark the offer as pending for approval
+		
+		this.changesRequests.remove(o);
 	}
 	
-	public void approveOffer(Offer o) {
-		// TODO
+	/**
+	 * Method that returns the current date of the app. Used to simulate dates in
+	 * the testers. When not testing, it can be changed to the now method of the
+	 * class LocalDate
+	 * 
+	 * @return Current date of the app
+	 */
+	private static LocalDate getCurrentDate() {
+		return ModifiableDate.getModifiableDate();
 	}
 
 
 	@Override
+	/**
+	 * Method that returns all the information stored in an object of the class App in a printable and readable format
+	 * 
+	 * @return Information stored in the app in a printable format
+	 */
 	public String toString() {
 		String string = "";
 		int i = 1;
-		string += "Offers:\n";
+		string += "Offers:";
 		for(Offer o: offers) {
-			string += "\n(" + i + ")" + "\n";
+			string += "\n\n(" + i + ")" + "\n";
 			string += o;
 			i++;
 		}
 		i = 1;
-		string += "\nBannedUsers:\n";
+		string += "\nBannedUsers:";
 		for(RegisteredUser r: bannedUsers) {
-			string += "\n(" + i + ")" + "\n";
+			string += "\n\n(" + i + ")" + "\n";
 			string += r;
 			i++;
 		}
 		i = 1;
-		string += "\nAuthorizedUsers:\n";
+		string += "\nAuthorizedUsers:";
 		for(RegisteredUser a: authorizedUsers) {
-			string += "\n(" + i + ")" + "\n";
+			string += "\n\n(" + i + ")" + "\n";
 			string += a;
 			i++;
 		}
-		string+= "\nLoggedUser:\n" + App.getLoggedUser() + "\n";
+		string+= "\n\nLoggedUser:\n" + App.getLoggedUser();
 		return string;
 	}
 	

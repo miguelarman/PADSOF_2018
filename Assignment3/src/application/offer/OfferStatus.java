@@ -1,5 +1,5 @@
 package application.offer;
 
 public enum OfferStatus {
-	PENDING, APPROVED, BOOKED, PAID
+	PENDING_FOR_APPROVAL, PENDING_FOR_CHANGES, APPROVED, BOOKED, PAID
 }

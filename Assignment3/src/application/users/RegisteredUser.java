@@ -142,7 +142,7 @@ public abstract class RegisteredUser implements Serializable{
 	public String toString() {
 		String string = "";
 		string = "Name: " + name + "\n" + "Surname: " + surname + "\n" + "Password: " + passwd + "\n"+  "CreditCard: "
-				+ creditCard + "\n" + "NIF: " + NIF + "\n";
+				+ creditCard + "\n" + "NIF: " + NIF;
 		return string;
 	}
 }
