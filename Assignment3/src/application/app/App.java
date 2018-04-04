@@ -358,7 +358,12 @@ public class App implements Serializable {
 		return app;
 	}
 
-
+	/**
+	 * Method that loads the data stored in binary files locally. It uses the
+	 * functionality of the Serializable Interface
+	 * 
+	 * @return An Object of the class System with all the data loaded
+	 */
 	private static App loadData() {
 		
 		App app = null;
@@ -380,27 +385,31 @@ public class App implements Serializable {
 			e.printStackTrace();
 		}
 		
-		
+		LocalDate currentDate = LocalDate.now();
 
 		// Deleting expired offers
-		app.deleteExpiredOffers();
+		app.deleteExpiredOffers(currentDate);
 		
 		// Deleting expired Reservations
-		app.deleteExpiredReservations();
+		app.deleteExpiredReservations(currentDate);
 		
 		// Deleting expired offers pending changes
-		app.deleteExpiredPendingOffers();
+		app.deleteExpiredPendingOffers(currentDate);
 		
 		return app;
 	}
 	
-	
-	
-	
-	private void deleteExpiredOffers() {
+	/**
+	 * This method removes the offers in the System whose starting date has arrived
+	 * without anyone paying for it. It is called every time the system is loaded
+	 * from the binary files
+	 * 
+	 * @param currentDate The current date, which will be used to sort which offers are
+	 * going to be removed from the system
+	 */
+	private void deleteExpiredOffers(LocalDate currentDate) {
 		for (Offer o : this.offers) {
 			LocalDate startingDate = o.getDate();
-			LocalDate currentDate = LocalDate.now();
 			
 			if (startingDate.isBefore(currentDate)) { // The offer has expired
 				if (o.getStatus() != OfferStatus.PAID) {
@@ -410,13 +419,19 @@ public class App implements Serializable {
 		}
 	}
 
-
-	private void deleteExpiredReservations() {
+	/**
+	 * This method removes the reservations in the System whose starting date has arrived
+	 * without anyone paying for it. It is called every time the system is loaded
+	 * from the binary files
+	 * 
+	 * @param currentDate The current date, which will be used to sort which reservations
+	 * are going to be removed from the system
+	 */
+	private void deleteExpiredReservations(LocalDate currentDate) {
 		for (RegisteredUser user : this.authorizedUsers) {
 			if (user.getRol() == RegisteredUser.Rol.GUEST) {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
 					LocalDate bookingDate = r.getBookingDate();
-					LocalDate currentDate = LocalDate.now();
 									    
 				    long daysBetween = ChronoUnit.DAYS.between(bookingDate, currentDate);
 					
@@ -428,14 +443,19 @@ public class App implements Serializable {
 		}
 	}
 
-
-	private void deleteExpiredPendingOffers() {
+	/**
+	 * This method removes the offers in the System that have not been modified in
+	 * fice days after an admin suggested changes
+	 * 
+	 * @param currentDate The current date, which will be used to sort which offers are
+	 * going to be removed from the system
+	 */
+	private void deleteExpiredPendingOffers(LocalDate currentDate) {
 		List<Offer> offers = this.getPendingOffers();
 		
 		for (Offer o : offers) {
 			
 			LocalDate changesDate = this.changesRequests.get(o);
-			LocalDate currentDate = LocalDate.now();
 		    
 		    long daysBetween = ChronoUnit.DAYS.between(changesDate, currentDate);
 			
@@ -481,6 +501,18 @@ public class App implements Serializable {
 	public void unbanUser(RegisteredUser user) {
 		this.authorizedUsers.add(user);
 		this.bannedUsers.remove(user);
+	}
+	
+	public void suggestChanges(Offer o, String description) {
+		// TODO
+	}
+	
+	public void modifyOffer(Offer o) {
+		//TODO especifico de cada atributo
+	}
+	
+	public void approveOffer(Offer o) {
+		// TODO
 	}
 
 
