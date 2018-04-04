@@ -12,11 +12,14 @@ import application.users.RegisteredUser.Rol;
 import exceptions.*;
 
 /**
+ * Class that stores all the data needed to get the app working. This includes
+ * user data, offers, ... As it is Serializable, it can be writen and read from
+ * binary files, in order to store data for later uses
  * 
- * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
  *
  */
-
 public class App implements Serializable {
 	
 	/**
@@ -55,7 +58,8 @@ public class App implements Serializable {
 	private HashMap<Offer, LocalDate> changesRequests;
 	
 	/**
-	 * Constructor of the class App
+	 * Constructor of the class App. Inicializes all the Lists and Maps inside the
+	 * App
 	 */
 	public App() {
 		offers = new ArrayList<Offer>();
