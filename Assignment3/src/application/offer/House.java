@@ -64,6 +64,8 @@ public class House {
 		String string = "";
 		string += "ZIP Code: " + zipCode + "\n";
 		string += "City: " + city + "\n";
-		string += "Characteristics: " + chara;
+		string += "Owner: " + host + "\n";
+		string += "Characteristics: " + chs + "\n";
+		return string;
 	}
 }
