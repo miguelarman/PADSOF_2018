@@ -10,16 +10,52 @@ import application.users.*;
 
 import exceptions.*;
 
+/**
+ * 
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ *
+ */
+
 public class App implements Serializable {
 	
+	/**
+	 * ID needed for the class to be Serializable
+	 */
 	private static final long serialVersionUID = 7941697892854198940L;
+	
+	/**
+	 * List of offers in the system
+	 */
 	private List<Offer> offers;
+	
+	/**
+	 * List of banned users in the system
+	 */
 	private List<RegisteredUser> bannedUsers;
+	
+	/**
+	 * List of users that can log into the system
+	 */
 	private List<RegisteredUser> authorizedUsers;
+	
+	/**
+	 * User that is currently logged in
+	 */
 	private static RegisteredUser loggedUser;
+	
+	/**
+	 * Name of the file where the information of the system is stored
+	 */
 	private static String filename = "data.obj";
+	
+	/**
+	 * HashMap that stores an offer and the date in which an admin requested a change
+	 */
 	private HashMap<Offer, LocalDate> changesRequests;
 	
+	/**
+	 * Constructor of the class App
+	 */
 	public App() {
 		offers = new ArrayList<Offer>();
 		bannedUsers = new ArrayList<RegisteredUser>();
@@ -31,24 +67,44 @@ public class App implements Serializable {
 		
 	// Getters
 
-
+	/**
+	 * Getter method for offers
+	 * @return offers, list of offers in the system
+	 */
 	public List<Offer> getOffers() {
 		return offers;
 	}
 
+	/**
+	 * Getter method for bannedUsers
+	 * @return bannedUsers, list of banned users in the system
+	 */
 	public List<RegisteredUser> getBannedUsers() {
 		return bannedUsers;
 	}
 
+	/**
+	 * Getter method for authorizedUsers
+	 * @return authorizedUsers, list of authorized users in the system
+	 */
 	public List<RegisteredUser> getAuthorizedUsers() {
 		return authorizedUsers;
 	}
 
+	/**
+	 * Getter method for loggedUser
+	 * @return loggedUser, user that is currently logged in
+	 */
 	public static RegisteredUser getLoggedUser() {
 		return loggedUser;
 	}
 
-
+	//Setters
+	
+	/**
+	 * Setter method for loggedUser
+	 * @param loggedUser, user that logs into the system
+	 */
 	public void setLoggedUser(RegisteredUser loggedUser) {
 		App.loggedUser = loggedUser;
 	}
@@ -58,6 +114,11 @@ public class App implements Serializable {
 	
 	// Searches
 	
+	/**
+	 * 
+	 * @param zip, zip code of the house in the offer
+	 * @return
+	 */
 	public List<Offer> searchZipCode(Integer zip) {
 		
 		List<Offer> searchResult = new ArrayList<Offer>();
