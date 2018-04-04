@@ -1,5 +1,6 @@
 package application.offer;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import application.app.App;
@@ -8,8 +9,12 @@ import application.users.Guest;
 import exceptions.*;
 
 
-public class Reservation {
+public class Reservation implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 738403020803075461L;
 	private LocalDate bookingDate;
 	private Guest client;
 	private Offer bookedOffer;

@@ -5,6 +5,10 @@ import java.util.*;
 
 public class Comment extends Opinion {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -704197778955576120L;
 	private String text;
 	private List<Opinion> replies;
 
