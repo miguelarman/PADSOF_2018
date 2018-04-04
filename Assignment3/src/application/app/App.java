@@ -241,10 +241,15 @@ public class App implements Serializable {
 	// App data functions
 	
 	/**
-	 * Method that with a given id (NIF) and a password checks if the user is an authorized user and lets that user go into the system
-	 * @param id - NIF of the user trying to log in
-	 * @param passwd - Password of the user trying to log in
-	 * @throws LoginException - When 
+	 * Method that with a given id (NIF) and a password checks if the user is an
+	 * authorized user and lets that user go into the system
+	 * 
+	 * @param id NIF of the user trying to log in
+	 * @param passwd Password of the user trying to log in
+	 * @throws UserIsBannedException When the user that is trying to log is been banned
+	 * @throws IncorrectPasswordException When the password with which the user
+	 * is trying to log is incorrect
+	 * @throws UnexistentUserException When the user with the specified id cannot be found on the system
 	 */
 	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException {
 		
@@ -547,6 +552,8 @@ public class App implements Serializable {
 	 * Method used by an Admin to mark an offer as approved
 	 * 
 	 * @param o Offer to be approved
+	 * @throws OfferIsPendingForChangesExceptions When the offer that is
+	 * trying to be approved is still pending for changes
 	 */
 	public void approveOffer(Offer o) throws OfferIsPendingForChangesExceptions{
 		
