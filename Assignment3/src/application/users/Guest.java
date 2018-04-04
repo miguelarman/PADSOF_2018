@@ -6,6 +6,11 @@ import application.offer.*;
 
 public class Guest extends RegisteredUser implements GuestI{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4989719272790707017L;
+
 	public Guest(String name, String surname, String passwd, String creditCard, String NIF) {
 		super(name, surname, passwd, creditCard, NIF);
 		reservedOffers = new ArrayList<Reservation>();
