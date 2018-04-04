@@ -23,7 +23,7 @@ public abstract class RegisteredUser implements Serializable{
 
 
 	/**
-	 * This enumeration is used to differenciate between al the types of users,
+	 * This enumeration is used to distinguish between all the types of users,
 	 * without having to check the class of a Java Object
 	 * 
 	 * @author Usuario

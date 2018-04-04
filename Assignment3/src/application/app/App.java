@@ -16,7 +16,7 @@ import exceptions.*;
  *
  */
 
-public class App implements Serializable {
+public class App implements Serializable, Cloneable {
 	
 	/**
 	 * ID needed for the class to be Serializable
@@ -368,7 +368,6 @@ public class App implements Serializable {
 			is = new ObjectInputStream(new FileInputStream(App.filename));
 			app = (App) is.readObject();
 			is.close();
-			return app;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
