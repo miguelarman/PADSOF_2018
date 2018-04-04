@@ -69,7 +69,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for offers
-	 * @return offers, list of offers in the system
+	 * @return list of offers in the system
 	 */
 	public List<Offer> getOffers() {
 		return offers;
@@ -77,7 +77,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for bannedUsers
-	 * @return bannedUsers, list of banned users in the system
+	 * @return list of banned users in the system
 	 */
 	public List<RegisteredUser> getBannedUsers() {
 		return bannedUsers;
@@ -85,7 +85,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for authorizedUsers
-	 * @return authorizedUsers, list of authorized users in the system
+	 * @return list of authorized users in the system
 	 */
 	public List<RegisteredUser> getAuthorizedUsers() {
 		return authorizedUsers;
@@ -93,7 +93,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for loggedUser
-	 * @return loggedUser, user that is currently logged in
+	 * @return user that is currently logged in
 	 */
 	public static RegisteredUser getLoggedUser() {
 		return loggedUser;
@@ -103,31 +103,28 @@ public class App implements Serializable {
 	
 	/**
 	 * Setter method for loggedUser
-	 * @param loggedUser, user that logs into the system
+	 * @param loggedUser - User that logs into the system
 	 */
 	public void setLoggedUser(RegisteredUser loggedUser) {
 		App.loggedUser = loggedUser;
 	}
 	
-	
-	
-	
 	// Searches
 	
 	/**
-	 * 
-	 * @param zip, zip code of the house in the offer
-	 * @return
+	 * Method that searches all the offers that have a house with the given ZIP code
+	 * @param zip - ZIP code of the house in the offer
+	 * @return list of offers whose house has the given ZIP code
 	 */
 	public List<Offer> searchZipCode(Integer zip) {
 		
 		List<Offer> searchResult = new ArrayList<Offer>();
 		
-		for (Offer o : this.offers) {
+		for (Offer o : this.offers) { //Go over all the houses in the system
 			House house = o.getHouse();
 			
-			if (house.getZipCode() == zip) {
-				if (o.getStatus() == OfferStatus.APPROVED) {
+			if (house.getZipCode() == zip) { //Check if the ZIP code matches
+				if (o.getStatus() == OfferStatus.APPROVED) { //Check if that offer is approved
 					searchResult.add(o);
 				}
 			}
@@ -137,13 +134,25 @@ public class App implements Serializable {
 		return searchResult;	
 	}
 	
+	/**
+	 * Method that searches all the offers whose starting date is between the two given dates
+	 * @param date1 - Starting or ending date of the interval
+	 * @param date2 - Starting or ending date of the interval
+	 * @return list of offers whose starting date is between the two given dates
+	 */
 	public List<Offer> searchStartingDate(LocalDate date1, LocalDate date2) {
 		
 		List<Offer> searchResult = new ArrayList<Offer>();
+		if(date1.isAfter(date2)) { //If the date1 is after the date2 we invert them
+			LocalDate dateAux = date2;
+			date2 = date1;
+			date1 = dateAux;
+			dateAux = null;
+		}
 		
-		for (Offer o : this.offers) {
-			if (o.getDate().isAfter(date1) && o.getDate().isBefore(date2)) {
-				if (o.getStatus() == OfferStatus.APPROVED) {
+		for (Offer o : this.offers) { //Go over all the offers
+			if (o.getDate().isAfter(date1) && o.getDate().isBefore(date2)) { //Check if its starting date is in the interval
+				if (o.getStatus() == OfferStatus.APPROVED) { //Check if the offer is approved
 					searchResult.add(o);
 				}
 			}
@@ -152,13 +161,18 @@ public class App implements Serializable {
 		return searchResult;
 	}
 	
+	/**
+	 * Method that searches all the offers whose type is the given one
+	 * @param type - Type of offer that we want to search
+	 * @return list of offers whose type is the given one
+	 */
 	public List<Offer> searchOfferType(OfferType type) {
 
 		List<Offer> searchResult = new ArrayList<Offer>();
 		
-		for (Offer o : this.offers) {
-			if (o.getType() == type) {
-				if (o.getStatus() == OfferStatus.APPROVED) {
+		for (Offer o : this.offers) { //Go over all the offers
+			if (o.getType() == type) { //Check if the type of offer matches
+				if (o.getStatus() == OfferStatus.APPROVED) { //Check if the offer is approved
 					searchResult.add(o);
 				}
 			}
@@ -167,44 +181,52 @@ public class App implements Serializable {
 		return searchResult;
 	}
 	
-	
+	/**
+	 * Method that searches all the offers that have been booked
+	 * @return list of booked offers
+	 */
 	public List<Offer> searchBooked() {
 
 		List<Offer> searchResult = new ArrayList<Offer>();
 		
-		for (Offer o : this.offers) {
-			if (o.getStatus() == OfferStatus.BOOKED) {
-				if (o.getStatus() == OfferStatus.APPROVED) {
-					searchResult.add(o);
-				}
+		for (Offer o : this.offers) { //Go over all the offers
+			if (o.getStatus() == OfferStatus.BOOKED) { //Check if the offer is booked
+				searchResult.add(o);
 			}
 		}
 		
 		return searchResult;
 	}
 	
+	/**
+	 * Method that searches all the offers that have been paid
+	 * @return list of paid offers
+	 */
 	public List<Offer> searchPaid() {
 
 		List<Offer> searchResult = new ArrayList<Offer>();
 		
-		for (Offer o : this.offers) {
-			if (o.getStatus() == OfferStatus.PAID) {
-				if (o.getStatus() == OfferStatus.APPROVED) {
-					searchResult.add(o);
-				}
+		for (Offer o : this.offers) { //Go over all the offers
+			if (o.getStatus() == OfferStatus.PAID) { //Check if the offer is paid
+				searchResult.add(o);
 			}
 		}
 		
 		return searchResult;
 	}
 	
+	/**
+	 * Method that searches all the offers with at least the given rating
+	 * @param minRating - Minimum rating of the offers
+	 * @return list of offers with at least the given rating
+	 */
 	public List<Offer> searchAvgRating(Float minRating) {
 
 		List<Offer> searchResult = new ArrayList<Offer>();
 		
-		for (Offer o : this.offers) {
-			if (o.getAvgRating() >= minRating) {
-				if (o.getStatus() == OfferStatus.APPROVED) {
+		for (Offer o : this.offers) { //Go over all the offers
+			if (o.getAvgRating() >= minRating) { //Check if the rating of the offer is greater or equal
+				if (o.getStatus() == OfferStatus.APPROVED) { //Check if the offer is approved
 					searchResult.add(o);
 				}
 			}
@@ -215,20 +237,26 @@ public class App implements Serializable {
 	
 	
 	
-	// Appdata functions
+	// App data functions
 	
+	/**
+	 * Method that with a given id (NIF) and a password checks if the user is an authorized user and lets that user go into the system
+	 * @param id - NIF of the user trying to log in
+	 * @param passwd - Password of the user trying to log in
+	 * @throws LoginException - When 
+	 */
 	public void login(String id, String passwd) throws LoginException {
 		
-		for (RegisteredUser user : this.bannedUsers) {
+		for (RegisteredUser user : this.bannedUsers) { //Checks if the user trying to log in is banned
 			if (user.getName() == id) {
 				throw new LoginException("The user (" + id + ") is banned");
 			}
 		}
 		
-		for (RegisteredUser user : this.authorizedUsers) {
-			if (user.getName() == id) {
-				if (user.getPasswd() == passwd) {
-					App.loggedUser = user;
+		for (RegisteredUser user : this.authorizedUsers) { 
+			if (user.getName() == id) { //Checks if that NIF is stored as a authorized user NIF
+				if (user.getPasswd() == passwd) { //Checks if the user's password matches with the one stored in the system
+					App.loggedUser = user; //Sets the user as logged
 					return;
 				} else {
 					throw new LoginException("Incorrect password");
@@ -239,28 +267,37 @@ public class App implements Serializable {
 		throw new LoginException("User does not seem to exist");
 	}
 	
+	/**
+	 * Method that logs out the user and closes the system, dumping the information into the file filename
+	 */
 	public void logout() {
 		
 		ObjectOutputStream oos;
+		
+		App.loggedUser = null; //Logs the user out
+		
 		try {
 			oos = new ObjectOutputStream( new FileOutputStream(App.filename));
-			oos.writeObject(this);
+			oos.writeObject(this); //Writes the system in the file
 			oos.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		App.loggedUser = null;
 	}
 	
-	
+	/**
+	 * Method that is called to start the system. If there it is the first time opening
+	 * the system it reads and loads a list of users into the system. Otherwise, it reads the 
+	 * system's information from the file filename
+	 * @return the system ready to function
+	 */
 	public static App openApp() {
 		App myApp= null;
 		File data = new File(App.filename);
 
 		if (data.exists()) {
-			myApp= App.loadData();
+			myApp= App.loadData(); 
 			return myApp;
 		} else {			
 			myApp= App.initializeApp();
@@ -268,39 +305,41 @@ public class App implements Serializable {
 		}
 	}
 	
-	
+	/**
+	 * Method that reads the user information from a file called "users.txt" and loads
+	 * its information into the authorized users list in the system
+	 * @return a new app with the information of the users from the file
+	 */
 	private static App initializeApp() {
 		
 		App app= new App();
 		int i;
 		
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(new File("users.txt")));
+			BufferedReader br = new BufferedReader(new FileReader(new File("users.txt")));//Open the file "users.txt" to read
 			
-			for(String x = br.readLine(); x != null; x = br.readLine()) {
-				StringTokenizer str = new StringTokenizer(x, ";");
-				String[] info = new String[str.countTokens()];
+			for(String x = br.readLine(); x != null; x = br.readLine()) { //While the file has not ended
+				StringTokenizer str = new StringTokenizer(x, ";"); //Token by the character ";"
+				String[] info = new String[str.countTokens()]; //Store the tokenized information in an array
 				
-				for(i = 0; i < info.length; i++) {
+				for(i = 0; i < info.length; i++) { //Get all the information
 					info[i] = str.nextToken();
 				}
-				StringTokenizer n = new StringTokenizer(info[2], ",");
+				StringTokenizer n = new StringTokenizer(info[2], ","); // Token the full name into name and surname
 				String surname = n.nextToken();
 				String name = n.nextToken();
-				if(info[0].equals("A")) {
+				if(info[0].equals("A")) { //If the user is an admin we create an admin in the system
 					RegisteredUser a = new Admin(name, surname, info[3], info[4], info[1]);
 					app.authorizedUsers.add(a);
-				} else if (info[0].equals("H")){
-					
+				} else if (info[0].equals("H")){ //If the user is a host we create a host in the system
 					RegisteredUser h = new Host(name, surname, info[3], info[4], info[1]);
 					app.authorizedUsers.add(h);
-					
-				} else if (info[0].equals("G")){
+				} else if (info[0].equals("G")){//If the user is a guest we create a guest in the system
 					RegisteredUser g = new Guest(name, surname, info[3], info[4], info[1]);
 					app.authorizedUsers.add(g);
-				} else if (info[0].equals("HG")) {
-					//RegisteredUser m = new Multi(name, surname, info[3], info[4], info[1]); TODO mirar el nombre del multrol
-					//app.authorizedUsers.add(m);
+				} else if (info[0].equals("HG")) { //If the user is a multirole we create a multiRoleUser in the system
+					RegisteredUser m = new MultiRoleUser(name, surname, info[3], info[4], info[1]); 
+					app.authorizedUsers.add(m);
 				}
 			}
 			
