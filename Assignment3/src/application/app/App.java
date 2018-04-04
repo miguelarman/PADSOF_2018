@@ -373,22 +373,7 @@ public class App implements Serializable {
 			is = new ObjectInputStream(new FileInputStream(App.filename));
 			app = (App) is.readObject();
 			is.close();
-<<<<<<< HEAD
-=======
-			
-			LocalDate currentDate = LocalDate.now();
 
-			// Deleting expired offers
-			app.deleteExpiredOffers(currentDate);
-			
-			// Deleting expired Reservations
-			app.deleteExpiredReservations(currentDate);
-			
-			// Deleting expired offers pending changes
-			app.deleteExpiredPendingOffers(currentDate);
-			
-			return app;
->>>>>>> 70a7b9e0ad4679f414d4e2efd9d97f7dc1415e3b
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Could not find the file to read the data in loadData()");
@@ -404,6 +389,16 @@ public class App implements Serializable {
 		}
 		
 		
+		LocalDate currentDate = LocalDate.now();
+
+		// Deleting expired offers
+		app.deleteExpiredOffers(currentDate);
+		
+		// Deleting expired Reservations
+		app.deleteExpiredReservations(currentDate);
+		
+		// Deleting expired offers pending changes
+		app.deleteExpiredPendingOffers(currentDate);
 		
 		return app;
 	}

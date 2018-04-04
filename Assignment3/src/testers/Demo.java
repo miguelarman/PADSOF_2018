@@ -29,7 +29,6 @@ public class Demo {
 			System.out.println(e);
 		}
 		
-<<<<<<< HEAD
 		try {
 			a.login("51999111X", "asdfg");
 			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
@@ -57,8 +56,6 @@ public class Demo {
 			// TODO Auto-generated catch block
 			System.out.println(e);
 		} //Login with an authorized user (host)
-=======
->>>>>>> 70a7b9e0ad4679f414d4e2efd9d97f7dc1415e3b
 		
 		System.out.println(a);
 
