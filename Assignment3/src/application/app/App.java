@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 import application.dates.ModifiableDate;
 import application.offer.*;
 import application.users.*;
-
+import application.users.RegisteredUser.Rol;
 import exceptions.*;
 
 /**
@@ -591,7 +591,38 @@ public class App implements Serializable {
 	private static LocalDate getCurrentDate() {
 		return ModifiableDate.getModifiableDate();
 	}
-
+	
+	/**
+	 * Method that adds a house to the list of houses of the logged user if they have a valid rol
+	 * @param zip - ZIP code of the house
+	 * @param city - City in which the the house is located
+	 * @throws InvalidRolException - When the logged user is neither a host nor a multiRoleUser
+	 */
+	public void addHouse(Integer zip, String city) throws InvalidRolException, NoUserLoggedException{
+		if(App.loggedUser == null) {
+			throw new NoUserLoggedException();
+		}
+		if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
+			Host user = (Host)App.loggedUser;
+			try {
+				user.addHouse(zip, city);
+			} catch (HouseAlreadyCreatedException e) {
+				e.printStackTrace();
+			}
+		}
+		else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
+			MultiRoleUser user = (MultiRoleUser)App.loggedUser;
+			try {
+				user.addHouse(zip, city);
+			} catch (HouseAlreadyCreatedException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		else {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
+		}
+	}
 
 	@Override
 	/**

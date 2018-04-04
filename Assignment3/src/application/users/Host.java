@@ -25,7 +25,6 @@ public class Host extends RegisteredUser implements HostI{
 	public void addHouse(Integer zipCode, String city) throws HouseAlreadyCreatedException {
 		House house = new House(zipCode, city, this);
 
-		
 		for(House h: houses) {
 			if(h.equals(house)) {
 				throw new HouseAlreadyCreatedException(house);

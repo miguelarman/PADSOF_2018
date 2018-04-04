@@ -1,6 +1,7 @@
 package application.users;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import application.offer.House;
@@ -72,6 +73,8 @@ public abstract class RegisteredUser implements Serializable{
 		this.passwd = passwd;
 		this.creditCard = creditCard;
 		this.NIF = NIF;
+		this.reservedOffers = new ArrayList<Reservation>();
+		this.houses = new ArrayList<House>();
 	}
 
 	
@@ -141,8 +144,29 @@ public abstract class RegisteredUser implements Serializable{
 	 */
 	public String toString() {
 		String string = "";
-		string = "Name: " + name + "\n" + "Surname: " + surname + "\n" + "Password: " + passwd + "\n"+  "CreditCard: "
-				+ creditCard + "\n" + "NIF: " + NIF;
+		string += "Name: " + name + "\n";
+		string += "Surname: " + surname + "\n";
+		string += "Password: " + passwd + "\n";
+		string += "CreditCard: " + creditCard + "\n";
+		string += "NIF: " + NIF + "\n";
+		if(this.getRol().equals(Rol.HOST) || this.getRol().equals(Rol.MULTIROL) ) {
+			string += "Houses: \n";
+			int i = 1;
+			for(House h: houses) {
+				string += "\n(" + i + ")\n";
+				string += h + "\n";
+				i++;
+			}
+		}
+		if(this.getRol().equals(Rol.GUEST) || this.getRol().equals(Rol.MULTIROL) ) {
+			string += "Booked offers: \n";
+			int i = 1;
+			for(Reservation r: reservedOffers) {
+				string += "\n(" + i + ")\n";
+				string += r + "\n";
+				i++;
+			}
+		}
 		return string;
 	}
 }

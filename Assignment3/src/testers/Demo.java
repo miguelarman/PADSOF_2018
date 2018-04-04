@@ -1,9 +1,8 @@
 package testers;
 
 import application.app.App;
-import exceptions.IncorrectPasswordException;
-import exceptions.UnexistentUserException;
-import exceptions.UserIsBannedException;
+import exceptions.*;
+
 
 public class Demo {
 
@@ -13,7 +12,7 @@ public class Demo {
 		//Checking if the system is opened correctly the first time
 		System.out.println("====================");
 		System.out.println(a);
-		System.out.println("====================");
+		System.out.println("====================\n");
 		
 		a.logout();
 		
@@ -22,53 +21,68 @@ public class Demo {
 		
 		System.out.println("====================");
 		System.out.println(a);
-		System.out.println("====================");
+		System.out.println("====================\n");
 		
 		
 		try {
 			a.login("12345678X", "jejexd"); //Trying to login with an incorrect id
 			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
 		} catch (UserIsBannedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (IncorrectPasswordException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (UnexistentUserException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
-		try {
-			a.login("51999111X", "asdfg");
-			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
-		} catch (UserIsBannedException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		} catch (IncorrectPasswordException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		} catch (UnexistentUserException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		} //Trying to login with an incorrect password
+		//Checking that no one has logged in yet
+		System.out.println("====================");
+		System.out.println("Logged user:\n" + App.getLoggedUser());
+		System.out.println("====================\n");
 		
 		try {
-			a.login("51999111X", "swordFish");
+			a.login("51999111X", "asdfg"); //Trying to login with an incorrect password
 			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
 		} catch (UserIsBannedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (IncorrectPasswordException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (UnexistentUserException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
-		} //Login with an authorized user (host)
+		} 
 		
+		//Checking that no one has logged in yet
 		System.out.println("====================");
-		System.out.println(a);
+		System.out.println("Logged user:\n" + App.getLoggedUser());
+		System.out.println("====================\n");
+		
+		try {
+			a.login("51999111X", "swordFish"); //Login with an authorized user (host)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} 
+		
+		//Checking if the loggedUser has been changed successfully
 		System.out.println("====================");
+		System.out.println("Logged user:\n" + App.getLoggedUser());
+		System.out.println("====================\n");
+		
+		try {
+			a.addHouse(28032, "OMG"); //Adding a house with a host
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		}
+		//Checking if the house has been created correctly
+		System.out.println("====================");
+		System.out.println("Logged user:\n" + App.getLoggedUser());
+		System.out.println("====================\n");
+		
 	}
 }

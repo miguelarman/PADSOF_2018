@@ -6,6 +6,6 @@ public class NoUserLoggedException extends Exception {
 
 	@Override
 	public String toString() {
-		return "The system could not retrieve the logged user";
+		return "There is not a user logged at this moment";
 	}
 }

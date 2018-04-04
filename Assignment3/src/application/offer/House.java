@@ -68,7 +68,7 @@ public class House implements Serializable{
 		String string = "";
 		string += "ZIP Code: " + zipCode + "\n";
 		string += "City: " + city + "\n";
-		string += "Owner: " + host + "\n";
+		string += "Owner: " + host.getNIF() + "\n";
 		string += "Characteristics: " + chs + "\n";
 		return string;
 	}
