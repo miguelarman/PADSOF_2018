@@ -275,37 +275,47 @@ public class App implements Serializable {
 	 * is trying to log is incorrect
 	 * @throws UnexistentUserException When the user with the specified id cannot be found on the system
 	 */
-	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException {
+	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException,AUserIsAlreadyLoggedException {
 		
-		for (RegisteredUser user : this.bannedUsers) { //Checks if the user trying to log in is banned
-			if (user.getNIF().equals(id)) {
-				throw new UserIsBannedException(user);
-			}
-		}
-		
-		for (RegisteredUser user : this.authorizedUsers) { 
-			if (user.getNIF().equals(id)) { //Checks if that NIF is stored as a authorized user NIF
-				if (user.getPasswd().equals(passwd)) { //Checks if the user's password matches with the one stored in the system
-					App.loggedUser = user; //Sets the user as logged
-					return;
-				} else {
-					throw new IncorrectPasswordException(user, passwd);
+		if(App.loggedUser != null) {
+			throw new AUserIsAlreadyLoggedException();
+		} else {
+			for (RegisteredUser user : this.bannedUsers) { //Checks if the user trying to log in is banned
+				if (user.getNIF().equals(id)) {
+					throw new UserIsBannedException(user);
 				}
 			}
+			for (RegisteredUser user : this.authorizedUsers) {
+				if (user.getNIF().equals(id)) { //Checks if that NIF is stored as a authorized user NIF
+					if (user.getPasswd().equals(passwd)) { //Checks if the user's password matches with the one stored in the system
+						App.loggedUser = user; //Sets the user as logged
+						return;
+					} else {
+						throw new IncorrectPasswordException(user, passwd);
+					}
+				}
+			}
+			throw new UnexistentUserException(id);
 		}
-		
-		throw new UnexistentUserException(id);
 	}
 	
 	/**
-	 * Method that logs out the user and closes the system, dumping the information
-	 * into the file filename
+	 * Method that logs out the user 
 	 */
 	public void logout() {
 		
-		ObjectOutputStream oos;
-		
 		App.loggedUser = null; //Logs the user out
+	}
+	
+	/**
+	 * Method that closes the app, dumping the information into the file filename
+	 */
+	public void closeApp() {
+		
+		if(App.loggedUser != null) {
+			App.loggedUser = null;
+		}
+		ObjectOutputStream oos;
 		
 		try {
 			oos = new ObjectOutputStream( new FileOutputStream(App.filename));
@@ -408,16 +418,10 @@ public class App implements Serializable {
 			is.close();
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Could not find the file to read the data in loadData()");
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Encountered an IOException when loading data");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			System.out.println("Encountered an ClassNotFoundException when loading data");
 			e.printStackTrace();
 		}
 		
@@ -551,18 +555,53 @@ public class App implements Serializable {
 		
 		if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
-		} else if(!offeredHouse.getHost().equals(App.getLoggedUser())) {
-			throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
 		}
-		else { 
-			if(App.loggedUser.getRole().equals(Role.HOST) || App.loggedUser.getRole().equals(Role.MULTIROLE)){ //Checks if the loggedUser is a host
+		
+		else if(App.loggedUser.getRole().equals(Role.HOST) || App.loggedUser.getRole().equals(Role.MULTIROLE)){ //Checks if the loggedUser is a host
+			
+			if(offeredHouse.getHost().equals(App.getLoggedUser())){
 				o = new LivingOffer(startingDate, price, deposit, description, offeredHouse, numberOfMonths);
 				offers.add(o);
-			}
-			else {
-				throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createLivingOffer");
+			} else {
+				throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
 			}
 		}
+		else {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createLivingOffer");
+		}
+
+	}
+	
+	public void createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
+		Offer o= null;
+		
+		if(finishDate.isBefore(startingDate)) {
+			LocalDate aux = finishDate;
+			finishDate = startingDate;
+			startingDate = aux;
+			aux = null;
+		}
+		if(startingDate.isBefore(App.getCurrentDate())){
+			throw new InvalidDateException(startingDate);
+		}
+
+		if(App.loggedUser == null) {
+			throw new NoUserLoggedException();
+		}
+		
+		else if(App.loggedUser.getRole().equals(Role.HOST) || App.loggedUser.getRole().equals(Role.MULTIROLE)){ //Checks if the loggedUser is a host
+			
+			if(offeredHouse.getHost().equals(App.getLoggedUser())){
+				o = new HolidayOffer(startingDate, price, deposit, description, offeredHouse, finishDate);
+				offers.add(o);
+			} else {
+				throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
+			}
+		}
+		else {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createHolidayOffer");
+		}
+
 	}
 
 	/**
@@ -702,25 +741,26 @@ public class App implements Serializable {
 		if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
 		}
-		else if(!house.getHost().equals(App.getLoggedUser())){
-			throw new NotTheOwnerException(house, App.loggedUser);
-		}
-		else {
-			
-			if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
+		else if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
+			if(house.getHost().equals(App.getLoggedUser())){
 				Host user = (Host)App.getLoggedUser();
 				user.getHouses().add(house);
-				
+			} else {
+				throw new NotTheOwnerException(house, App.loggedUser);
 			}
-			else if(App.loggedUser.getRole().equals(Role.MULTIROLE)) { //Checks if the loggedUser is a multirole
+
+		}
+		else if(App.loggedUser.getRole().equals(Role.MULTIROLE)) { //Checks if the loggedUser is a multirole
+			if(house.getHost().equals(App.getLoggedUser())){
 				MultiRoleUser user = (MultiRoleUser)App.getLoggedUser();
 				user.getHouses().add(house);
-				
-			}
-			else {
-				throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
+			} else {
+				throw new NotTheOwnerException(house, App.loggedUser);
 			}
 		}
+		else {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
+		}			
 	}
 	
 	// TODO javadoc
