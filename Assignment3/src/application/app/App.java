@@ -74,6 +74,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for offers
+	 * 
 	 * @return list of offers in the system
 	 */
 	public List<Offer> getOffers() {
@@ -82,6 +83,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for bannedUsers
+	 * 
 	 * @return list of banned users in the system
 	 */
 	public List<RegisteredUser> getBannedUsers() {
@@ -90,6 +92,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for authorizedUsers
+	 * 
 	 * @return list of authorized users in the system
 	 */
 	public List<RegisteredUser> getAuthorizedUsers() {
@@ -98,6 +101,7 @@ public class App implements Serializable {
 
 	/**
 	 * Getter method for loggedUser
+	 * 
 	 * @return user that is currently logged in
 	 */
 	public static RegisteredUser getLoggedUser() {
@@ -108,7 +112,8 @@ public class App implements Serializable {
 	
 	/**
 	 * Setter method for loggedUser
-	 * @param loggedUser - User that logs into the system
+	 * 
+	 * @param loggedUser User that logs into the system
 	 */
 	public void setLoggedUser(RegisteredUser loggedUser) {
 		App.loggedUser = loggedUser;
@@ -118,7 +123,8 @@ public class App implements Serializable {
 	
 	/**
 	 * Method that searches all the offers that have a house with the given ZIP code
-	 * @param zip - ZIP code of the house in the offer
+	 * 
+	 * @param zip ZIP code of the house in the offer
 	 * @return list of offers whose house has the given ZIP code
 	 */
 	public List<Offer> searchZipCode(Integer zip) {
@@ -141,8 +147,9 @@ public class App implements Serializable {
 	
 	/**
 	 * Method that searches all the offers whose starting date is between the two given dates
-	 * @param date1 - Starting or ending date of the interval
-	 * @param date2 - Starting or ending date of the interval
+	 * 
+	 * @param date1 Starting or ending date of the interval
+	 * @param date2 Starting or ending date of the interval
 	 * @return list of offers whose starting date is between the two given dates
 	 */
 	public List<Offer> searchStartingDate(LocalDate date1, LocalDate date2) {
@@ -168,7 +175,8 @@ public class App implements Serializable {
 	
 	/**
 	 * Method that searches all the offers whose type is the given one
-	 * @param type - Type of offer that we want to search
+	 * 
+	 * @param type Type of offer that we want to search
 	 * @return list of offers whose type is the given one
 	 */
 	public List<Offer> searchOfferType(OfferType type) {
@@ -188,6 +196,7 @@ public class App implements Serializable {
 	
 	/**
 	 * Method that searches all the offers that have been booked
+	 * 
 	 * @return list of booked offers
 	 */
 	public List<Offer> searchBooked() {
@@ -205,6 +214,7 @@ public class App implements Serializable {
 	
 	/**
 	 * Method that searches all the offers that have been paid
+	 * 
 	 * @return list of paid offers
 	 */
 	public List<Offer> searchPaid() {
@@ -222,6 +232,7 @@ public class App implements Serializable {
 	
 	/**
 	 * Method that searches all the offers with at least the given rating
+	 * 
 	 * @param minRating - Minimum rating of the offers
 	 * @return list of offers with at least the given rating
 	 */
@@ -278,7 +289,8 @@ public class App implements Serializable {
 	}
 	
 	/**
-	 * Method that logs out the user and closes the system, dumping the information into the file filename
+	 * Method that logs out the user and closes the system, dumping the information
+	 * into the file filename
 	 */
 	public void logout() {
 		
@@ -300,6 +312,7 @@ public class App implements Serializable {
 	 * Method that is called to start the system. If there it is the first time opening
 	 * the system it reads and loads a list of users into the system. Otherwise, it reads the 
 	 * system's information from the file filename
+	 * 
 	 * @return the system ready to function
 	 */
 	public static App openApp() {
@@ -318,6 +331,7 @@ public class App implements Serializable {
 	/**
 	 * Method that reads the user information from a file called "users.txt" and loads
 	 * its information into the authorized users list in the system
+	 * 
 	 * @return a new app with the information of the users from the file
 	 */
 	private static App initializeApp() {
@@ -597,10 +611,13 @@ public class App implements Serializable {
 	}
 	
 	/**
-	 * Method that adds a house to the list of houses of the logged user if they have a valid rol
-	 * @param zip - ZIP code of the house
-	 * @param city - City in which the the house is located
-	 * @throws InvalidRolException - When the logged user is neither a host nor a multiRoleUser
+	 * Method that adds a house to the list of houses of the logged user if they
+	 * have a valid rol
+	 * 
+	 * @param zip ZIP code of the house
+	 * @param city City in which the the house is located
+	 * @throws InvalidRolException When the logged user is neither a host nor a multiRoleUser
+	 * @throws NoUserLoggedException When the app could not retrieve the logged user
 	 */
 	public void addHouse(Integer zip, String city) throws InvalidRolException, NoUserLoggedException{
 		if(App.loggedUser == null) {
