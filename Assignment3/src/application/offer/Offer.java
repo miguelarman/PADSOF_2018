@@ -75,6 +75,7 @@ public abstract class Offer implements Serializable{
 		this.startingDate = startingDate;
 		this.price = price;
 		this.deposit = deposit;
+		this.description = description;
 		this.status = OfferStatus.PENDING_FOR_APPROVAL;
 		this.offeredHouse = offeredHouse;
 		this.opinions = new ArrayList<Opinion>();

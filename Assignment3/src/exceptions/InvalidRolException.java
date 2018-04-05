@@ -17,7 +17,7 @@ public class InvalidRolException extends Exception{
 	}
 	@Override
 	public String toString() {
-		return "The user " + this.NIF + "with rol " + this.rol + "cannot execute the mehthod " + this.method;
+		return "The user " + this.NIF + " with rol " + this.rol + " cannot execute the method " + this.method;
 	}
 
 }
