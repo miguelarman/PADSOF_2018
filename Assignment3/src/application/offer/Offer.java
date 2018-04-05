@@ -267,11 +267,22 @@ public abstract class Offer implements Serializable{
 	@Override
 	/**
 	 * Method that returns all the information stored in an object of the class
-	 * Offer in a printable and readable format. It is abstract as is makes no sense
-	 * to print an Offer which is not either HolidayOffer or LivingOffer
+	 * Offer in a printable and readable format. It prints the data in common
+	 * amongst all the types of offers
 	 * 
 	 * @return Information stored in the Offer in a printable format
 	 */
-	public abstract String toString();
+	public String toString() {
+		String string = "";
+		
+		string += "Offer for the house in " + this.getHouse().getZipCode() + " (" + this.getHouse().getCity() + ")";
+		string += "\n Description: " + this.description;
+		string += "\nPrice: " + this.price;
+		string += "\nDeposit: " + this.deposit;
+		string += "\nHouse: " + this.offeredHouse;
+		string += "\nStarting date: " + this.startingDate;
+		
+		return string;
+	}
 
 }

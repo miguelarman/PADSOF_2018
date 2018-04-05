@@ -48,8 +48,6 @@ public class Rating extends Opinion {
 	 * @return Information stored in the rating in a printable format
 	 */
 	public String toString() {
-		// TODO
-		
-		return null;
+		return this.getCommenter().getNIF() + " : " + this.rating;
 	}
 }

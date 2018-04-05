@@ -73,7 +73,10 @@ public class HolidayOffer extends Offer {
 	 * @return Information stored in the HolidayOffer in a printable format
 	 */
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		String string = super.toString();
+		
+		string += "\nFinish date: " + this.finishDate;
+		
+		return string;
 	}
 }

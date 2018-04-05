@@ -124,9 +124,7 @@ public class Reservation implements Serializable{
 	 * @return Information stored in the Reservation in a printable format
 	 */
 	public String toString() {
-		// TODO
-		
-		return null;
+		return "Reservation for " + this.getBookedOffer().getHouse().getZipCode() + " (" + this.getBookedOffer().getHouse().getCity() + ") booked on " + this.getBookingDate() + " by " + this.getClient().getNIF();
 	}
 
 }

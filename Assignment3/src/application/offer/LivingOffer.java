@@ -74,8 +74,10 @@ public class LivingOffer extends Offer {
 	 * @return Information stored in the LivingOffer in a printable format
 	 */
 	public String toString() {
-		// TODO
+		String string = super.toString();
 		
-		return null;
+		string += "\nNumber of months: " + this.numberOfMonths;
+		
+		return string;
 	}
 }
