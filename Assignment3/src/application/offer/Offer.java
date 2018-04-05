@@ -159,8 +159,10 @@ public abstract class Offer implements Serializable{
 	 * Method used to pay for an offer
 	 * 
 	 * @throws NoUserLoggedException When no user is logged in the app
+	 * @throws CouldNotPayHostException When the system could not pay the host
+	 * @throws InvalidCardNumberException 
 	 */
-	public void payOffer() throws NoUserLoggedException {
+	public void payOffer() throws NoUserLoggedException, CouldNotPayHostException, InvalidCardNumberException {
 		Double amount = this.getAmount();
 		
 		// TODO rellenar el asunto
@@ -176,8 +178,7 @@ public abstract class Offer implements Serializable{
 		try {
 			TeleChargeAndPaySystem.charge(ccard, subject, amount); // TODO maybe throw exception
 		} catch (InvalidCardNumberException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		} catch (FailedInternetConnectionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

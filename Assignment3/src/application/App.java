@@ -9,6 +9,9 @@ import application.dates.ModifiableDate;
 import application.offer.*;
 import application.users.*;
 import application.users.RegisteredUser.Role;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+import es.uam.eps.padsof.telecard.OrderRejectedException;
+import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
 import exceptions.*;
 
 /**
@@ -56,6 +59,11 @@ public class App implements Serializable {
 	 * HashMap that stores an offer and the date in which an admin requested a change
 	 */
 	private HashMap<Offer, LocalDate> changesRequests;
+	
+	/**
+	 * HashMap that stores the amount of money to be paid
+	 */
+	private HashMap<RegisteredUser, Double> toPay; // Must be RegisteredUser as there are multirole users
 	
 	/**
 	 * Constructor of the class App. Inicializes all the Lists and Maps inside the
@@ -421,9 +429,37 @@ public class App implements Serializable {
 		// Deleting expired offers pending changes
 		app.deleteExpiredPendingOffers();
 		
+		// Try to pay the pending payments
+		app.payPendingOffers();
+		
 		return app;
 	}
 	
+	/**
+	 * This method tries to pay all the money that has not been paid to the hosts
+	 */
+	public void payPendingOffers() {
+		Set<RegisteredUser> pendingHosts = this.toPay.keySet();
+		
+		for (RegisteredUser user : pendingHosts) {
+			Double amount = this.toPay.get(user);
+			
+			// Trying to pay
+			String subject = "__________"; // TODO
+			
+			try {
+				TeleChargeAndPaySystem.charge(user.getCreditCard(), subject, -amount);// It is negative to pay the host, not charge
+			} catch (OrderRejectedException e) {
+				continue;
+			}
+			
+			// If payment is successfull remove host from people we owe money
+			
+			this.toPay.remove(user);
+		}
+	}
+
+
 	/**
 	 * This method removes the offers in the System whose starting date has arrived
 	 * without anyone paying for it. It is called every time the system is loaded
@@ -685,7 +721,51 @@ public class App implements Serializable {
 			}
 		}
 	}
+	
+	// TODO javadoc
+	public void payOffer(Offer o) {
+		try {
+			o.payOffer();
+		} catch (InvalidCardNumberException e) {
+			this.banUser(App.getLoggedUser());
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CouldNotPayHostException e) {
+			RegisteredUser h = e.getHost();
+			Double amount = e.getAmount();
+			
+			this.addDebt(h, amount);
+		}
+	}
 
+
+	// TODO javadoc
+	public void payReservation(Reservation r) {
+		try {
+			r.payReservation();
+		} catch (NotTheReserverException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidCardNumberException e) {
+			this.banUser(App.getLoggedUser());
+		} catch (CouldNotPayHostException e) {
+			RegisteredUser user = e.getHost();
+			Double amount = e.getAmount();
+			
+			this.addDebt(user, amount);
+		}
+	}
+	
+	// TODO javadoc
+	private void addDebt(RegisteredUser user, Double amount) {
+		if (this.toPay.containsKey(user)) {
+			this.toPay.put(user, this.toPay.get(user) + amount);
+		} else {
+			this.toPay.put(user, amount);
+		}
+	}
+	
 	@Override
 	/**
 	 * Method that returns all the information stored in an object of the class App in a printable and readable format

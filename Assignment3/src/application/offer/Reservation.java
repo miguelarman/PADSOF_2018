@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 import application.App;
 import application.users.Guest;
-
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import exceptions.*;
 
 /**
@@ -100,8 +100,10 @@ public class Reservation implements Serializable{
 	 * Method that pays for the reservation. It call the method payOffer()
 	 * 
 	 * @throws NotTheReserverException When the user trying to pay is not the reserver
+	 * @throws InvalidCardNumberException When the credit card is not valid
+	 * @throws CouldNotPayHostException 
 	 */
-	public void payReservation() throws NotTheReserverException {
+	public void payReservation() throws NotTheReserverException, InvalidCardNumberException, CouldNotPayHostException {
 
 		// We check if the user trying to pay the reservation is the one that booked it
 		if (!this.client.equals(App.getLoggedUser())) {

@@ -2,10 +2,8 @@ package application.offer;
 
 import java.time.LocalDate;
 
-import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
-import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import es.uam.eps.padsof.telecard.OrderRejectedException;
-import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+import es.uam.eps.padsof.telecard.*;
+
 import exceptions.CouldNotPayHostException;
 
 /**

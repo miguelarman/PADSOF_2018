@@ -2,14 +2,9 @@ package application.offer;
 
 import java.time.LocalDate;
 
-import application.App;
-import application.users.RegisteredUser;
-import es.uam.eps.padsof.telecard.FailedInternetConnectionException;
-import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import es.uam.eps.padsof.telecard.OrderRejectedException;
-import es.uam.eps.padsof.telecard.TeleChargeAndPaySystem;
+import es.uam.eps.padsof.telecard.*;
+
 import exceptions.CouldNotPayHostException;
-import exceptions.NoUserLoggedException;
 
 /**
  * Class that stores the data of a holiday offer. It is a subclass of Offer
