@@ -28,5 +28,5 @@ public interface HostI {
 	 * @param city City of the house
 	 * @throws HouseAlreadyCreatedException When a house has been created with the same data
 	 */
-	public void addHouse(Integer zipCode, String city) throws HouseAlreadyCreatedException;
+	public void addHouse(House house) throws HouseAlreadyCreatedException;
 }

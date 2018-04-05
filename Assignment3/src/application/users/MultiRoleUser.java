@@ -28,8 +28,8 @@ public class MultiRoleUser extends RegisteredUser implements GuestI, HostI {
 	}
 
 	@Override
-	public void addHouse(Integer zipCode, String city) throws HouseAlreadyCreatedException {
-		this.hostRole.addHouse(zipCode, city);
+	public void addHouse(House house) throws HouseAlreadyCreatedException {
+		this.hostRole.addHouse(house);
 	}
 
 	@Override
