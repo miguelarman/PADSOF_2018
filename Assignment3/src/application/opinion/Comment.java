@@ -84,9 +84,15 @@ public class Comment extends Opinion {
 	 * @return Information stored in the comment in a printable format
 	 */
 	public String toString() {
-		// TODO
+		String string = "";
 		
-		return null;
+		string += this.getCommenter() + " : " + this.text;
+		
+		for (Opinion o : this.replies) {
+			string += "\n" + o;
+		}
+		
+		return string;
 	}
 
 }
