@@ -1,7 +1,11 @@
 package testers;
 
 import application.offer.House;
+
+import java.time.LocalDate;
+
 import application.App;
+import application.dates.ModifiableDate;
 import exceptions.*;
 
 
@@ -14,6 +18,7 @@ public class Demo {
 		System.out.println("====================");
 		System.out.println(a);
 		System.out.println("====================\n");
+		ModifiableDate.setToday();
 		
 		a.logout();
 		
@@ -126,5 +131,25 @@ public class Demo {
 		System.out.println("Logged user:\n" + App.getLoggedUser());
 		System.out.println("====================\n");
 		
+		//TODO logout y esas cosas
+		
+		try {
+			a.createLivingOffer(LocalDate.of(2018, 12, 30), 200.34, 100.01, "Perfect", house1, 2);
+		} catch (InvalidRolException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (InvalidDateException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		System.out.println("====================");
+		System.out.println(a);
+		System.out.println("====================\n");
 	}
 }

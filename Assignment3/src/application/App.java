@@ -505,33 +505,28 @@ public class App implements Serializable {
 		return offers;
 	}
 	
-	public Offer createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException {
-		House h = null;
+	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
+		Offer o= null;
+		if(startingDate.isBefore(App.getCurrentDate())){
+			throw new InvalidDateException(startingDate);
+		}
 		if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
 		}
-		else if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
-			h = new House(zip, city, (Host)App.loggedUser);
+		else if(!offeredHouse.getHost().equals(App.getLoggedUser())) {
+			throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
 		}
-		else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
-			h = new House(zip, city, (MultiRoleUser)App.loggedUser);
-			
+		else { 
+			if(App.loggedUser.getRole().equals(Role.HOST) || App.loggedUser.getRole().equals(Role.MULTIROLE)){ //Checks if the loggedUser is a host
+				o = new LivingOffer(startingDate, price, deposit, description, offeredHouse, numberOfMonths);
+				offers.add(o);
+			}
+			else {
+				throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createLivingOffer");
+			}
 		}
-		else {
-			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
-		}
-		return h;
 	}
 
-	/**
-	 * Method that add an offer to the App
-	 * 
-	 * @param offer Offer to be added
-	 */
-	public void addOffer(Offer offer) {
-		this.offers.add(offer);
-	}
-	
 	/**
 	 * Method that removes an offer from the App
 	 * 
@@ -650,7 +645,7 @@ public class App implements Serializable {
 			
 		}
 		else {
-			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createHouse");
 		}
 		return h;
 	}
