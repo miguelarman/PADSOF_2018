@@ -12,16 +12,16 @@ import application.offer.Reservation;
  * class is abstract, because in our implementation a user must either be Host,
  * Guest and/or Admin.
  * 
- * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) and Alberto Gonzalez (alberto.gonzalezk@gmail.com)
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) and Alberto
+ *         Gonzalez (alberto.gonzalezk@gmail.com)
  *
  */
-public abstract class RegisteredUser implements Serializable{
-	
+public abstract class RegisteredUser implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 9222090974779634707L;
-
 
 	/**
 	 * This enumeration is used to distinguish between all the types of users,
@@ -31,10 +31,9 @@ public abstract class RegisteredUser implements Serializable{
 	 *
 	 */
 	public enum Rol {
-		HOST, GUEST, ADMIN, MULTIROL, ERROR;		
+		HOST, GUEST, ADMIN, MULTIROL, ERROR;
 	}
-	
-	
+
 	/**
 	 * Name of the user
 	 */
@@ -55,12 +54,23 @@ public abstract class RegisteredUser implements Serializable{
 	 * NIF of the user
 	 */
 	private String NIF;
+
+	/**
+	 * List of reserved offers of the user. Cannot be modified unless the user is
+	 * from the type Guest or Multirole
+	 */
 	protected List<Reservation> reservedOffers;
+
+	/**
+	 * List of houses of the user. Cannot be modified unless the user is from the
+	 * type Host or Multirole
+	 */
 	protected List<House> houses;
 
 	
 	/**
 	 * Constructor of the RegisteredUser class
+	 * 
 	 * @param name Name of the user
 	 * @param surname Surname of the user
 	 * @param passwd Password of the user
@@ -77,9 +87,9 @@ public abstract class RegisteredUser implements Serializable{
 		this.houses = new ArrayList<House>();
 	}
 
-	
 	/**
 	 * Getter method for the name argument
+	 * 
 	 * @return The name of the user
 	 */
 	public String getName() {
@@ -88,6 +98,7 @@ public abstract class RegisteredUser implements Serializable{
 
 	/**
 	 * Getter method for the surname argument
+	 * 
 	 * @return The surname of the user
 	 */
 	public String getSurname() {
@@ -96,6 +107,7 @@ public abstract class RegisteredUser implements Serializable{
 
 	/**
 	 * Getter method for the password argument
+	 * 
 	 * @return The password of the user
 	 */
 	public String getPasswd() {
@@ -104,21 +116,22 @@ public abstract class RegisteredUser implements Serializable{
 
 	/**
 	 * Getter method for the credit card argument
+	 * 
 	 * @return The credit card of the user
 	 */
 	public String getCreditCard() {
 		return creditCard;
 	}
-	
+
 	/**
 	 * Getter method for the NIF argument
+	 * 
 	 * @return The NIF of the user
 	 */
 	public String getNIF() {
 		return NIF;
 	}
 
-	
 	/**
 	 * Method that returns the rol of the user. It is abstract, because it has no
 	 * sense using it in a RegisteredUser that is not Guest or Host
@@ -126,8 +139,7 @@ public abstract class RegisteredUser implements Serializable{
 	 * @return The rol of the user
 	 */
 	public abstract Rol getRol();
-	
-	
+
 	/**
 	 * Method that modifies the credit card associated with a user
 	 * 
@@ -137,10 +149,10 @@ public abstract class RegisteredUser implements Serializable{
 		this.creditCard = creditCard;
 	}
 
-
 	@Override
 	/**
-	 * Method that returns all the data of a RegisteredUser in a String with printable format
+	 * Method that returns all the data of a RegisteredUser in a String with
+	 * printable format
 	 */
 	public String toString() {
 		String string = "";
@@ -149,19 +161,19 @@ public abstract class RegisteredUser implements Serializable{
 		string += "Password: " + passwd + "\n";
 		string += "CreditCard: " + creditCard + "\n";
 		string += "NIF: " + NIF + "\n";
-		if(this.getRol().equals(Rol.HOST) || this.getRol().equals(Rol.MULTIROL) ) {
+		if (this.getRol().equals(Rol.HOST) || this.getRol().equals(Rol.MULTIROL)) {
 			string += "Houses: \n";
 			int i = 1;
-			for(House h: houses) {
+			for (House h : houses) {
 				string += "\n(" + i + ")\n";
 				string += h + "\n";
 				i++;
 			}
 		}
-		if(this.getRol().equals(Rol.GUEST) || this.getRol().equals(Rol.MULTIROL) ) {
+		if (this.getRol().equals(Rol.GUEST) || this.getRol().equals(Rol.MULTIROL)) {
 			string += "Booked offers: \n";
 			int i = 1;
-			for(Reservation r: reservedOffers) {
+			for (Reservation r : reservedOffers) {
 				string += "\n(" + i + ")\n";
 				string += r + "\n";
 				i++;
