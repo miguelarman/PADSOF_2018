@@ -1,6 +1,6 @@
 package testers;
 
-import application.app.App;
+import application.App;
 import exceptions.*;
 
 

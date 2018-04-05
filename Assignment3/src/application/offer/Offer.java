@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-import application.app.App;
+import application.App;
 import application.opinion.*;
 import application.users.RegisteredUser;
 

@@ -3,7 +3,7 @@ package application.offer;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import application.app.App;
+import application.App;
 import application.users.Guest;
 
 import exceptions.*;

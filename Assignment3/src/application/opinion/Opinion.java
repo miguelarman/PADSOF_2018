@@ -2,7 +2,7 @@ package application.opinion;
 
 import java.io.Serializable;
 
-import application.app.App;
+import application.App;
 import application.users.RegisteredUser;
 
 
