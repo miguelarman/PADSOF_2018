@@ -102,13 +102,13 @@ public class MultiRoleUser extends RegisteredUser implements GuestI, HostI {
 
 	@Override
 	/**
-	 * Method that returns the rol of the user. Inherited from the superclass
+	 * Method that returns the role of the user. Inherited from the superclass
 	 * RegisteredUser
 	 * 
-	 * @returns The rol of the user. Always multirol
+	 * @returns The role of the user. Always multirole
 	 */
-	public Rol getRol() {
-		return Rol.MULTIROL;
+	public Role getRole() {
+		return Role.MULTIROLE;
 	}
 
 }

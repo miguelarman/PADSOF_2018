@@ -36,13 +36,13 @@ public class Host extends RegisteredUser implements HostI{
 	}
 
 	/**
-	 * Method that returns the rol of the user. Inherited from the superclass
+	 * Method that returns the role of the user. Inherited from the superclass
 	 * RegisteredUser
 	 * 
-	 * @return The rol of the user. Always host
+	 * @return The role of the user. Always host
 	 */
-	public Rol getRol() {
-		return Rol.HOST;
+	public Role getRole() {
+		return Role.HOST;
 	}
 	
 	/**

@@ -1,7 +1,8 @@
-application.app
+application
 application.dates
 application.offer
 application.opinion
 application.users
 exceptions
+exceptions.deprecatedExceptions
 testers

@@ -24,8 +24,7 @@ public interface HostI {
 	/**
 	 * Method that adds a House to the list of created houses of a Host
 	 * 
-	 * @param zipCode Zip code of the house
-	 * @param city City of the house
+	 * @param house House to be added
 	 * @throws HouseAlreadyCreatedException When a house has been created with the same data
 	 */
 	public void addHouse(House house) throws HouseAlreadyCreatedException;

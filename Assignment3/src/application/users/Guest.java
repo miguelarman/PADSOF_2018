@@ -35,13 +35,13 @@ public class Guest extends RegisteredUser implements GuestI{
 	
 	
 	/**
-	 * Method that returns the rol of the user. Inherited from the superclass
+	 * Method that returns the role of the user. Inherited from the superclass
 	 * RegisteredUser
 	 * 
-	 * @return The rol of the user. Always guest
+	 * @return The role of the user. Always guest
 	 */
-	public Rol getRol() {
-		return Rol.GUEST;
+	public Role getRole() {
+		return Role.GUEST;
 	}
 	
 	@Override
