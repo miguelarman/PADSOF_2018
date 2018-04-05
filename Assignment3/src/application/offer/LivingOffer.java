@@ -2,6 +2,10 @@ package application.offer;
 
 import java.time.LocalDate;
 
+import es.uam.eps.padsof.telecard.*;
+
+import exceptions.CouldNotPayHostException;
+
 /**
  * Class that stores the data of a holiday offer. It is a subclass of Offer
  * 
@@ -64,6 +68,35 @@ public class LivingOffer extends Offer {
 	 */
 	public void setNumberOfMonths(int numberOfMonths) {
 		this.numberOfMonths = numberOfMonths;
+	}
+	
+	@Override
+	/**
+	 * Method used to pay the host what has been paid by the client minus the system
+	 * fees
+	 * 
+	 * @throws CouldNotPayHostException When the app could not pay the host
+	 */
+	public void payHost() throws CouldNotPayHostException {
+		Double amount = this.getAmount();
+		
+		// TODO rellenar el asunto
+		String subject = "------------";
+		
+		
+		String ccard = this.getHouse().getHost().getCreditCard();
+		
+		amount *= (0.999); // 0.1% fees
+		
+		try {
+			TeleChargeAndPaySystem.charge(ccard, subject, -amount); // It is negative to pay the host, not charge
+		} catch (InvalidCardNumberException e) {
+			throw new CouldNotPayHostException(this.getHouse().getHost(), amount);
+		} catch (FailedInternetConnectionException e) {
+			throw new CouldNotPayHostException(this.getHouse().getHost(), amount);
+		} catch (OrderRejectedException e) {
+			throw new CouldNotPayHostException(this.getHouse().getHost(), amount);
+		}
 	}
 
 	@Override

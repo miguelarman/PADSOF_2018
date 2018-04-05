@@ -7,7 +7,7 @@ import java.util.*;
 import application.App;
 import application.opinion.*;
 import application.users.RegisteredUser;
-
+import exceptions.CouldNotPayHostException;
 import exceptions.NoUserLoggedException;
 
 import es.uam.eps.padsof.telecard.*;
@@ -160,8 +160,10 @@ public abstract class Offer implements Serializable{
 	 * Method used to pay for an offer
 	 * 
 	 * @throws NoUserLoggedException When no user is logged in the app
+	 * @throws CouldNotPayHostException When the system could not pay the host
+	 * @throws InvalidCardNumberException 
 	 */
-	public void payOffer() throws NoUserLoggedException {
+	public void payOffer() throws NoUserLoggedException, CouldNotPayHostException, InvalidCardNumberException {
 		Double amount = this.getAmount();
 		
 		// TODO rellenar el asunto
@@ -175,10 +177,9 @@ public abstract class Offer implements Serializable{
 		String ccard = user.getCreditCard();
 		
 		try {
-			TeleChargeAndPaySystem.charge(ccard, subject, amount); // Igual en los catch siguentes debemos lanzar un PaymentException
+			TeleChargeAndPaySystem.charge(ccard, subject, amount); // TODO maybe throw exception
 		} catch (InvalidCardNumberException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		} catch (FailedInternetConnectionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,9 +188,18 @@ public abstract class Offer implements Serializable{
 			e.printStackTrace();
 		}
 		
-		// TODO pagar al host
+		this.payHost();
 	}
 	
+	
+	/**
+	 * Method used to pay the host what has been paid by the client minus the system
+	 * fees
+	 * 
+	 * @throws CouldNotPayHostException When the app could not pay the host
+	 */
+	public abstract void payHost() throws CouldNotPayHostException;
+
 	/**
 	 * Method used to add an opinion about the offer
 	 * 
