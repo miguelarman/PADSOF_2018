@@ -507,7 +507,7 @@ public class App implements Serializable {
 
 	/**
 	 * This method removes the offers in the System that have not been modified in
-	 * fice days after an admin suggested changes
+	 * five days after an admin suggested changes
 	 */
 	private void deleteExpiredPendingOffers() {
 		List<Offer> offers = this.getPendingOffers();
@@ -518,7 +518,7 @@ public class App implements Serializable {
 		    
 		    long daysBetween = ChronoUnit.DAYS.between(changesDate, currentDate);
 			
-			if (daysBetween >= 5) { // User has exceeded 5 days without paying
+			if (daysBetween >= 5) { // User has exceeded 5 days without modifying the date
 				// Deletes the request from the app
 				this.changesRequests.remove(o);
 				
@@ -560,8 +560,8 @@ public class App implements Serializable {
 	 * @throws NotTheOwnerException
 	 */
 	
-	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
-		Offer o= null;
+	public Offer createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
+		Offer o = null;
 		
 		if(startingDate.isBefore(App.getCurrentDate())){
 			throw new InvalidDateException(startingDate);
@@ -583,11 +583,13 @@ public class App implements Serializable {
 		else {
 			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createLivingOffer");
 		}
+		
+		return o;
 
 	}
 	
-	public void createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
-		Offer o= null;
+	public Offer createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
+		Offer o = null;
 		
 		if(finishDate.isBefore(startingDate)) {
 			LocalDate aux = finishDate;
@@ -615,6 +617,8 @@ public class App implements Serializable {
 		else {
 			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createHolidayOffer");
 		}
+		
+		return o;
 
 	}
 

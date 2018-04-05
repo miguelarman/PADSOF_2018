@@ -69,12 +69,21 @@ public class Comment extends Opinion {
 	}
 	
 	/**
+	 * Getter method for the text replies
+	 * 
+	 * @return Replies of the comment
+	 */
+	public List<Opinion> getReplies() {
+		return this.replies;
+	}
+	
+	/**
 	 * Method that adds a reply to a Comment
 	 * 
 	 * @param o Opinion with the reply
 	 */
 	public void addReply(Opinion o) {
-		// TODO
+		this.replies.add(o);
 	}
 	
 	@Override
