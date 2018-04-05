@@ -64,4 +64,16 @@ public class HolidayOffer extends Offer {
 	public void setFinishDate(LocalDate finishDate) {
 		this.finishDate = finishDate;
 	}
+
+	@Override
+	/**
+	 * Method that returns all the information stored in an object of the class
+	 * HolidayOffer in a printable and readable format.
+	 * 
+	 * @return Information stored in the HolidayOffer in a printable format
+	 */
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

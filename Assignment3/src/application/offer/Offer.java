@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
-import application.app.App;
+import application.App;
 import application.opinion.*;
 import application.users.RegisteredUser;
 
@@ -267,14 +267,11 @@ public abstract class Offer implements Serializable{
 	@Override
 	/**
 	 * Method that returns all the information stored in an object of the class
-	 * Offer in a printable and readable format
+	 * Offer in a printable and readable format. It is abstract as is makes no sense
+	 * to print an Offer which is not either HolidayOffer or LivingOffer
 	 * 
 	 * @return Information stored in the Offer in a printable format
 	 */
-	public String toString() {
-		// TODO
-		
-		return null;
-	}
+	public abstract String toString();
 
 }

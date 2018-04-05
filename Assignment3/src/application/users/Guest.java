@@ -3,24 +3,53 @@ import java.util.*;
 
 import application.offer.*;
 
-
+/**
+ * Class that stores all the data of a Guest. It is a subclass of RegisteredUser,
+ * and implements GuestI
+ * 
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez
+ *         (alberto.gonzalezk@estudiante.uam.es)
+ *
+ */
 public class Guest extends RegisteredUser implements GuestI{
 	
 	/**
-	 * 
+	 * ID needed for serialization
 	 */
 	private static final long serialVersionUID = 4989719272790707017L;
 
+	
+	/**
+	 * Constructor of the class Guest
+	 * 
+	 * @param name Name of the guest
+	 * @param surname Surname of the guest
+	 * @param passwd Password of the guest
+	 * @param creditCard Credit card of the guest
+	 * @param NIF NIF of the guest
+	 */
 	public Guest(String name, String surname, String passwd, String creditCard, String NIF) {
 		super(name, surname, passwd, creditCard, NIF);
 		reservedOffers = new ArrayList<Reservation>();
 	}
 	
+	
+	/**
+	 * Method that returns the rol of the user. Inherited from the superclass
+	 * RegisteredUser
+	 * 
+	 * @return The rol of the user. Always guest
+	 */
 	public Rol getRol() {
 		return Rol.GUEST;
 	}
 	
 	@Override
+	/**
+	 * Method that adds a reservation to the list of reservations of the user
+	 * 
+	 * @param reservation Reservation to be added
+	 */
 	public void addReservation(Reservation reservation) {
 		// TODO comprobar algo de las fechas?
 		// TODO comprobar el estado de la oferta?
@@ -29,6 +58,11 @@ public class Guest extends RegisteredUser implements GuestI{
 	}
 	
 	@Override
+	/**
+	 * Method that deletes a reservation from the list of reservations of the user
+	 * 
+	 * @param reservation Reservation to be deleted
+	 */
 	public void deleteReservation(Reservation reservation) {
 		// TODO mirar algo con las fechas?
 		
@@ -39,6 +73,11 @@ public class Guest extends RegisteredUser implements GuestI{
 	
 
 	@Override
+	/**
+	 * Method that returns the list of reserved offers by the guest
+	 * 
+	 * @return List with all the reserved offers
+	 */
 	public List<Reservation> getReservedOffers() {
 		return this.reservedOffers;
 	}
