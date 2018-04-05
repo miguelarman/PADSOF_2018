@@ -275,7 +275,7 @@ public class App implements Serializable {
 	 * is trying to log is incorrect
 	 * @throws UnexistentUserException When the user with the specified id cannot be found on the system
 	 */
-	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException,AUserIsAlreadyLoggedException {
+	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException, AUserIsAlreadyLoggedException {
 		
 		if(App.loggedUser != null) {
 			throw new AUserIsAlreadyLoggedException();
