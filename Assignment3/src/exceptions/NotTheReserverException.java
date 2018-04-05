@@ -17,7 +17,7 @@ public class NotTheReserverException extends Exception {
 	
 	@Override
 	public String toString() {
-		return "The user " + user.getName() + " is not who booked this offer";
+		return "The user " + user.getNIF() + " has not booked this offer";
 	}
 
 }

@@ -611,37 +611,63 @@ public class App implements Serializable {
 	}
 	
 	/**
-	 * Method that adds a house to the list of houses of the logged user if they
-	 * have a valid rol
+	 * Method that creates if the logged user has a valid role
 	 * 
 	 * @param zip ZIP code of the house
 	 * @param city City in which the the house is located
 	 * @throws InvalidRolException When the logged user is neither a host nor a multiRoleUser
 	 * @throws NoUserLoggedException When the app could not retrieve the logged user
+	 * @return the created house
 	 */
-	public void addHouse(Integer zip, String city) throws InvalidRolException, NoUserLoggedException{
+	public House createHouse(Integer zip, String city) throws InvalidRolException, NoUserLoggedException {
+		House h = null;
 		if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
 		}
-		if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
-			Host user = (Host)App.loggedUser;
-			try {
-				user.addHouse(zip, city);
-			} catch (HouseAlreadyCreatedException e) {
-				e.printStackTrace();
-			}
+		else if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
+			h = new House(zip, city, (Host)App.loggedUser);
 		}
 		else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
-			MultiRoleUser user = (MultiRoleUser)App.loggedUser;
-			try {
-				user.addHouse(zip, city);
-			} catch (HouseAlreadyCreatedException e) {
-				e.printStackTrace();
-			}
+			h = new House(zip, city, (MultiRoleUser)App.loggedUser);
 			
 		}
 		else {
 			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
+		}
+		return h;
+	}
+	
+	/**
+	 * Method that adds a house to the system if the owner of the house and the logged user match, 
+	 * and if the logged user is a host
+	 * 
+	 * @param house House to add to the system
+	 * @throws InvalidRolException When the logged user is neither a host nor a multiRoleUser
+	 * @throws NoUserLoggedException When the app could not retrieve the logged user
+	 * @throws NotTheOwnerException When the logged user is not the owner of the house
+	 */
+	public void addHouse(House house) throws InvalidRolException, NoUserLoggedException, NotTheOwnerException{
+		
+		if(house.getHost().equals(App.getLoggedUser())){
+			throw new NotTheOwnerException(house, App.loggedUser);
+		}
+		else {
+			if(App.loggedUser == null) {
+				throw new NoUserLoggedException();
+			}
+			else if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
+				Host user = (Host)App.getLoggedUser();
+				user.getHouses().add(house);
+				
+			}
+			else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
+				MultiRoleUser user = (MultiRoleUser)App.getLoggedUser();
+				user.getHouses().add(house);
+				
+			}
+			else {
+				throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
+			}
 		}
 	}
 

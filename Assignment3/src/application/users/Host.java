@@ -49,13 +49,10 @@ public class Host extends RegisteredUser implements HostI{
 	 * Method that adds a House to the list of created houses of a Host. From the
 	 * interface HostI
 	 * 
-	 * @param zipCode Zip code of the house
-	 * @param city City of the house
+	 * @param house House to be added to the list of houses of the host
 	 * @throws HouseAlreadyCreatedException When a house has been created with the same data
 	 */
-	public void addHouse(Integer zipCode, String city) throws HouseAlreadyCreatedException {
-		House house = new House(zipCode, city, this);
-
+	public void addHouse(House house) throws HouseAlreadyCreatedException {
 		for(House h: houses) {
 			if(h.equals(house)) {
 				throw new HouseAlreadyCreatedException(house);
