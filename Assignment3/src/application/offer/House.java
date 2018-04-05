@@ -129,7 +129,13 @@ public class House implements Serializable{
 		string += "ZIP Code: " + zipCode + "\n";
 		string += "City: " + city + "\n";
 		string += "Owner: " + host.getNIF() + "\n";
-		string += "Characteristics: " + chs + "\n";
+		string += "Characteristics:";
+		
+		Set<String> keys = this.chs.keySet();
+		
+		for (String key : keys) {
+			string += "\n- " + key + " -> " + this.chs.get(key);
+		}
 		return string;
 	}
 }
