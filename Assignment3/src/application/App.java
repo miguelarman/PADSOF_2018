@@ -510,15 +510,15 @@ public class App implements Serializable {
 		if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
 		}
-		else if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
+		else if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
 			h = new House(zip, city, (Host)App.loggedUser);
 		}
-		else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
+		else if(App.loggedUser.getRole().equals(Role.MULTIROL)) { //Checks if the loggedUser is a multirol
 			h = new House(zip, city, (MultiRoleUser)App.loggedUser);
 			
 		}
 		else {
-			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
 		}
 		return h;
 	}
