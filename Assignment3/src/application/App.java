@@ -546,6 +546,20 @@ public class App implements Serializable {
 		return offers;
 	}
 	
+	/**
+	 * Method that creates a living offer and loads it into the system
+	 * @param startingDate
+	 * @param price
+	 * @param deposit
+	 * @param description
+	 * @param offeredHouse
+	 * @param numberOfMonths
+	 * @throws InvalidRolException
+	 * @throws NoUserLoggedException
+	 * @throws InvalidDateException
+	 * @throws NotTheOwnerException
+	 */
+	
 	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
 		Offer o= null;
 		
@@ -553,7 +567,7 @@ public class App implements Serializable {
 			throw new InvalidDateException(startingDate);
 		}
 		
-		if(App.loggedUser == null) {
+		else if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
 		}
 		
