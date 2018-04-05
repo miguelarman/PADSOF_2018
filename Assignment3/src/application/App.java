@@ -75,6 +75,7 @@ public class App implements Serializable {
 		authorizedUsers = new ArrayList<RegisteredUser>();
 		loggedUser = null;
 		changesRequests = new HashMap<Offer, LocalDate>();
+		toPay = new HashMap<RegisteredUser, Double>();
 	}
 	
 		
@@ -777,21 +778,21 @@ public class App implements Serializable {
 		int i = 1;
 		string += "Offers:";
 		for(Offer o: offers) {
-			string += "\n\n(" + i + ")" + "\n";
+			string += "\n\n(" + i + "/" + offers.size() + ")" + "\n";
 			string += o;
 			i++;
 		}
 		i = 1;
 		string += "\nBannedUsers:";
 		for(RegisteredUser r: bannedUsers) {
-			string += "\n\n(" + i + ")" + "\n";
+			string += "\n\n(" + i + "/" + bannedUsers.size() + ")" + "\n";
 			string += r;
 			i++;
 		}
 		i = 1;
 		string += "\nAuthorizedUsers:";
 		for(RegisteredUser a: authorizedUsers) {
-			string += "\n\n(" + i + ")" + "\n";
+			string += "\n\n(" + i + "/" + authorizedUsers.size() + ")" + "\n";
 			string += a;
 			i++;
 		}
