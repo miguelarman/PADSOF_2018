@@ -91,7 +91,7 @@ public class Demo {
 			house1.addCharacteristic("SwimmingPool", "Amazing"); //We add a characteristic to the created house
 		} catch (DuplicateCharacteristicException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		//Checking if the characteristic was added correctly
 		System.out.println("====================");
@@ -102,13 +102,26 @@ public class Demo {
 			house1.addCharacteristic("SwimmingPool", "Amazing"); //We try to add the same characteristic again
 		} catch (DuplicateCharacteristicException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		//Checking if the characteristic was not added
 		System.out.println("====================");
 		System.out.println(house1);
 		System.out.println("====================\n");
-		//Checking if the house has been created correctly
+		
+		try {
+			a.addHouse(house1); //We add the house to the system
+		} catch (InvalidRolException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		//Checking if the house has been added correctly
 		System.out.println("====================");
 		System.out.println("Logged user:\n" + App.getLoggedUser());
 		System.out.println("====================\n");

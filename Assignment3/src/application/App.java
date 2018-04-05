@@ -504,6 +504,24 @@ public class App implements Serializable {
 		
 		return offers;
 	}
+	
+	public Offer createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException {
+		House h = null;
+		if(App.loggedUser == null) {
+			throw new NoUserLoggedException();
+		}
+		else if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
+			h = new House(zip, city, (Host)App.loggedUser);
+		}
+		else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
+			h = new House(zip, city, (MultiRoleUser)App.loggedUser);
+			
+		}
+		else {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
+		}
+		return h;
+	}
 
 	/**
 	 * Method that add an offer to the App
@@ -648,14 +666,15 @@ public class App implements Serializable {
 	 */
 	public void addHouse(House house) throws InvalidRolException, NoUserLoggedException, NotTheOwnerException{
 		
-		if(house.getHost().equals(App.getLoggedUser())){
+		if(App.loggedUser == null) {
+			throw new NoUserLoggedException();
+		}
+		else if(!house.getHost().equals(App.getLoggedUser())){
 			throw new NotTheOwnerException(house, App.loggedUser);
 		}
 		else {
-			if(App.loggedUser == null) {
-				throw new NoUserLoggedException();
-			}
-			else if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
+			
+			if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
 				Host user = (Host)App.getLoggedUser();
 				user.getHouses().add(house);
 				
