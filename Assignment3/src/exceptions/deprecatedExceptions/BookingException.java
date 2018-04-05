@@ -1,4 +1,4 @@
-package exceptions;
+package exceptions.deprecatedExceptions;
 
 public class BookingException extends Exception {
 

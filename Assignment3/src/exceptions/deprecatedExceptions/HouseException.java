@@ -1,4 +1,4 @@
-package exceptions;
+package exceptions.deprecatedExceptions;
 
 public class HouseException extends Exception {
 	/**

@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
 import application.dates.ModifiableDate;
 import application.offer.*;
 import application.users.*;
-import application.users.RegisteredUser.Rol;
+import application.users.RegisteredUser.Role;
 import exceptions.*;
 
 /**
@@ -449,7 +449,7 @@ public class App implements Serializable {
 	 */
 	private void deleteExpiredReservations() {
 		for (RegisteredUser user : this.authorizedUsers) {
-			if (user.getRol() == RegisteredUser.Rol.GUEST) {
+			if (user.getRole() == RegisteredUser.Role.GUEST) {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
 					LocalDate bookingDate = r.getBookingDate();
 					LocalDate currentDate = App.getCurrentDate();
@@ -642,15 +642,15 @@ public class App implements Serializable {
 		if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
 		}
-		else if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
+		else if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
 			h = new House(zip, city, (Host)App.loggedUser);
 		}
-		else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
+		else if(App.loggedUser.getRole().equals(Role.MULTIROLE)) { //Checks if the loggedUser is a multirole
 			h = new House(zip, city, (MultiRoleUser)App.loggedUser);
 			
 		}
 		else {
-			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
 		}
 		return h;
 	}
@@ -673,19 +673,19 @@ public class App implements Serializable {
 			throw new NotTheOwnerException(house, App.loggedUser);
 		}
 		else {
-
-			if(App.loggedUser.getRol().equals(Rol.HOST)){ //Checks if the loggedUser is a host
+			
+			if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
 				Host user = (Host)App.getLoggedUser();
 				user.getHouses().add(house);
 				
 			}
-			else if(App.loggedUser.getRol().equals(Rol.MULTIROL)) { //Checks if the loggedUser is a multirol
+			else if(App.loggedUser.getRole().equals(Role.MULTIROLE)) { //Checks if the loggedUser is a multirole
 				MultiRoleUser user = (MultiRoleUser)App.getLoggedUser();
 				user.getHouses().add(house);
 				
 			}
 			else {
-				throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRol(), "addHouse");
+				throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
 			}
 		}
 	}

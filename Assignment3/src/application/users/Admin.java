@@ -32,10 +32,10 @@ public class Admin extends RegisteredUser {
 	 * Method that returns the rol of the user. Inherited from the superclass
 	 * RegisteredUser
 	 * 
-	 * @return The rol of the user. Always admin
+	 * @return The role of the user. Always admin
 	 */
-	public Rol getRol() {
-		return Rol.ADMIN;
+	public Role getRole() {
+		return Role.ADMIN;
 	}
 
 }

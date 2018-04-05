@@ -30,8 +30,8 @@ public abstract class RegisteredUser implements Serializable {
 	 * @author Usuario
 	 *
 	 */
-	public enum Rol {
-		HOST, GUEST, ADMIN, MULTIROL, ERROR;
+	public enum Role {
+		HOST, GUEST, ADMIN, MULTIROLE, ERROR;
 	}
 
 	/**
@@ -136,9 +136,9 @@ public abstract class RegisteredUser implements Serializable {
 	 * Method that returns the rol of the user. It is abstract, because it has no
 	 * sense using it in a RegisteredUser that is not Guest or Host
 	 * 
-	 * @return The rol of the user
+	 * @return The role of the user
 	 */
-	public abstract Rol getRol();
+	public abstract Role getRole();
 
 	/**
 	 * Method that modifies the credit card associated with a user
@@ -161,7 +161,7 @@ public abstract class RegisteredUser implements Serializable {
 		string += "Password: " + passwd + "\n";
 		string += "CreditCard: " + creditCard + "\n";
 		string += "NIF: " + NIF + "\n";
-		if (this.getRol().equals(Rol.HOST) || this.getRol().equals(Rol.MULTIROL)) {
+		if (this.getRole().equals(Role.HOST) || this.getRole().equals(Role.MULTIROLE)) {
 			string += "Houses: \n";
 			int i = 1;
 			for (House h : houses) {
@@ -170,7 +170,7 @@ public abstract class RegisteredUser implements Serializable {
 				i++;
 			}
 		}
-		if (this.getRol().equals(Rol.GUEST) || this.getRol().equals(Rol.MULTIROL)) {
+		if (this.getRole().equals(Role.GUEST) || this.getRole().equals(Role.MULTIROLE)) {
 			string += "Booked offers: \n";
 			int i = 1;
 			for (Reservation r : reservedOffers) {
