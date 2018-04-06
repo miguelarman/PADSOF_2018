@@ -61,9 +61,11 @@ public class App implements Serializable {
 	
 	/**
 	 * HashMap that stores the amount of money to be paid
+	 * 
 	 */
 	private HashMap<RegisteredUser, Double> toPay; // Must be RegisteredUser as there are multirole users
 	
+	private List<RegisteredUser> badCCard;
 	/**
 	 * Constructor of the class App. Inicializes all the Lists and Maps inside the
 	 * App
@@ -75,6 +77,7 @@ public class App implements Serializable {
 		loggedUser = null;
 		changesRequests = new HashMap<Offer, LocalDate>();
 		toPay = new HashMap<RegisteredUser, Double>();
+		badCCard = new ArrayList<RegisteredUser>();
 	}
 	
 		
@@ -107,6 +110,9 @@ public class App implements Serializable {
 		return authorizedUsers;
 	}
 
+	public List<RegisteredUser> getBadCCard() {
+		return badCCard;
+	}
 	/**
 	 * Getter method for loggedUser
 	 * 
@@ -114,6 +120,10 @@ public class App implements Serializable {
 	 */
 	public static RegisteredUser getLoggedUser() {
 		return loggedUser;
+	}
+	
+	public HashMap<RegisteredUser, Double> getToPay(){
+		return toPay;
 	}
 
 	//Setters
@@ -925,7 +935,7 @@ public class App implements Serializable {
 		if(!loggedUser.getRole().equals(Role.ADMIN)) {
 			throw new InvalidRolException(loggedUser.getNIF(), loggedUser.getRole(), "changeCreditCard");
 		}
-		else if(creditCard.length() == 16) {
+		else if(creditCard.length() == 16 && (user.getRole().equals(Role.GUEST) || user.getRole().equals(Role.MULTIROLE))){
 			unbanUser(user);
 		}
 		user.changeCreditCard(creditCard);
@@ -950,6 +960,7 @@ public class App implements Serializable {
 			Double amount = e.getAmount();
 			
 			this.addDebt(h, amount);
+			this.badCCard.add(h);
 		}
 	}
 
