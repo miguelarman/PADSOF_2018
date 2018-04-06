@@ -2,6 +2,9 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import application.App;
@@ -12,6 +15,11 @@ import exceptions.*;
 
 public class AppTest {
 
+	@BeforeClass
+	public static void removeData() {
+		File file = new File("data.obj"); file.delete();
+	}
+	
 	@Test
 	public void testOpenApp() {
 		App app = App.openApp();

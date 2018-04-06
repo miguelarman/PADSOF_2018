@@ -2,6 +2,7 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import org.junit.BeforeClass;
@@ -17,6 +18,9 @@ public class GuestTest {
 	
 	@BeforeClass
 	public static void setUp() {
+		
+		File file = new File("data.obj"); file.delete();
+				
 		Host host = new Host("Host Jesus", "de los hosts", "password", "23871298371", "92837492F");
 		House h = new House(28049, "Cantoblanco", host);
 		

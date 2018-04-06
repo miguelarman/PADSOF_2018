@@ -2,6 +2,7 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import org.junit.BeforeClass;
@@ -21,6 +22,9 @@ public class MultiRoleUserTest {
 	
 	@BeforeClass
 	public static void createMultiRole() {
+		
+		File file = new File("data.obj"); file.delete();
+		
 		user = new MultiRoleUser("Multi Jesus", "de los multis", "password", "23871298371", "92837492F");
 		
 		Host host = new Host("Host Jesus", "de los hosts", "password", "23871298371", "92837492F");

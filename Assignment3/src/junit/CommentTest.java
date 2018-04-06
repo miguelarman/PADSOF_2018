@@ -2,6 +2,8 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.*;
 
 import application.App;
@@ -13,6 +15,12 @@ public class CommentTest {
 	
 	private Comment comm;
 	private App app;
+	
+	@BeforeClass
+	public static void removeData() {
+		File file = new File("data.obj"); file.delete();
+	}
+	
 	
 	@Before
 	public void setUp() {

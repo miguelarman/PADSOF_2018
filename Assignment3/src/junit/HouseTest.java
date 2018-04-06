@@ -2,6 +2,8 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -15,6 +17,9 @@ public class HouseTest {
 	
 	@BeforeClass
 	public static void setUp() {
+		
+		File file = new File("data.obj"); file.delete();
+		
 		
 		Host host = new Host("Host Jesus", "de los hosts", "password", "23871298371", "92837492F");
 		h = new House(280922, "cantowhite", host);

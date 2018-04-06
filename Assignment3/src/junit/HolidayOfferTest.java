@@ -2,9 +2,11 @@ package junit;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import application.offer.HolidayOffer;
@@ -17,6 +19,12 @@ public class HolidayOfferTest {
 
 	private Offer o;
 	private Host h;
+	
+	@BeforeClass
+	public static void removeData() {
+		File file = new File("data.obj"); file.delete();
+	}
+	
 	
 	@Before
 	public void setUp() {
