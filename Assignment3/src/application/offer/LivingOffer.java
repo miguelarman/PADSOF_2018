@@ -58,15 +58,6 @@ public class LivingOffer extends Offer {
 	public int getNumberOfMonths() {
 		return numberOfMonths;
 	}
-
-	/**
-	 * Setter method for the attribute numberOfMonths
-	 * 
-	 * @param numberOfMonths Number of months of the offer
-	 */
-	public void setNumberOfMonths(int numberOfMonths) {
-		this.numberOfMonths = numberOfMonths;
-	}
 	
 	@Override
 	/**

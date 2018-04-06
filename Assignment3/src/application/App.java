@@ -139,17 +139,6 @@ public class App implements Serializable {
 	public HashMap<RegisteredUser, Double> getToPay(){
 		return toPay;
 	}
-
-	//Setters
-	
-	/**
-	 * Setter method for loggedUser
-	 * 
-	 * @param loggedUser User that logs into the system
-	 */
-	public void setLoggedUser(RegisteredUser loggedUser) {
-		App.loggedUser = loggedUser;
-	}
 	
 	// Searches
 	
@@ -473,7 +462,7 @@ public class App implements Serializable {
 	/**
 	 * This method tries to pay all the money that has not been paid to the hosts
 	 */
-	public void payPendingOffers() {
+	private void payPendingOffers() {
 		Set<RegisteredUser> pendingHosts = this.toPay.keySet();
 		
 		for (RegisteredUser user : pendingHosts) {

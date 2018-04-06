@@ -58,14 +58,6 @@ public class HolidayOffer extends Offer {
 	public LocalDate getFinishLocalDate() {
 		return finishDate;
 	}
-	
-	/**
-	 * Setter method for the attribute finish date
-	 * @param finishDate new finish date of the offer
-	 */
-	public void setFinishDate(LocalDate finishDate) {
-		this.finishDate = finishDate;
-	}
 
 	@Override
 	/**
