@@ -31,7 +31,7 @@ public abstract class RegisteredUser implements Serializable {
 	 *
 	 */
 	public enum Role {
-		HOST, GUEST, ADMIN, MULTIROLE, ERROR;
+		HOST, GUEST, ADMIN, MULTIROLE;
 	}
 
 	/**

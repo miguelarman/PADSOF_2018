@@ -139,17 +139,6 @@ public class App implements Serializable {
 	public HashMap<RegisteredUser, Double> getToPay(){
 		return toPay;
 	}
-
-	//Setters
-	
-	/**
-	 * Setter method for loggedUser
-	 * 
-	 * @param loggedUser User that logs into the system
-	 */
-	public void setLoggedUser(RegisteredUser loggedUser) {
-		App.loggedUser = loggedUser;
-	}
 	
 	// Searches
 	
@@ -307,6 +296,7 @@ public class App implements Serializable {
 	 * @throws IncorrectPasswordException When the password with which the user
 	 * is trying to log is incorrect
 	 * @throws UnexistentUserException When the user with the specified id cannot be found on the system
+	 * @throws AUserIsAlreadyLoggedException When no user is logged on the system
 	 */
 	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException, AUserIsAlreadyLoggedException {
 		
@@ -472,7 +462,7 @@ public class App implements Serializable {
 	/**
 	 * This method tries to pay all the money that has not been paid to the hosts
 	 */
-	public void payPendingOffers() {
+	private void payPendingOffers() {
 		Set<RegisteredUser> pendingHosts = this.toPay.keySet();
 		
 		for (RegisteredUser user : pendingHosts) {
@@ -499,6 +489,7 @@ public class App implements Serializable {
 	 * Method used to modify the starting date of the offer
 	 * 
 	 * @param startingDate New starting date of the offer
+	 * @param o Offer to be modified
 	 * @throws TimeIsUpException When a user tries to modify an offer when the 5 day-period has expired
 	 */
 	public void modifyOffer(LocalDate startingDate, Offer o) throws TimeIsUpException {
@@ -524,6 +515,7 @@ public class App implements Serializable {
 	 * 
 	 * @param price New price of the offer
 	 * @param deposit New deposit of the offer
+	 * @param o Offer to be modified
 	 * @throws TimeIsUpException When a user tries to modify an offer when the 5 day-period has expired
 	 */
 	public void modifyOffer(Double price, Double deposit, Offer o) throws TimeIsUpException {
@@ -548,6 +540,7 @@ public class App implements Serializable {
 	 * Method used to modify the description date of the offer
 	 * 
 	 * @param description New description of the offer
+	 * @param o Offer to be modified
 	 * @throws TimeIsUpException When a user tries to modify an offer when the 5 day-period has expired
 	 */
 	public void modifyOffer(String description, Offer o) throws TimeIsUpException {
@@ -574,6 +567,7 @@ public class App implements Serializable {
 	 * Method used to modify the status of the offer
 	 * 
 	 * @param status New status of the offer
+	 * @param o Offer to be modified
 	 * @throws InvalidRolException When a non-admin user tries to modify the status
 	 */
 	public void modifyOffer(OfferStatus status, Offer o) throws InvalidRolException {
@@ -1045,7 +1039,8 @@ public class App implements Serializable {
 
 	/**
 	 * Method that pays a reservation
-	 * @param r
+	 * 
+	 * @param r Reservation to be paid
 	 */
 	public void payReservation(Reservation r) {
 

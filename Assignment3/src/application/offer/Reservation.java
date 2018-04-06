@@ -45,7 +45,6 @@ public class Reservation implements Serializable{
 	/**
 	 * Constructor of the class Reservation
 	 * 
-	 * @param bookingDate Date in which the reservation is created
 	 * @param client Client that is booking the offer
 	 * @param bookedOffer Offer that is being booked
 	 */
