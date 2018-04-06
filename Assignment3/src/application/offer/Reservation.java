@@ -132,6 +132,8 @@ public class Reservation implements Serializable{
 			} catch (NoUserLoggedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (InvalidCardNumberException e) {
+				throw e;
 			}
 		}
 	}

@@ -14,6 +14,10 @@ public class InvalidOfferStatusException extends Exception{
 		this.method = method;
 		this.status = status;
 	}
+	
+	public OfferStatus getStatus() {
+		return this.status;
+	}
 	@Override
 	public String toString() {
 		return "A offer with the status " + this.status + " cannot perform the method " + this.method;

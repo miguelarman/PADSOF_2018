@@ -71,21 +71,6 @@ public class HolidayOffer extends Offer {
 
 	@Override
 	/**
-	 * Method that returns all the information stored in an object of the class
-	 * HolidayOffer in a printable and readable format.
-	 * 
-	 * @return Information stored in the HolidayOffer in a printable format
-	 */
-	public String toString() {
-		String string = super.toString();
-		
-		string += "\nFinish date: " + this.finishDate;
-		
-		return string;
-	}
-
-	@Override
-	/**
 	 * Method used to pay the host what has been paid by the client minus the system
 	 * fees
 	 * 
@@ -95,7 +80,7 @@ public class HolidayOffer extends Offer {
 		Double amount = this.getAmount();
 		
 		// TODO rellenar el asunto
-		String subject = "offer";
+		String subject = "Payment to host of the house in " + this.getHouse().getZipCode() + " (" + this.getHouse().getCity() + ").Amount: " + amount;
 		
 		
 		String ccard = this.getHouse().getHost().getCreditCard();
@@ -111,5 +96,21 @@ public class HolidayOffer extends Offer {
 		} catch (OrderRejectedException e) {
 			throw new CouldNotPayHostException(this.getHouse().getHost(), amount);
 		}
+	}
+	
+	
+	@Override
+	/**
+	 * Method that returns all the information stored in an object of the class
+	 * HolidayOffer in a printable and readable format.
+	 * 
+	 * @return Information stored in the HolidayOffer in a printable format
+	 */
+	public String toString() {
+		String string = super.toString();
+		
+		string += "\nFinish date: " + this.finishDate;
+		
+		return string;
 	}
 }
