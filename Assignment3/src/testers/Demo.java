@@ -526,18 +526,18 @@ public class Demo {
 		
 		//We check that the reservation has added to the user's list
 		System.out.println("====================");
-		System.out.println(App.getLoggedUser().getReservations());
+		System.out.println(App.getLoggedUser().getReservedOffers());
 		System.out.println("====================\n");
 		
 		//10 days have passed
 		ModifiableDate.plusDays(10);
 		
 		//We try to pay the offer
-		a.payReservation(App.getLoggedUser().getReservations().get(0));
+		a.payReservation(App.getLoggedUser().getReservedOffers().get(0));
 		
 		//We check that the reservation has been deleted from the user's list
 		System.out.println("====================");
-		System.out.println(App.getLoggedUser().getReservations());
+		System.out.println(App.getLoggedUser().getReservedOffers());
 		System.out.println("====================\n");
 		
 		//We try to book that offer again
@@ -551,7 +551,7 @@ public class Demo {
 		
 		//We check the reservation list
 		System.out.println("====================");
-		System.out.println(App.getLoggedUser().getReservations());
+		System.out.println(App.getLoggedUser().getReservedOffers());
 		System.out.println("====================\n");
 		
 		//We try to pay that offer
