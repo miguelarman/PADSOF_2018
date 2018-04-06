@@ -98,6 +98,16 @@ public class House implements Serializable{
 	public Integer getZipCode() {
 		return zipCode;
 	}
+	
+	
+	/**
+	 * Getter method for the characteristic attribute
+	 * 
+	 * @return characteristics of the house
+	 */
+	public HashMap<String, String> getCharacteristics() {
+		return chs;
+	}
 
 	/**
 	 * Getter method for the city attribute
