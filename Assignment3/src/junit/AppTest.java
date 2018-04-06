@@ -11,7 +11,11 @@ import application.users.Host;
 import application.users.RegisteredUser;
 import exceptions.AUserIsAlreadyLoggedException;
 import exceptions.IncorrectPasswordException;
+import exceptions.InvalidDateException;
 import exceptions.InvalidRolException;
+import exceptions.NoUserLoggedException;
+import exceptions.NotTheOwnerException;
+import exceptions.OfferAlreadyCreatedException;
 import exceptions.UnexistentUserException;
 import exceptions.UserIsBannedException;
 
@@ -134,12 +138,26 @@ public class AppTest {
 	public void testDeleteExpiredOffers() {
 		App app = App.openApp();
 		
-		app.login("51999111X", "swordFish");
+		try {
+			app.login("51999111X", "swordFish");
+		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
+				| AUserIsAlreadyLoggedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}
 		
-		Host host = new Host("Ana Maria", "Garcia Serrano", "swordFish", "9999666633330000", "51999111X");
+		Host host = (Host)App.getLoggedUser();
 		
 		House house = new House(28049, "Cantoblanco", host);
-		app.createHolidayOffer(ModifiableDate.getModifiableDate().plusDays(3), 0.0, 0.0, "description", house, ModifiableDate.getModifiableDate().plusDays(18));
+		try {
+			app.createHolidayOffer(ModifiableDate.getModifiableDate().plusDays(3), 0.0, 0.0, "description", house, ModifiableDate.getModifiableDate().plusDays(18));
+		} catch (InvalidRolException | NoUserLoggedException | InvalidDateException | NotTheOwnerException
+				| OfferAlreadyCreatedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail();
+		}
 		app.logout();
 		
 		int before = app.getOffers().size();
@@ -147,7 +165,7 @@ public class AppTest {
 		ModifiableDate.plusDays(100);
 		
 		app = App.openApp();
-		AssertEquals(app.getOffers().size(), before - 1, 0);
+		assertEquals(app.getOffers().size(), before - 1, 0);
 	}
 	
 	// deleteExpiredReservations
