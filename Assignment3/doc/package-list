@@ -4,5 +4,5 @@ application.offer
 application.opinion
 application.users
 exceptions
-exceptions.deprecatedExceptions
+junit
 testers
