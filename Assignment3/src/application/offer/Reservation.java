@@ -131,7 +131,7 @@ public class Reservation implements Serializable{
 				this.bookedOffer.payOffer();
 			} catch (NoUserLoggedException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(e);
 			}
 		}
 	}

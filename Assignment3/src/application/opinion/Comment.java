@@ -2,6 +2,9 @@ package application.opinion;
 
 import java.util.*;
 
+import application.App;
+import exceptions.NoUserLoggedException;
+
 /**
  * Class that stores a comment about an offer. Thus, it is a subclass of the
  * Opinion class
@@ -45,8 +48,8 @@ public class Comment extends Opinion {
 	 * 
 	 * @return Average rating of the comment
 	 */
-	public Float getAvgRating() {
-		Float avg = (float) 0;
+	public Double getAvgRating() {
+		Double avg = 0.0;
 		int amount = 0;
 		
 		for (Opinion o : this.replies) {
@@ -54,6 +57,10 @@ public class Comment extends Opinion {
 				avg += ((Rating) o).getRating();
 				amount++;
 			}
+		}
+		
+		if(amount == 0) {
+			return 0.0;
 		}
 		
 		return avg / amount;
@@ -81,10 +88,38 @@ public class Comment extends Opinion {
 	 * Method that adds a reply to a Comment
 	 * 
 	 * @param o Opinion with the reply
+	 * @throws NoUserLoggedException 
 	 */
-	public void addReply(Opinion o) {
+	public void addReply(String reply) throws NoUserLoggedException {
+		if(App.getLoggedUser() == null) {
+			throw new NoUserLoggedException();
+		}
+		Opinion o = new Comment(reply);
+		
+		if(App.getLoggedUser() == null) {
+			throw new NoUserLoggedException();
+		}
 		this.replies.add(o);
 	}
+	
+	/**
+	 * Method that adds a reply to a Comment
+	 * 
+	 * @param o Opinion with the reply
+	 * @throws NoUserLoggedException 
+	 */
+	public void rateComment(double rating) throws NoUserLoggedException {
+		if(App.getLoggedUser() == null) {
+			throw new NoUserLoggedException();
+		}
+		Opinion o = new Rating(rating);
+		if(App.getLoggedUser() == null) {
+			throw new NoUserLoggedException();
+		}
+		
+		this.replies.add(o);
+	}
+	
 	
 	@Override
 	/**
@@ -95,10 +130,14 @@ public class Comment extends Opinion {
 	public String toString() {
 		String string = "";
 		
-		string += this.getCommenter() + " : " + this.text;
+		
+		string += this.getCommenter().getNIF() + ": " + this.text;
+		string += " |Rating: " + this.getAvgRating();
 		
 		for (Opinion o : this.replies) {
-			string += "\n" + o;
+			if(o.getClass() == Comment.class) {
+				string += "\n\t" + o;
+			}
 		}
 		
 		return string;

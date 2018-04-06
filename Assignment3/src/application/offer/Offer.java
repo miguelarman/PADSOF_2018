@@ -109,6 +109,15 @@ public abstract class Offer implements Serializable{
 		return this.startingDate;
 	}
 	
+	public List<Opinion> getComments() {
+		List<Opinion> aux = new ArrayList<Opinion>();
+		for(Opinion o: opinions) {
+			if (o.getClass() == Comment.class) {
+				aux.add(o);
+			}
+		}
+		return aux;
+	}
 	/**
 	 * Getter method for the description attribute
 	 * 
@@ -224,6 +233,7 @@ public abstract class Offer implements Serializable{
 			System.out.println(e);
 		}
 		
+		modifyOffer(OfferStatus.PAID);
 		this.payHost();
 	}
 	
@@ -240,9 +250,14 @@ public abstract class Offer implements Serializable{
 	 * Method used to add an opinion about the offer
 	 * 
 	 * @param opinion Comment about the offer
+	 * @throws NoUserLoggedException 
 	 */
-	public void rateOffer(String opinion) {
+	public void rateOffer(String opinion) throws NoUserLoggedException {
 		Opinion o = new Comment(opinion);
+		
+		if(App.getLoggedUser() == null) {
+			throw new NoUserLoggedException();
+		}
 		
 		this.opinions.add(o);
 	}
@@ -251,23 +266,15 @@ public abstract class Offer implements Serializable{
 	 * Method used to add a rating to the offer
 	 * 
 	 * @param rating Rating of the offer
+	 * @throws NoUserLoggedException 
 	 */
-	public void rateOffer(Float rating) {
+	public void rateOffer(Double rating) throws NoUserLoggedException {
 		Opinion o = new Rating(rating);
+		if(App.getLoggedUser() == null) {
+			throw new NoUserLoggedException();
+		}
 		
 		this.opinions.add(o);
-	}
-	
-	/**
-	 * Method used to add an opinion and a rating about the offer
-	 * 
-	 * @param opinion Opinion about the offer
-	 * @param rating Rating of the offer
-	 */
-	public void rateOffer(String opinion, int rating) {
-		// TODO
-		
-		// no se como hacer para poner a la vez un comentario de texto y numerico
 	}
 	
 	
@@ -276,9 +283,9 @@ public abstract class Offer implements Serializable{
 	 * 
 	 * @return The average rating of the offer. Calculated from the rating
 	 */
-	public Float getAvgRating() {
+	public Double getAvgRating() {
 		
-		Float rating = (float) 0;
+		Double rating = 0.0;
 		int amount = 0;
 		
 		for (Opinion o : this.opinions) {
@@ -287,6 +294,10 @@ public abstract class Offer implements Serializable{
 				
 				amount++;
 			}
+		}
+		
+		if(amount == 0) {
+			return 0.0;
 		}
 		
 		return rating / amount;

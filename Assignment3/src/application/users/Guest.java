@@ -54,6 +54,7 @@ public class Guest extends RegisteredUser implements GuestI{
 		// TODO comprobar algo de las fechas?
 		// TODO comprobar el estado de la oferta?
 		this.reservedOffers.add(reservation);
+		reservation.getBookedOffer().modifyOffer(OfferStatus.BOOKED);
 	}
 	
 	@Override
