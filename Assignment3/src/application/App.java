@@ -3,7 +3,6 @@ package application;
 import java.io.*;
 import java.util.*;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 import application.dates.ModifiableDate;
 import application.offer.*;
@@ -323,7 +322,7 @@ public class App implements Serializable {
 			oos.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 	}
 	
@@ -392,10 +391,10 @@ public class App implements Serializable {
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (NoSuchElementException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		return app;
@@ -418,11 +417,11 @@ public class App implements Serializable {
 			is.close();
 
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		// Deleting expired offers
@@ -458,13 +457,109 @@ public class App implements Serializable {
 				continue;
 			}
 			
-			// If payment is successfull remove host from people we owe money
+			// If the payment is successful remove host from people we owe money
 			
 			this.toPay.remove(user);
 		}
 	}
 
+	/**
+	 * Method used to modify the starting date of the offer
+	 * 
+	 * @param startingDate New starting date of the offer
+	 * @throws TimeIsUpException 
+	 * @throws NotTheOwnerException 
+	 */
+	public void modifyOffer(LocalDate startingDate, Offer o) throws TimeIsUpException {
+		LocalDate changesDate = this.changesRequests.get(o);
+		LocalDate currentDate = App.getCurrentDate();
+		
+		if (currentDate.minusDays(5).isEqual(changesDate) || currentDate.minusDays(5).isAfter(changesDate)) {
+			throw new TimeIsUpException("modifyOffer");
+		}
+		else {
+			try {
+				o.modifyOffer(startingDate);
+			} catch (InvalidOfferStatusException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+			} catch (NotTheOwnerException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+			}
+		}
+	}
+	
+	/**
+	 * Method used to modify the price and deposit of the offer
+	 * 
+	 * @param price New price of the offer
+	 * @param deposit New deposit of the offer
+	 * @throws InvalidOfferStatusException 
+	 * @throws NotTheOwnerException 
+	 */
+	public void modifyOffer(Double price, Double deposit, Offer o) throws TimeIsUpException {
+		LocalDate changesDate = this.changesRequests.get(o);
+		LocalDate currentDate = App.getCurrentDate();
+		
+		if (currentDate.minusDays(5).isEqual(changesDate) || currentDate.minusDays(5).isAfter(changesDate)) {
+			throw new TimeIsUpException("modifyOffer");
+		}
+		else {
+			try {
+				o.modifyOffer(price, deposit);
+			} catch (InvalidOfferStatusException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+			} catch (NotTheOwnerException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+			}
+		}
+	}
+	
+	/**
+	 * Method used to modify the description date of the offer
+	 * 
+	 * @param description New description of the offer
+	 * @throws InvalidOfferStatusException 
+	 * @throws NotTheOwnerException 
+	 */
+	public void modifyOffer(String description, Offer o) throws TimeIsUpException {
+		
+		LocalDate changesDate = this.changesRequests.get(o);
+		LocalDate currentDate = App.getCurrentDate();
+		
+		if (currentDate.minusDays(5).isEqual(changesDate) || currentDate.minusDays(5).isAfter(changesDate)) { // User has exceeded 5 days without paying
+			throw new TimeIsUpException("modifyOffer");
+		}
+		else {
+			try {
+				o.modifyOffer(description);
+			} catch (InvalidOfferStatusException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+			} catch (NotTheOwnerException e) {
+				// TODO Auto-generated catch block
+				System.out.println(e);
+			}
+		}
 
+	}
+	
+	/**
+	 * Method used to modify the status of the offer
+	 * 
+	 * @param status New status of the offer
+	 * @throws InvalidRolException 
+	 * @throws InvalidOfferStatusException 
+	 */
+	public void modifyOffer(OfferStatus status, Offer o) throws InvalidRolException {
+		if(!App.getLoggedUser().getRole().equals(Role.ADMIN)) {
+			throw new InvalidRolException(App.getLoggedUser().getNIF(), App.getLoggedUser().getRole(), "modifyOffer(status)");
+		}
+		o.modifyOffer(status);
+	}
 	/**
 	 * This method removes the offers in the System whose starting date has arrived
 	 * without anyone paying for it. It is called every time the system is loaded
@@ -494,10 +589,8 @@ public class App implements Serializable {
 				for (Reservation r : ((Guest) user).getReservedOffers()) {
 					LocalDate bookingDate = r.getBookingDate();
 					LocalDate currentDate = App.getCurrentDate();
-									    
-				    long daysBetween = ChronoUnit.DAYS.between(bookingDate, currentDate);
 					
-					if (daysBetween >= 5) { // User has exceeded 5 days without paying
+					if (currentDate.minusDays(5).isEqual(bookingDate) || currentDate.minusDays(5).isAfter(bookingDate)) { // User has exceeded 5 days without paying
 						r.cancelReservation();
 					}
 				}
@@ -515,10 +608,8 @@ public class App implements Serializable {
 		for (Offer o : offers) {
 			LocalDate changesDate = this.changesRequests.get(o);
 			LocalDate currentDate = App.getCurrentDate();
-		    
-		    long daysBetween = ChronoUnit.DAYS.between(changesDate, currentDate);
 			
-			if (daysBetween >= 5) { // User has exceeded 5 days without paying
+			if (currentDate.minusDays(5).isEqual(changesDate) || currentDate.minusDays(5).isAfter(changesDate)) { // User has exceeded 5 days without paying
 				// Deletes the request from the app
 				this.changesRequests.remove(o);
 				
@@ -538,7 +629,7 @@ public class App implements Serializable {
 		List<Offer> offers = new ArrayList<Offer>();
 		
 		for (Offer o : this.offers) {
-			if (o.getStatus() == OfferStatus.PENDING_FOR_APPROVAL) {
+			if (o.getStatus() == OfferStatus.PENDING_FOR_CHANGES) {
 				offers.add(o);
 			}
 		}
@@ -558,11 +649,12 @@ public class App implements Serializable {
 	 * @throws NoUserLoggedException
 	 * @throws InvalidDateException
 	 * @throws NotTheOwnerException
+	 * @throws OfferAlreadyCreatedException 
 	 */
 	
-	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
+	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;
-		
+	
 		if(startingDate.isBefore(App.getCurrentDate())){
 			throw new InvalidDateException(startingDate);
 		}
@@ -575,6 +667,11 @@ public class App implements Serializable {
 			
 			if(offeredHouse.getHost().equals(App.getLoggedUser())){
 				o = new LivingOffer(startingDate, price, deposit, description, offeredHouse, numberOfMonths);
+				for(Offer offer: offers) {
+					if(offer.equals(o)) {
+						throw new OfferAlreadyCreatedException();
+					}
+				}
 				offers.add(o);
 			} else {
 				throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
@@ -586,7 +683,7 @@ public class App implements Serializable {
 
 	}
 	
-	public void createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException {
+	public void createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;
 		
 		if(finishDate.isBefore(startingDate)) {
@@ -607,6 +704,11 @@ public class App implements Serializable {
 			
 			if(offeredHouse.getHost().equals(App.getLoggedUser())){
 				o = new HolidayOffer(startingDate, price, deposit, description, offeredHouse, finishDate);
+				for(Offer offer: offers) {
+					if(offer.equals(o)) {
+						throw new OfferAlreadyCreatedException();
+					}
+				}
 				offers.add(o);
 			} else {
 				throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
@@ -632,12 +734,14 @@ public class App implements Serializable {
 	 * 
 	 * @param user User to be banned
 	 */
-	public void banUser(RegisteredUser user) {
+	public void banUser(RegisteredUser user) throws InvalidRolException {
+		if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "unbanUser");
+		}
 		this.authorizedUsers.remove(user);
 		this.bannedUsers.add(user);
 		
-		// TODO hacer logout aqui o donde se llame a esta funcion
-		// TODO comprobar si es admin el que llama a esta funcion
+
 	}
 	
 	/**
@@ -645,7 +749,10 @@ public class App implements Serializable {
 	 * 
 	 * @param user User to be unbanned
 	 */
-	public void unbanUser(RegisteredUser user) {
+	public void unbanUser(RegisteredUser user) throws InvalidRolException {
+		if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "unbanUser");
+		}
 		this.authorizedUsers.add(user);
 		this.bannedUsers.remove(user);
 
@@ -659,12 +766,16 @@ public class App implements Serializable {
 	 * @param description Description of the suggestion of changes
 	 */
 	public void suggestChanges(Offer o, String description) {
-		if (o.getStatus() != OfferStatus.PENDING_FOR_APPROVAL) { // Can only suggest changes to an offer pending for
-																 // approval
+		if (o.getStatus() != OfferStatus.PENDING_FOR_APPROVAL) { // Can only suggest changes to an offer pending for												 // approval
 			return;
 		}
 		
-		o.modifyOffer(OfferStatus.PENDING_FOR_CHANGES);
+		try {
+			modifyOffer(OfferStatus.PENDING_FOR_CHANGES, o);
+		} catch (InvalidRolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		this.changesRequests.put(o, App.getCurrentDate());
 	}
@@ -676,15 +787,19 @@ public class App implements Serializable {
 	 * @param o Offer to be approved
 	 * @throws OfferIsPendingForChangesExceptions When the offer that is
 	 * trying to be approved is still pending for changes
+	 * @throws InvalidRolException 
 	 */
-	public void approveOffer(Offer o) throws OfferIsPendingForChangesExceptions{
+	public void approveOffer(Offer o) throws OfferIsPendingForChangesExceptions, InvalidRolException{
 		
 		if (o.getStatus() == OfferStatus.PENDING_FOR_CHANGES) {
 			throw new OfferIsPendingForChangesExceptions(o);
 		}
-		o.modifyOffer(OfferStatus.APPROVED); // Mark the offer as approved
-		
+		else if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
+			throw new InvalidRolException(App.loggedUser.getNIF(),App.loggedUser.getRole(), "approveOffer");
+		}
+		modifyOffer(OfferStatus.APPROVED, o);
 		this.changesRequests.remove(o); // Remove the changes suggestion from the HashMap
+		
 	}
 	
 	/**
@@ -693,14 +808,20 @@ public class App implements Serializable {
 	 * 
 	 * @param o Offer to be reviewed
 	 */
-	public void requestRevision(Offer o) {
+	public void requestRevision(Offer o) throws InvalidRolException, NotTheOwnerException{
 		if (o.getStatus() != OfferStatus.PENDING_FOR_CHANGES) { // Cannot request this if the offer has been approved
 			return;
 		}
-		
-		o.modifyOffer(OfferStatus.PENDING_FOR_APPROVAL); // Mark the offer as pending for approval
-		
-		this.changesRequests.remove(o);
+		else if(!App.loggedUser.getRole().equals(Role.HOST) && !App.loggedUser.getRole().equals(Role.MULTIROLE)) {
+			throw new InvalidRolException(App.loggedUser.getNIF(),App.loggedUser.getRole(), "requestRevision");
+		}
+		else if(!o.getHouse().getHost().equals(App.loggedUser)) {
+			throw new NotTheOwnerException(o.getHouse(), App.loggedUser);
+		}
+		else {
+			modifyOffer(OfferStatus.PENDING_FOR_APPROVAL, o);
+			this.changesRequests.remove(o);
+		}
 	}
 	
 	/**
@@ -776,16 +897,48 @@ public class App implements Serializable {
 			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
 		}			
 	}
+	public void addReservation(Offer o) throws InvalidRolException, RestrictedUserException {
+		if(!loggedUser.getRole().equals(Role.GUEST) && !loggedUser.getRole().equals(Role.MULTIROLE)) {
+			throw new InvalidRolException(loggedUser.getNIF(), loggedUser.getRole(), "addReservation");
+		}
+		else if(o.getRestrictedUsers().contains(loggedUser)){
+			throw new RestrictedUserException(loggedUser.getNIF());
+		}
+		else if(loggedUser.getRole().equals(Role.GUEST)){
+			Guest g = (Guest)loggedUser;
+			g.addReservation(new Reservation(g, o));
+		}
+		else if(loggedUser.getRole().equals(Role.MULTIROLE)){
+			MultiRoleUser m = (MultiRoleUser)loggedUser;
+			m.addReservation(new Reservation(m, o));
+		}
+	}
 	
+	public void changeCreditCard(String creditCard, RegisteredUser user) throws InvalidRolException {
+		
+		if(!loggedUser.getRole().equals(Role.ADMIN)) {
+			throw new InvalidRolException(loggedUser.getNIF(), loggedUser.getRole(), "changeCreditCard");
+		}
+		else if(creditCard.length() == 16) {
+			unbanUser(user);
+		}
+		user.changeCreditCard(creditCard);
+	}
 	// TODO javadoc
-	public void payOffer(Offer o) {
+	public void payOffer(Offer o) throws RestrictedUserException {
+		if(o.getRestrictedUsers().contains(loggedUser)){
+			throw new RestrictedUserException(loggedUser.getNIF());
+		}
 		try {
 			o.payOffer();
 		} catch (InvalidCardNumberException e) {
-			this.banUser(App.getLoggedUser());
+			try {
+				this.banUser(App.getLoggedUser());
+			} catch (InvalidRolException e1) {
+				System.out.println(e1);
+			}
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (CouldNotPayHostException e) {
 			RegisteredUser h = e.getHost();
 			Double amount = e.getAmount();
@@ -797,13 +950,21 @@ public class App implements Serializable {
 
 	// TODO javadoc
 	public void payReservation(Reservation r) {
+
 		try {
 			r.payReservation();
 		} catch (NotTheReserverException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (InvalidCardNumberException e) {
-			this.banUser(App.getLoggedUser());
+			try {
+				r.cancelReservation();
+				this.banUser(App.getLoggedUser());
+			} catch (InvalidRolException e1) {
+				System.out.println(e1);
+			}
+		} catch (TimeIsUpException e) {
+			r.getBookedOffer().getRestrictedUsers().add(loggedUser);
+			r.cancelReservation();
 		} catch (CouldNotPayHostException e) {
 			RegisteredUser user = e.getHost();
 			Double amount = e.getAmount();

@@ -53,7 +53,6 @@ public class Guest extends RegisteredUser implements GuestI{
 	public void addReservation(Reservation reservation) {
 		// TODO comprobar algo de las fechas?
 		// TODO comprobar el estado de la oferta?
-		
 		this.reservedOffers.add(reservation);
 	}
 	

@@ -59,7 +59,7 @@ public abstract class RegisteredUser implements Serializable {
 	 * List of reserved offers of the user. Cannot be modified unless the user is
 	 * from the type Guest or Multirole
 	 */
-	protected List<Reservation> reservedOffers;
+	public List<Reservation> reservedOffers;
 
 	/**
 	 * List of houses of the user. Cannot be modified unless the user is from the
@@ -94,6 +94,10 @@ public abstract class RegisteredUser implements Serializable {
 	 */
 	public String getName() {
 		return name;
+	}
+	
+	public List<Reservation> getReservations(){
+		return this.reservedOffers;
 	}
 
 	/**

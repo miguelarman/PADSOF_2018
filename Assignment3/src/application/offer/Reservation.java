@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import application.App;
+import application.dates.ModifiableDate;
 import application.users.Guest;
+import application.users.MultiRoleUser;
+import application.users.RegisteredUser;
+import application.users.RegisteredUser.Role;
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import exceptions.*;
 
@@ -31,7 +35,7 @@ public class Reservation implements Serializable{
 	/**
 	 * Client that booked the offer
 	 */
-	private Guest client;
+	private RegisteredUser client;
 	
 	/**
 	 * Offer that was booked
@@ -46,8 +50,8 @@ public class Reservation implements Serializable{
 	 * @param client Client that is booking the offer
 	 * @param bookedOffer Offer that is being booked
 	 */
-	public Reservation(LocalDate bookingDate, Guest client, Offer bookedOffer) {
-		this.bookingDate = bookingDate;
+	public Reservation(RegisteredUser client, Offer bookedOffer) {
+		this.bookingDate = ModifiableDate.getModifiableDate();
 		this.client = client;
 		this.bookedOffer = bookedOffer;
 	}
@@ -66,7 +70,7 @@ public class Reservation implements Serializable{
 	 * 
 	 * @return Client of the reservation
 	 */
-	public Guest getClient() {
+	public RegisteredUser getClient() {
 		return client;
 	}
 	
@@ -84,10 +88,17 @@ public class Reservation implements Serializable{
 	 * Method that cancels a Reservation
 	 */
 	public void cancelReservation() {
-				
-		Guest user = this.client;
 		
-		user.deleteReservation(this);
+		
+		if(this.client.getRole().equals(Role.GUEST)) {
+			Guest user = (Guest)this.client;
+			user.deleteReservation(this);
+		}
+		else if(this.client.getRole().equals(Role.MULTIROLE)) {
+			MultiRoleUser user = (MultiRoleUser)this.client;
+			user.deleteReservation(this);
+		}
+
 		
 		// This assigning prevent errors in the future
 		this.bookedOffer = null;
@@ -102,9 +113,16 @@ public class Reservation implements Serializable{
 	 * @throws NotTheReserverException When the user trying to pay is not the reserver
 	 * @throws InvalidCardNumberException When the credit card is not valid
 	 * @throws CouldNotPayHostException 
+	 * @throws TimeIsUpException 
 	 */
-	public void payReservation() throws NotTheReserverException, InvalidCardNumberException, CouldNotPayHostException {
+	public void payReservation() throws NotTheReserverException, InvalidCardNumberException, CouldNotPayHostException, TimeIsUpException {
 
+		LocalDate changesDate = getBookingDate();
+		LocalDate currentDate = ModifiableDate.getModifiableDate();
+		
+		if (currentDate.minusDays(5).isEqual(changesDate) || currentDate.minusDays(5).isAfter(changesDate)) { // User has exceeded 5 days without paying
+			throw new TimeIsUpException("payReservation");
+		}
 		// We check if the user trying to pay the reservation is the one that booked it
 		if (!this.client.equals(App.getLoggedUser())) {
 			throw new NotTheReserverException(this, App.getLoggedUser());

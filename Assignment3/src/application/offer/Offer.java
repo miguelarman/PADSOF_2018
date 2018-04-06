@@ -7,8 +7,7 @@ import java.util.*;
 import application.App;
 import application.opinion.*;
 import application.users.RegisteredUser;
-import exceptions.CouldNotPayHostException;
-import exceptions.NoUserLoggedException;
+import exceptions.*;
 
 import es.uam.eps.padsof.telecard.*;
 
@@ -71,6 +70,7 @@ public abstract class Offer implements Serializable{
 	 * @param description Description of the offer
 	 * @param offeredHouse House in which the offer takes place
 	 */
+	private List<RegisteredUser> restrictedUsers;
 	public Offer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse) {
 		this.startingDate = startingDate;
 		this.price = price;
@@ -79,6 +79,7 @@ public abstract class Offer implements Serializable{
 		this.status = OfferStatus.PENDING_FOR_APPROVAL;
 		this.offeredHouse = offeredHouse;
 		this.opinions = new ArrayList<Opinion>();
+		this.restrictedUsers = new ArrayList<RegisteredUser>();
 	}
 	
 	/**
@@ -118,13 +119,26 @@ public abstract class Offer implements Serializable{
 	}
 	
 	
+	public List<RegisteredUser> getRestrictedUsers() {
+		return restrictedUsers;
+	}
+
 	/**
 	 * Method used to modify the starting date of the offer
 	 * 
 	 * @param startingDate New starting date of the offer
+	 * @throws NotTheOwnerException 
 	 */
-	public void modifyOffer(LocalDate startingDate) {
-		this.startingDate = startingDate;
+	public void modifyOffer(LocalDate startingDate) throws InvalidOfferStatusException, NotTheOwnerException{
+		if(!this.status.equals(OfferStatus.PENDING_FOR_CHANGES)) {
+			throw new InvalidOfferStatusException(this.status, "modifyOffer");
+		}
+		else if(!App.getLoggedUser().equals(this.offeredHouse.getHost())) {
+			throw new NotTheOwnerException(this.offeredHouse, App.getLoggedUser());
+		}
+		else {
+			this.startingDate = startingDate;
+		}
 	}
 	
 	/**
@@ -132,27 +146,51 @@ public abstract class Offer implements Serializable{
 	 * 
 	 * @param price New price of the offer
 	 * @param deposit New deposit of the offer
+	 * @throws InvalidOfferStatusException 
+	 * @throws NotTheOwnerException 
 	 */
-	public void modifyOffer(Double price, Double deposit) {
-		this.price = price;
-		this.deposit = deposit;
+	public void modifyOffer(Double price, Double deposit) throws InvalidOfferStatusException, NotTheOwnerException {
+		if(!this.status.equals(OfferStatus.PENDING_FOR_CHANGES)) {
+			throw new InvalidOfferStatusException(this.status, "modifyOffer");
+		}
+		else if(!App.getLoggedUser().equals(this.offeredHouse.getHost())) {
+			throw new NotTheOwnerException(this.offeredHouse, App.getLoggedUser());
+		}
+		else {
+			this.price = price;
+			this.deposit = deposit;
+		}
 	}
 	
 	/**
 	 * Method used to modify the description date of the offer
 	 * 
 	 * @param description New description of the offer
+	 * @throws InvalidOfferStatusException 
+	 * @throws NotTheOwnerException 
 	 */
-	public void modifyOffer(String description) {
-		this.description = description;
+	public void modifyOffer(String description) throws InvalidOfferStatusException, NotTheOwnerException {
+		
+		if(!this.status.equals(OfferStatus.PENDING_FOR_CHANGES)) {
+			throw new InvalidOfferStatusException(this.status, "modifyOffer");
+		}
+		else if(!App.getLoggedUser().equals(this.offeredHouse.getHost())) {
+			throw new NotTheOwnerException(this.offeredHouse, App.getLoggedUser());
+		}
+		else {
+			this.description = description;
+		}
+
 	}
 	
 	/**
 	 * Method used to modify the status of the offer
 	 * 
 	 * @param status New status of the offer
+	 * @throws InvalidRolException 
+	 * @throws InvalidOfferStatusException 
 	 */
-	public void modifyOffer(OfferStatus status) {
+	public void modifyOffer(OfferStatus status){
 		this.status = status;
 	}
 	
@@ -181,11 +219,9 @@ public abstract class Offer implements Serializable{
 		} catch (InvalidCardNumberException e) {
 			throw e;
 		} catch (FailedInternetConnectionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (OrderRejectedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		this.payHost();
@@ -288,10 +324,11 @@ public abstract class Offer implements Serializable{
 		
 		string += "Offer for the house in " + this.getHouse().getZipCode() + " (" + this.getHouse().getCity() + ")";
 		string += "\n Description: " + this.description;
+		string += "\nStatus: " + this.status;
 		string += "\nPrice: " + this.price;
 		string += "\nDeposit: " + this.deposit;
-		string += "\nHouse: " + this.offeredHouse;
 		string += "\nStarting date: " + this.startingDate;
+
 		
 		return string;
 	}
