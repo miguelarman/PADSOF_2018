@@ -96,7 +96,7 @@ public abstract class RegisteredUser implements Serializable {
 		return name;
 	}
 	
-	public List<Reservation> getReservations(){
+	public List<Reservation> getReservedOffers(){
 		return this.reservedOffers;
 	}
 

@@ -226,7 +226,7 @@ public class AppTest {
 		int before = 0;
 		
 		for (RegisteredUser u : app.getAuthorizedUsers()) {
-			before += u.getReservations().size();
+			before += u.getReservedOffers().size();
 		}
 		
 		app.logout();
@@ -239,7 +239,7 @@ public class AppTest {
 		int after = 0;
 
 		for (RegisteredUser u : app.getAuthorizedUsers()) {
-			after += u.getReservations().size();
+			after += u.getReservedOffers().size();
 		}
 		
 		assertEquals(after, before - 1, 0);
