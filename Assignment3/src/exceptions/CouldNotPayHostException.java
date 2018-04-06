@@ -24,6 +24,11 @@ public class CouldNotPayHostException extends Exception {
 	 */
 	private Double amount;
 
+	/**
+	 * Constructor of the class CouldNotPayHostException
+	 * @param host
+	 * @param amount
+	 */
 	public CouldNotPayHostException(RegisteredUser host, Double amount) {
 		this.host = host;
 		this.amount = amount;

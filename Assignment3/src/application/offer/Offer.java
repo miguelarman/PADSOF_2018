@@ -137,10 +137,21 @@ public abstract class Offer implements Serializable{
 		return description;
 	}
 	
+
 	/**
-	 * Getter method for the restrictedUsers attribute
-	 * @return List of restricted users
+	 * Getter method for the replies attribute
+	 * 
+	 * @return Opinions of the offer
 	 */
+	public List<Opinion> getOpinions() {
+		return this.opinions;
+	}
+	
+/**
+
+ * Getter method for the restrictedUsers attribute
+ * @return List of restricted users
+ */
 	public List<RegisteredUser> getRestrictedUsers() {
 		return restrictedUsers;
 	}
@@ -235,7 +246,7 @@ public abstract class Offer implements Serializable{
 		String ccard = user.getCreditCard();
 		
 		try {
-			TeleChargeAndPaySystem.charge(ccard, subject, amount); // TODO maybe throw exception
+			TeleChargeAndPaySystem.charge(ccard, subject, amount); 
 		} catch (InvalidCardNumberException e) {
 			throw e;
 		} catch (FailedInternetConnectionException e) {

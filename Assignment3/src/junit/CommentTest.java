@@ -33,50 +33,48 @@ public class CommentTest {
 	
 	@Test
 	public void testGetAvgRating() {
-		Opinion o1 = new Rating((float) 0.0);
-		comm.addReply(o1);
-		assertEquals(comm.getReplies().size(), 1, 0);
-		assertEquals(comm.getAvgRating(), 0.0, 0.1);
-		
-		Opinion o2 = new Rating((float) 1.0);
-		comm.addReply(o2);
-		assertEquals(comm.getReplies().size(), 2);
-		assertEquals(comm.getAvgRating(), 0.5, 0.1);
-		
-		Opinion o3 = new Rating((float) 0.5);
-		comm.addReply(o3);
-		assertEquals(comm.getReplies().size(), 3);
-		assertEquals(comm.getAvgRating(), 0.5, 0.1);
-		
-		Opinion o4 = new Rating((float) 5.0);
-		comm.addReply(o4);
-		assertEquals(comm.getReplies().size(), 4);
-		assertEquals(comm.getAvgRating(), 1.625, 0.1);
-		
-		Opinion o5 = new Rating((float) 2.5);
-		comm.addReply(o5);
-		assertEquals(comm.getReplies().size(), 5);
-		assertEquals(comm.getAvgRating(), 1.8, 0.1);
+		try {
+			comm.rateComment(0.0);
+			assertEquals(comm.getReplies().size(), 1, 0);
+			assertEquals(comm.getAvgRating(), 0.0, 0.1);
+
+			comm.rateComment(1.0);
+			assertEquals(comm.getReplies().size(), 2);
+			assertEquals(comm.getAvgRating(), 0.5, 0.1);
+
+			comm.rateComment(0.5);
+			assertEquals(comm.getReplies().size(), 3);
+			assertEquals(comm.getAvgRating(), 0.5, 0.1);
+
+			comm.rateComment(5.0);
+			assertEquals(comm.getReplies().size(), 4);
+			assertEquals(comm.getAvgRating(), 1.625, 0.1);
+
+			comm.rateComment(2.5);
+			assertEquals(comm.getReplies().size(), 5);
+			assertEquals(comm.getAvgRating(), 1.8, 0.1);
+		} catch (NoUserLoggedException e) {
+			fail();
+		}
 	}
 	
 	@Test
-	public void testAddReply() {
-		Opinion o = new Comment("First reply");
-		
-		comm.addReply(o);
-		
-		assertNotNull(comm);
-		assertNotNull(comm.getReplies());
-		assertEquals(comm.getReplies().size(), 1);
-		
-		
-		Opinion o2 = new Comment("First reply");
-		
-		comm.addReply(o2);
-		
-		assertNotNull(comm);
-		assertNotNull(comm.getReplies());
-		assertEquals(comm.getReplies().size(), 2);
+	public void testAddReply() {		
+		try {
+			comm.addReply("Pole");
+
+			assertNotNull(comm);
+			assertNotNull(comm.getReplies());
+			assertEquals(comm.getReplies().size(), 1);
+
+			comm.addReply("First reply");
+
+			assertNotNull(comm);
+			assertNotNull(comm.getReplies());
+			assertEquals(comm.getReplies().size(), 2);
+		} catch (NoUserLoggedException e) {
+			fail();
+		}
 	}
 	
 	@After
