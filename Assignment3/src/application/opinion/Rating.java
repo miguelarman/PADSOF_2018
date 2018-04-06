@@ -31,7 +31,6 @@ public class Rating extends Opinion {
 		this.rating = rating;
 	}
 	
-	
 	/**
 	 * Getter method for the rating attribute
 	 * 

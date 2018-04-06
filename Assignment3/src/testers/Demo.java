@@ -197,7 +197,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -231,7 +230,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -268,7 +266,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -289,7 +286,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -325,7 +321,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -363,7 +358,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -417,7 +411,13 @@ public class Demo {
 			System.out.println(e);
 		}
 		
-		a.suggestChanges(a.getOffers().get(0), "Cheaper plz");
+		try {
+			a.suggestChanges(a.getOffers().get(0), "Cheaper plz");
+		} catch (InvalidOfferStatusException e) {
+			System.out.println(e);
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		}
 		
 		System.out.println("====================");
 		System.out.println(a.getOffers().get(0).getStatus());
@@ -491,10 +491,8 @@ public class Demo {
 		try {
 			a.approveOffer(a.getOffers().get(0));
 		} catch (OfferIsPendingForChangesExceptions e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		//Checking the status
@@ -521,10 +519,8 @@ public class Demo {
 		try {
 			a.addReservation(a.getOffers().get(0));
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (RestrictedUserException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -550,7 +546,6 @@ public class Demo {
 		} catch (InvalidRolException e) {
 			System.out.println(e);
 		} catch (RestrictedUserException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -638,7 +633,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -660,10 +654,8 @@ public class Demo {
 		try {
 			a.approveOffer(a.getOffers().get(1));
 		} catch (OfferIsPendingForChangesExceptions e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		a.logout();
@@ -686,10 +678,8 @@ public class Demo {
 		try {
 			a.addReservation(a.getOffers().get(1));
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (RestrictedUserException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -729,7 +719,6 @@ public class Demo {
 		try {
 			a.changeCreditCard("1111222233334444", a.getBannedUsers().get(0));
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -796,7 +785,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -817,10 +805,8 @@ public class Demo {
 		try {
 			a.approveOffer(a.getOffers().get(2));
 		} catch (OfferIsPendingForChangesExceptions e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		a.logout();
@@ -842,7 +828,6 @@ public class Demo {
 		try {
 			a.payOffer(a.getOffers().get(2));
 		} catch (RestrictedUserException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -869,7 +854,6 @@ public class Demo {
 		try {
 			a.changeCreditCard("1111222244445555", a.getBadCCard().get(0));
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -898,14 +882,12 @@ public class Demo {
 		try {
 			a.getOffers().get(2).rateOffer("Awful");
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		//Rate the offer
 		try {
 			a.getOffers().get(2).rateOffer(1.0);
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		//Check the avg rating
@@ -938,7 +920,6 @@ public class Demo {
 		try {
 			c.addReply("Nah");
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -946,7 +927,6 @@ public class Demo {
 		try {
 			c.rateComment(2.0);
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -954,7 +934,6 @@ public class Demo {
 		try {
 			a.getOffers().get(2).rateOffer(4.0);
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -1009,7 +988,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -1053,7 +1031,6 @@ public class Demo {
 		} catch (NotTheOwnerException e) {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		a.logout();
@@ -1097,24 +1074,20 @@ public class Demo {
 		try {
 			a.addReservation(a.getOffers().get(3));
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (RestrictedUserException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		//We comment and rate an offer
 		try {
 			a.getOffers().get(4).rateOffer("Ok");
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		//Rate the offer
 		try {
 			a.getOffers().get(4).rateOffer(3.0);
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -1141,7 +1114,6 @@ public class Demo {
 		try {
 			System.out.println(a.searchBooked());
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		System.out.println("====================\n");
@@ -1166,7 +1138,6 @@ public class Demo {
 		try {
 			System.out.println(a.searchBooked());
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		//Search paid offers
@@ -1174,7 +1145,6 @@ public class Demo {
 		try {
 			System.out.println(a.searchPaid());
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		//Search by average rating
@@ -1182,7 +1152,6 @@ public class Demo {
 		try {
 			System.out.println(a.searchAvgRating(1.0));
 		} catch (NoUserLoggedException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 	}
