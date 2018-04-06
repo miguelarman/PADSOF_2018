@@ -78,10 +78,6 @@ public class AppTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail();
-		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail();
 		}
 
 		app = App.openApp();
@@ -162,7 +158,11 @@ public class AppTest {
 		
 		app = App.openApp();
 		assertEquals(app.getOffers().size(), before - 1, 0);
+		app.logout();
+		app.closeApp();
 	}
+	
+	
 	
 	// deleteExpiredReservations
 

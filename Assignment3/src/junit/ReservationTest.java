@@ -68,10 +68,12 @@ public class ReservationTest {
 		user = new Guest("Jose Luis", "Perez Lopez", "ItIsNoTKnOwN", "7777222288885555", "55555111Z");
 
 		App app = App.openApp();
+		app.logout();
 		try {
 			app.login("55555111Z", "ItIsNoTKnOwN");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
 				| AUserIsAlreadyLoggedException e1) {
+			e1.printStackTrace();
 			fail();
 		}
 		
@@ -94,6 +96,8 @@ public class ReservationTest {
 		} catch (TimeIsUpException e) {
 			fail();
 		}
+		
+		app.logout();
 	}
 	
 	@Test(expected = NotTheReserverException.class)
@@ -102,6 +106,7 @@ public class ReservationTest {
 		user = new Guest("Otro", "Otro", "Otro", "7777222288885555", "Otro");
 
 		App app = App.openApp();
+		app.logout();
 		try {
 			app.login("55555111Z", "ItIsNoTKnOwN");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
@@ -124,6 +129,8 @@ public class ReservationTest {
 		} catch (TimeIsUpException e) {
 			fail();
 		}
+		
+		app.logout();
 	}
 	
 	@Test(expected = CouldNotPayHostException.class)
@@ -132,6 +139,7 @@ public class ReservationTest {
 		user = new Guest("Jose Luis", "Perez Lopez", "ItIsNoTKnOwN", "7777222288885555", "55555111Z");
 
 		App app = App.openApp();
+		app.logout();
 		try {
 			app.login("55555111Z", "ItIsNoTKnOwN");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
@@ -156,6 +164,9 @@ public class ReservationTest {
 		} catch (TimeIsUpException e) {
 			fail();
 		}
+		
+		
+		app.logout();
 	}
 	
 	@Test(expected = TimeIsUpException.class)
@@ -164,6 +175,7 @@ public class ReservationTest {
 		user = new Guest("Jose Luis", "Perez Lopez", "ItIsNoTKnOwN", "7777222288885555", "55555111Z");
 
 		App app = App.openApp();
+		app.logout();
 		try {
 			app.login("55555111Z", "ItIsNoTKnOwN");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
@@ -189,6 +201,8 @@ public class ReservationTest {
 		} catch (TimeIsUpException e) {
 			throw e;
 		}
+		
+		
+		app.logout();
 	}
-
 }

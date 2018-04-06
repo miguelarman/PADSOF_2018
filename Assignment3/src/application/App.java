@@ -589,16 +589,31 @@ public class App implements Serializable {
 	 * from the binary files
 	 */
 	private void deleteExpiredOffers() {
-		for (Offer o : this.offers) {
-			LocalDate startingDate = o.getDate();
+		
+//		for (Offer o : this.offers) {
+//			LocalDate startingDate = o.getDate();
+//			LocalDate currentDate = App.getCurrentDate();
+//			
+//			if (startingDate.isBefore(currentDate)) { // The offer has expired
+//				if (o.getStatus() != OfferStatus.PAID) {
+//					this.removeOffer(o);
+//				}
+//			}
+//		}
+		
+		for (Iterator<Offer> iterator = this.offers.iterator(); iterator.hasNext(); ) {
+		    Offer o = iterator.next();
+		    LocalDate startingDate = o.getDate();
 			LocalDate currentDate = App.getCurrentDate();
 			
 			if (startingDate.isBefore(currentDate)) { // The offer has expired
 				if (o.getStatus() != OfferStatus.PAID) {
-					this.removeOffer(o);
+					//this.removeOffer(o);
+					//offersToDelete.add(o);
+					iterator.remove();
 				}
 			}
-		}
+		}		
 	}
 
 	/**
@@ -607,14 +622,29 @@ public class App implements Serializable {
 	 * from the binary files
 	 */
 	private void deleteExpiredReservations() {
-		for (RegisteredUser user : this.authorizedUsers) {
-			if (user.getRole() == RegisteredUser.Role.GUEST) {
-				for (Reservation r : ((Guest) user).getReservedOffers()) {
+//		for (RegisteredUser user : this.authorizedUsers) {
+//			if (user.getRole() == RegisteredUser.Role.GUEST) {
+//				for (Reservation r : ((Guest) user).getReservedOffers()) {
+//					LocalDate bookingDate = r.getBookingDate();
+//					LocalDate currentDate = App.getCurrentDate();
+//					
+//					if (currentDate.minusDays(5).isEqual(bookingDate) || currentDate.minusDays(5).isAfter(bookingDate)) { // User has exceeded 5 days without paying
+//						r.cancelReservation();
+//					}
+//				}
+//			}
+//		}
+		
+		for (Iterator<RegisteredUser> iterator = this.authorizedUsers.iterator(); iterator.hasNext(); ) {
+		    RegisteredUser user = iterator.next();
+		    if (user.getRole() == RegisteredUser.Role.GUEST) {
+				for (Iterator<Reservation> iterator2 = ((Guest) user).getReservedOffers().iterator(); iterator2.hasNext(); ) {
+					Reservation r = iterator2.next();
 					LocalDate bookingDate = r.getBookingDate();
 					LocalDate currentDate = App.getCurrentDate();
 					
 					if (currentDate.minusDays(5).isEqual(bookingDate) || currentDate.minusDays(5).isAfter(bookingDate)) { // User has exceeded 5 days without paying
-						r.cancelReservation();
+						iterator2.remove();
 					}
 				}
 			}

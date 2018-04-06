@@ -80,12 +80,40 @@ public class Comment extends Opinion {
 	 * 
 	 * @return Replies of the comment
 	 */
-	public List<Opinion> getReplies() {
+	public List<Opinion> getComments() {
 		List<Opinion> aux = new ArrayList<Opinion>();
 		for(Opinion o: replies) {
 			if (o.getClass() == Comment.class) {
 				aux.add(o);
 			}
+		}
+		return aux;
+	}
+	
+	/**
+	 * Getter method for the numerical replies
+	 * 
+	 * @return Ratings of the comment
+	 */
+	public List<Opinion> getRatings() {
+		List<Opinion> aux = new ArrayList<Opinion>();
+		for(Opinion o: replies) {
+			if (o.getClass() == Rating.class) {
+				aux.add(o);
+			}
+		}
+		return aux;
+	}
+	
+	/**
+	 * Getter method for the replies (both numerical and text)
+	 * 
+	 * @return Replies of the comment
+	 */
+	public List<Opinion> getReplies() {
+		List<Opinion> aux = new ArrayList<Opinion>();
+		for(Opinion o: replies) {
+			aux.add(o);
 		}
 		return aux;
 	}
@@ -119,9 +147,6 @@ public class Comment extends Opinion {
 			throw new NoUserLoggedException();
 		}
 		Opinion o = new Rating(rating);
-		if(App.getLoggedUser() == null) {
-			throw new NoUserLoggedException();
-		}
 		
 		this.replies.add(o);
 	}

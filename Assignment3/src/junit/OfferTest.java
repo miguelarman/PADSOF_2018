@@ -62,7 +62,7 @@ public class OfferTest {
 		} catch (NotTheOwnerException e) {
 			fail();
 		}
-		
+		app.logout();
 	}
 	
 	@Test
@@ -81,6 +81,7 @@ public class OfferTest {
 		
 		try {
 			app = App.openApp();
+			app.logout();
 			app.login("55535121Z", "lolol");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
 				| AUserIsAlreadyLoggedException e) {
@@ -99,9 +100,11 @@ public class OfferTest {
 		
 		try {
 			app = App.openApp();
+			app.logout();
 			app.login("51999111X", "swordFish");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
 				| AUserIsAlreadyLoggedException e) {
+			e.printStackTrace();
 			fail();
 		}
 		
@@ -127,9 +130,11 @@ public class OfferTest {
 		o.modifyOffer(OfferStatus.PENDING_FOR_CHANGES);
 		try {
 			app = App.openApp();
+			app.logout();
 			app.login("55535121Z", "lolol");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
 				| AUserIsAlreadyLoggedException e) {
+			e.printStackTrace();
 			fail();
 		}
 		try {
@@ -141,17 +146,20 @@ public class OfferTest {
 		}
 		
 		
-		o.modifyOffer(OfferStatus.APPROVED);		
+		o.modifyOffer(OfferStatus.APPROVED);
+		app.logout();
 	}
 	
 	// payOffer
 	@Test
 	public void testPayOfferCorrect() {
 		App app = App.openApp();
+		app.logout();
 		try {
 			app.login("51999111X", "swordFish");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
 				| AUserIsAlreadyLoggedException e) {
+			e.printStackTrace();
 			fail();
 		}
 		
@@ -167,6 +175,7 @@ public class OfferTest {
 			e.printStackTrace();
 			fail();
 		}
+		app.logout();
 	}
 	
 	@Test
@@ -195,10 +204,12 @@ public class OfferTest {
 		
 		
 		app = App.openApp();
+		app.logout();
 		try {
 			app.login("51999111X", "swordFish");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
 				| AUserIsAlreadyLoggedException e) {
+			e.printStackTrace();
 			fail();
 		}
 		
@@ -239,6 +250,7 @@ public class OfferTest {
 			System.out.println("Excepcion esperada");
 		}
 		
+		app.logout();
 	}
 	
 	// rateOffer
@@ -270,6 +282,7 @@ public class OfferTest {
 			e.printStackTrace();
 			fail();
 		}
+		app.logout();
 	}
 	
 	@Test(expected = NoUserLoggedException.class)
@@ -321,5 +334,7 @@ public class OfferTest {
 			e.printStackTrace();
 			fail();
 		}
+		
+		app.logout();
 	}
 }

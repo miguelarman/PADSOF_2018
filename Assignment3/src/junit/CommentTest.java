@@ -14,14 +14,10 @@ public class CommentTest {
 	private Comment comm;
 	private App app;
 	
-	@BeforeClass
-	public static void setUpApp() {
-		
-	}
-	
 	@Before
 	public void setUp() {
 		app = App.openApp();
+		app.logout();
 		try {
 			app.login("54444111D", "forgetme");
 		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
@@ -33,6 +29,7 @@ public class CommentTest {
 	
 	@Test
 	public void testGetAvgRating() {
+		
 		try {
 			comm.rateComment(0.0);
 			assertEquals(comm.getReplies().size(), 1, 0);
@@ -64,14 +61,14 @@ public class CommentTest {
 			comm.addReply("Pole");
 
 			assertNotNull(comm);
-			assertNotNull(comm.getReplies());
-			assertEquals(comm.getReplies().size(), 1);
+			assertNotNull(comm.getComments());
+			assertEquals(comm.getComments().size(), 1);
 
 			comm.addReply("First reply");
 
 			assertNotNull(comm);
-			assertNotNull(comm.getReplies());
-			assertEquals(comm.getReplies().size(), 2);
+			assertNotNull(comm.getComments());
+			assertEquals(comm.getComments().size(), 2);
 		} catch (NoUserLoggedException e) {
 			fail();
 		}
@@ -80,6 +77,7 @@ public class CommentTest {
 	@After
 	public void toNull() {
 		comm = null;
+		app.logout();
 	}
 
 }
