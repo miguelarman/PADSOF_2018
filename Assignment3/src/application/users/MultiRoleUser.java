@@ -3,7 +3,6 @@ package application.users;
 import java.util.List;
 
 import application.offer.*;
-
 import exceptions.HouseAlreadyCreatedException;
 
 /**
@@ -109,6 +108,38 @@ public class MultiRoleUser extends RegisteredUser implements GuestI, HostI {
 	 */
 	public Role getRole() {
 		return Role.MULTIROLE;
+	}
+	
+	@Override
+	/**
+	 * Method that returns all the data of a RegisteredUser in a String with
+	 * printable format
+	 */
+	public String toString() {
+		String string = "";
+		string += "Name: " + this.getName() + "\n";
+		string += "Surname: " + this.getSurname() + "\n";
+		string += "Password: " + this.getPasswd() + "\n";
+		string += "CreditCard: " + this.getCreditCard() + "\n";
+		string += "NIF: " + this.getNIF() + "\n";
+		
+		string += "Houses: \n";
+		int i = 1;
+		for (House h : this.hostRole.houses) {
+			string += "\n(" + i + ")\n";
+			string += h + "\n";
+			i++;
+		}
+		
+		string += "Booked offers: \n";
+		i = 1;
+		for (Reservation r : this.guestRole.reservedOffers) {
+			string += "\n(" + i + ")\n";
+			string += r + "\n";
+			i++;
+		}
+		
+		return string;
 	}
 
 }
