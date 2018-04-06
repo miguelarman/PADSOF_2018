@@ -775,8 +775,6 @@ public class App implements Serializable {
 		}
 		this.authorizedUsers.add(user);
 		this.bannedUsers.remove(user);
-
-		// TODO comprobar si es admin el que llama a esta funcion
 	}
 	
 	/**

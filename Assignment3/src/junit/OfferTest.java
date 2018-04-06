@@ -9,9 +9,12 @@ import org.junit.*;
 import application.App;
 import application.offer.*;
 import application.users.Host;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import exceptions.AUserIsAlreadyLoggedException;
+import exceptions.CouldNotPayHostException;
 import exceptions.IncorrectPasswordException;
 import exceptions.InvalidOfferStatusException;
+import exceptions.NoUserLoggedException;
 import exceptions.NotTheOwnerException;
 import exceptions.UnexistentUserException;
 import exceptions.UserIsBannedException;
@@ -142,9 +145,181 @@ public class OfferTest {
 	}
 	
 	// payOffer
+	@Test
+	public void testPayOfferCorrect() {
+		App app = App.openApp();
+		try {
+			app.login("51999111X", "swordFish");
+		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
+				| AUserIsAlreadyLoggedException e) {
+			fail();
+		}
+		
+		try {
+			o.payOffer();
+		} catch (InvalidCardNumberException e) {
+			e.printStackTrace();
+			fail();
+		} catch (NoUserLoggedException e) {
+			e.printStackTrace();
+			fail();
+		} catch (CouldNotPayHostException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testPayOffer() {
+		App app = App.openApp();
+		try {
+			app.login("51999111X", "swordFish");
+		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
+				| AUserIsAlreadyLoggedException e) {
+			fail();
+		}
+		
+		App.getLoggedUser().changeCreditCard("wrong");
+		
+		try {
+			o.payOffer();
+		} catch (InvalidCardNumberException e) {
+			System.out.println("Excepcion esperada");
+		} catch (NoUserLoggedException e) {
+			e.printStackTrace();
+			fail();
+		} catch (CouldNotPayHostException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		app = App.openApp();
+		try {
+			app.login("51999111X", "swordFish");
+		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
+				| AUserIsAlreadyLoggedException e) {
+			fail();
+		}
+		
+		app.logout();
+		
+		try {
+			o.payOffer();
+		} catch (InvalidCardNumberException e) {
+			e.printStackTrace();
+			fail();
+		} catch (NoUserLoggedException e) {
+			System.out.println("Excepcion esperada");
+		} catch (CouldNotPayHostException e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		app = App.openApp();
+		try {
+			app.login("51999111X", "swordFish");
+		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
+				| AUserIsAlreadyLoggedException e) {
+			fail();
+		}
+		
+		o.getHouse().getHost().changeCreditCard("wrong");
+		
+		try {
+			o.payOffer();
+		} catch (InvalidCardNumberException e) {
+			e.printStackTrace();
+			fail();
+		} catch (NoUserLoggedException e) {
+			e.printStackTrace();
+			fail();
+		} catch (CouldNotPayHostException e) {
+			System.out.println("Excepcion esperada");
+		}
+		
+	}
 	
 	// rateOffer
 	
+	@Test
+	public void testRateOffer() {
+		
+		App app = App.openApp();
+		try {
+			app.login("51999111X", "swordFish");
+		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
+				| AUserIsAlreadyLoggedException e) {
+			fail();
+		}
+		
+		assertEquals(o.getComments().size(), 0, 0);
+		
+		try {
+			o.rateOffer(0.0);
+
+			assertEquals(o.getOpinions().size(), 1, 0);
+
+			o.rateOffer(5.0);
+			assertEquals(o.getOpinions().size(), 2, 0);
+			
+			o.rateOffer("really nice");
+			assertEquals(o.getOpinions().size(), 3, 0);
+		} catch (NoUserLoggedException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test(expected = NoUserLoggedException.class)
+	public void testRateOfferIncorrectNumerical() throws NoUserLoggedException {
+		
+		App app = App.openApp();
+		app.logout();
+		
+		assertEquals(o.getComments().size(), 0, 0);
+		
+		o.rateOffer(0.0);
+	}
+	
+	@Test(expected = NoUserLoggedException.class)
+	public void testRateOfferIncorrecttext() throws NoUserLoggedException {
+		
+		App app = App.openApp();
+		app.logout();
+		
+		assertEquals(o.getComments().size(), 0, 0);
+		
+		o.rateOffer("nice house");
+	}
+	
 	// getAvgRating
 
+	@Test
+	public void testAvgRating() {
+		
+		App app = App.openApp();
+		try {
+			app.login("51999111X", "swordFish");
+		} catch (UserIsBannedException | IncorrectPasswordException | UnexistentUserException
+				| AUserIsAlreadyLoggedException e) {
+			fail();
+		}
+		
+		
+		try {
+			o.rateOffer(0.0);
+			o.rateOffer(5.0);			
+			o.rateOffer("really nice");
+			o.rateOffer(1.0);
+			o.rateOffer(2.0);
+			
+			
+			assertEquals(o.getAvgRating(), 2.0, 0.1);
+		} catch (NoUserLoggedException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 }

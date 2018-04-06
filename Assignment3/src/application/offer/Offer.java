@@ -127,6 +127,15 @@ public abstract class Offer implements Serializable{
 		return description;
 	}
 	
+	/**
+	 * Getter method for the replies attribute
+	 * 
+	 * @return Opinions of the offer
+	 */
+	public List<Opinion> getOpinions() {
+		return this.opinions;
+	}
+	
 	
 	public List<RegisteredUser> getRestrictedUsers() {
 		return restrictedUsers;
