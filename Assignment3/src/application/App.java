@@ -733,9 +733,6 @@ public class App implements Serializable {
 	 * @param user User to be banned
 	 */
 	public void banUser(RegisteredUser user) throws InvalidRolException {
-		if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
-			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "unbanUser");
-		}
 		this.authorizedUsers.remove(user);
 		this.bannedUsers.add(user);
 		
@@ -877,7 +874,12 @@ public class App implements Serializable {
 		else if(App.loggedUser.getRole().equals(Role.HOST)){ //Checks if the loggedUser is a host
 			if(house.getHost().equals(App.getLoggedUser())){
 				Host user = (Host)App.getLoggedUser();
-				user.getHouses().add(house);
+				try {
+					user.addHouse(house);
+				} catch (HouseAlreadyCreatedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
 				throw new NotTheOwnerException(house, App.loggedUser);
 			}
@@ -886,7 +888,13 @@ public class App implements Serializable {
 		else if(App.loggedUser.getRole().equals(Role.MULTIROLE)) { //Checks if the loggedUser is a multirole
 			if(house.getHost().equals(App.getLoggedUser())){
 				MultiRoleUser user = (MultiRoleUser)App.getLoggedUser();
-				user.getHouses().add(house);
+				try {
+					user.addHouse(house);
+				} catch (HouseAlreadyCreatedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(user.getHouses());
 			} else {
 				throw new NotTheOwnerException(house, App.loggedUser);
 			}

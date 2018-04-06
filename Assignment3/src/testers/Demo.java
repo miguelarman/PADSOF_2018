@@ -1,6 +1,7 @@
 package testers;
 
 import application.offer.House;
+import application.users.MultiRoleUser;
 
 import java.time.LocalDate;
 
@@ -591,22 +592,22 @@ public class Demo {
 			System.out.println(e);
 		}
 		
-		//Checking if the house was created successfully
-		System.out.println("====================");
-		System.out.println(house1);
-		System.out.println("====================\n");
-		
 		try {
 			house2.addCharacteristic("Toilet", "1"); //We add a characteristic to the created house
 		} catch (DuplicateCharacteristicException e) {
 			System.out.println(e);
 		}
 		try {
-			house1.addCharacteristic("Garden", "WOW"); //We another characteristic to the created house
+			house2.addCharacteristic("Garden", "WOW"); //We another characteristic to the created house
 		} catch (DuplicateCharacteristicException e) {
 			System.out.println(e);
 		}
-			
+		
+		//Checking if the house was created successfully
+		System.out.println("====================");
+		System.out.println(house2);
+		System.out.println("====================\n");
+		
 		try {
 			a.addHouse(house2); //We add the house to the system
 		} catch (InvalidRolException e) {
@@ -690,17 +691,24 @@ public class Demo {
 		
 		//We check that the reservation has added to the user's list
 		System.out.println("====================");
-		System.out.println(App.getLoggedUser().getReservations());
+		System.out.println(App.getLoggedUser());
 		System.out.println("====================\n");
-			
+		
+		MultiRoleUser m = (MultiRoleUser)App.getLoggedUser();
+		
+		System.out.println("====================");
+		System.out.println(m.getReservedOffers());
+		System.out.println("====================\n");
 		//We try to pay the offer (invalid creditcard)
-		a.payReservation(App.getLoggedUser().getReservations().get(0));
+		
+		a.payReservation(m.getReservedOffers().get(0));
 		
 		//Check if the user lists have been updated
 		System.out.println("====================");
 		System.out.println(a.getBannedUsers());
-		System.out.println(a.getAuthorizedUsers());
 		System.out.println("====================\n");
+		
+		a.logout();
 		
 		try {
 			a.login("X1130055", "secret"); //Login with an authorized user (admin)
@@ -724,6 +732,8 @@ public class Demo {
 		//Check if the user lists have been updated
 		System.out.println("====================");
 		System.out.println(a.getBannedUsers());
+		System.out.println("====================\n");
+		System.out.println("====================");
 		System.out.println(a.getAuthorizedUsers());
 		System.out.println("====================\n");
 	}
