@@ -733,9 +733,6 @@ public class App implements Serializable {
 	 * @param user User to be banned
 	 */
 	public void banUser(RegisteredUser user) throws InvalidRolException {
-		if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
-			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "unbanUser");
-		}
 		this.authorizedUsers.remove(user);
 		this.bannedUsers.add(user);
 		
