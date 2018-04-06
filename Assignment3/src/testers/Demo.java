@@ -1,6 +1,10 @@
 package testers;
 
 import application.offer.House;
+import application.offer.Offer;
+import application.offer.OfferStatus;
+import application.offer.OfferType;
+import application.opinion.Comment;
 import application.users.MultiRoleUser;
 
 import java.time.LocalDate;
@@ -194,7 +198,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//Checking that the offer was not added
@@ -228,7 +232,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//Checking that the offer was not added
@@ -265,7 +269,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//Checking that the offer was added
@@ -286,7 +290,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//Checking that the offer was not added
@@ -322,7 +326,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 
@@ -360,7 +364,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//Checking that the offer was added
@@ -488,10 +492,10 @@ public class Demo {
 			a.approveOffer(a.getOffers().get(0));
 		} catch (OfferIsPendingForChangesExceptions e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		//Checking the status
 		System.out.println("====================");
@@ -518,10 +522,10 @@ public class Demo {
 			a.addReservation(a.getOffers().get(0));
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (RestrictedUserException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//We check that the reservation has added to the user's list
@@ -635,7 +639,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		a.logout();
@@ -657,10 +661,10 @@ public class Demo {
 			a.approveOffer(a.getOffers().get(1));
 		} catch (OfferIsPendingForChangesExceptions e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		a.logout();
 		
@@ -683,10 +687,10 @@ public class Demo {
 			a.addReservation(a.getOffers().get(1));
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (RestrictedUserException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//We check that the reservation has added to the user's list
@@ -726,7 +730,7 @@ public class Demo {
 			a.changeCreditCard("1111222233334444", a.getBannedUsers().get(0));
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//Check if the user lists have been updated
@@ -782,7 +786,7 @@ public class Demo {
 		}		
 		//We create a new offer
 		try {
-			a.createLivingOffer(LocalDate.of(2018, 10, 2), 160.89, 32.04, "Even worst than Palencia", house3, 10);
+			a.createLivingOffer(LocalDate.of(2018, 10, 2), 200000.0, 32.04, "Even worst than Palencia", house3, 10);
 		} catch (InvalidRolException e) {
 			System.out.println(e);
 		} catch (NoUserLoggedException e) {
@@ -793,7 +797,7 @@ public class Demo {
 			System.out.println(e);
 		} catch (OfferAlreadyCreatedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		a.logout();
@@ -814,10 +818,10 @@ public class Demo {
 			a.approveOffer(a.getOffers().get(2));
 		} catch (OfferIsPendingForChangesExceptions e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		a.logout();
 		
@@ -839,7 +843,7 @@ public class Demo {
 			a.payOffer(a.getOffers().get(2));
 		} catch (RestrictedUserException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		//Checking if the debt was added
@@ -866,7 +870,7 @@ public class Demo {
 			a.changeCreditCard("1111222244445555", a.getBadCCard().get(0));
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		a.logout();
@@ -877,5 +881,309 @@ public class Demo {
 		System.out.println("====================");
 		System.out.println(a.getToPay());
 		System.out.println("====================\n");
+		
+		try {
+			a.login("55555111Z", "ItIsNoTKnOwN"); //Login with an authorized user (guest)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		//We comment and rate an offer
+		try {
+			a.getOffers().get(2).rateOffer("Awful");
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		//Rate the offer
+		try {
+			a.getOffers().get(2).rateOffer(1.0);
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		//Check the avg rating
+		System.out.println("====================");
+		System.out.println(a.getOffers().get(2).getAvgRating());
+		System.out.println("====================\n");
+		
+		//Check the comments
+		System.out.println("====================");
+		System.out.println(a.getOffers().get(2).getComments());
+		System.out.println("====================\n");
+		
+		a.logout();
+		
+		try {
+			a.login("12345678Z", "hehehe"); //Login with an authorized user (host)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		
+		Comment c = (Comment)a.getOffers().get(2).getComments().get(0);
+		//Reply the comment
+		try {
+			c.addReply("Nah");
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		
+		//Rate the comment
+		try {
+			c.rateComment(2.0);
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		
+		//Rate the offer		
+		try {
+			a.getOffers().get(2).rateOffer(4.0);
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		
+		//Check the avg rating
+		System.out.println("====================");
+		System.out.println(a.getOffers().get(2).getAvgRating());
+		System.out.println("====================\n");
+		
+		//Check the comments
+		System.out.println("====================");
+		System.out.println(a.getOffers().get(2).getComments());
+		System.out.println("====================\n");
+		
+		//Now we are going to add some offers to try the searches
+		House house4 = null;
+		try {
+			house4 = a.createHouse(34337, "ValdeMingoMez"); //We create a house
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		}
+		
+		try {
+			house4.addCharacteristic("Toilet", "1"); //We add a characteristic to the created house
+		} catch (DuplicateCharacteristicException e) {
+			System.out.println(e);
+		}
+		try {
+			house4.addCharacteristic("Garden", "WOW"); //We another characteristic to the created house
+		} catch (DuplicateCharacteristicException e) {
+			System.out.println(e);
+		}
+		try {
+			a.addHouse(house4); //We add the house to the system
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			System.out.println(e);
+		}		
+		//We create a new offer
+		try {
+			a.createLivingOffer(LocalDate.of(2018, 7, 15), 100.34, 21.04, "Pfff", house4, 1);
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		} catch (InvalidDateException e) {
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			System.out.println(e);
+		} catch (OfferAlreadyCreatedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		
+		House house5 = null;
+		try {
+			house5 = a.createHouse(12337, "Valencia"); //We create a house
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		}
+		
+		try {
+			house5.addCharacteristic("Toilet", "1"); //We add a characteristic to the created house
+		} catch (DuplicateCharacteristicException e) {
+			System.out.println(e);
+		}
+		try {
+			house5.addCharacteristic("Garden", "WOW"); //We another characteristic to the created house
+		} catch (DuplicateCharacteristicException e) {
+			System.out.println(e);
+		}
+		try {
+			a.addHouse(house5); //We add the house to the system
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			System.out.println(e);
+		}		
+		//We create a new offer
+		try {
+			a.createHolidayOffer(LocalDate.of(2018, 10, 2), 160.89, 32.04, "PFFFF", house5, LocalDate.of(2019, 1, 1));
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		} catch (InvalidDateException e) {
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			System.out.println(e);
+		} catch (OfferAlreadyCreatedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		a.logout();
+		
+		try {
+			a.login("X1130055", "secret"); //Login with an authorized user (admin)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		
+		//We approve all offers
+		for(Offer o : a.getOffers()) {
+			if(o.getStatus().equals(OfferStatus.PENDING_FOR_APPROVAL)) {
+				o.modifyOffer(OfferStatus.APPROVED);
+			}
+		}
+		
+		a.logout();
+		
+		try {
+			a.login("55555111Z", "ItIsNoTKnOwN"); //Login with an authorized user (guest)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		//We book an offer
+		
+		try {
+			a.addReservation(a.getOffers().get(3));
+		} catch (InvalidRolException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} catch (RestrictedUserException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		//We comment and rate an offer
+		try {
+			a.getOffers().get(4).rateOffer("Ok");
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		//Rate the offer
+		try {
+			a.getOffers().get(4).rateOffer(3.0);
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		
+		a.logout();
+		//Try searches with no user logged
+		
+		//Search by zip code
+		System.out.println("====================");
+		System.out.println(a.searchZipCode(12337));
+		System.out.println("====================\n");
+		
+		//Search by dates
+		System.out.println("====================");
+		System.out.println(a.searchStartingDate(LocalDate.of(2018, 11, 1), LocalDate.of(2018, 12, 1)));
+		System.out.println("====================\n");
+		
+		//Search by type
+		System.out.println("====================");
+		System.out.println(a.searchOfferType(OfferType.HOLIDAY));
+		System.out.println("====================\n");
+		
+		//Search booked offers
+		System.out.println("====================");
+		try {
+			System.out.println(a.searchBooked());
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		System.out.println("====================\n");
+		//The result is the same for searchPaid and searchAvgRating
+		
+		//Now we log in and we search with the advanced searches
+		try {
+			a.login("12345678Z", "hehehe"); //Login with an authorized user (host)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		
+		//Search booked offers
+		System.out.println("====================");
+		try {
+			System.out.println(a.searchBooked());
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		//Search paid offers
+		System.out.println("====================");
+		try {
+			System.out.println(a.searchPaid());
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
+		//Search by average rating
+		System.out.println("====================");
+		try {
+			System.out.println(a.searchAvgRating(1.0));
+		} catch (NoUserLoggedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
 	}
 }

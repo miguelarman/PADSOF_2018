@@ -45,6 +45,7 @@ public abstract class Opinion implements Serializable{
 		return this.commenter;
 	}
 	
+	
 	@Override
 	/**
 	 * Method that returns all the information stored in an object of the class

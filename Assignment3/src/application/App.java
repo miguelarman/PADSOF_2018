@@ -152,7 +152,7 @@ public class App implements Serializable {
 		for (Offer o : this.offers) { //Go over all the houses in the system
 			House house = o.getHouse();
 			
-			if (house.getZipCode() == zip) { //Check if the ZIP code matches
+			if (house.getZipCode().equals(zip)) { //Check if the ZIP code matches
 				if (o.getStatus() == OfferStatus.APPROVED) { //Check if that offer is approved
 					searchResult.add(o);
 				}
@@ -216,10 +216,15 @@ public class App implements Serializable {
 	 * Method that searches all the offers that have been booked
 	 * 
 	 * @return list of booked offers
+	 * @throws NoUserLoggedException 
 	 */
-	public List<Offer> searchBooked() {
+	public List<Offer> searchBooked() throws NoUserLoggedException {
 
 		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		if(loggedUser == null) {
+			throw new NoUserLoggedException();
+		}
 		
 		for (Offer o : this.offers) { //Go over all the offers
 			if (o.getStatus() == OfferStatus.BOOKED) { //Check if the offer is booked
@@ -234,10 +239,15 @@ public class App implements Serializable {
 	 * Method that searches all the offers that have been paid
 	 * 
 	 * @return list of paid offers
+	 * @throws NoUserLoggedException 
 	 */
-	public List<Offer> searchPaid() {
+	public List<Offer> searchPaid() throws NoUserLoggedException {
 
 		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		if(loggedUser == null) {
+			throw new NoUserLoggedException();
+		}
 		
 		for (Offer o : this.offers) { //Go over all the offers
 			if (o.getStatus() == OfferStatus.PAID) { //Check if the offer is paid
@@ -253,10 +263,15 @@ public class App implements Serializable {
 	 * 
 	 * @param minRating - Minimum rating of the offers
 	 * @return list of offers with at least the given rating
+	 * @throws NoUserLoggedException 
 	 */
-	public List<Offer> searchAvgRating(Float minRating) {
+	public List<Offer> searchAvgRating(Double minRating) throws NoUserLoggedException {
 
 		List<Offer> searchResult = new ArrayList<Offer>();
+		
+		if(loggedUser == null) {
+			throw new NoUserLoggedException();
+		}
 		
 		for (Offer o : this.offers) { //Go over all the offers
 			if (o.getAvgRating() >= minRating) { //Check if the rating of the offer is greater or equal
@@ -779,7 +794,7 @@ public class App implements Serializable {
 			modifyOffer(OfferStatus.PENDING_FOR_CHANGES, o);
 		} catch (InvalidRolException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		
 		this.changesRequests.put(o, App.getCurrentDate());
@@ -888,7 +903,7 @@ public class App implements Serializable {
 					user.addHouse(house);
 				} catch (HouseAlreadyCreatedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(e);
 				}
 			} else {
 				throw new NotTheOwnerException(house, App.loggedUser);
@@ -902,7 +917,7 @@ public class App implements Serializable {
 					user.addHouse(house);
 				} catch (HouseAlreadyCreatedException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(e);
 				}
 				System.out.println(user.getHouses());
 			} else {
@@ -956,11 +971,18 @@ public class App implements Serializable {
 		} catch (NoUserLoggedException e) {
 			System.out.println(e);
 		} catch (CouldNotPayHostException e) {
-			RegisteredUser h = e.getHost();
-			Double amount = e.getAmount();
-			
-			this.addDebt(h, amount);
-			this.badCCard.add(h);
+			if(o.getClass() == HolidayOffer.class) {
+				RegisteredUser h = e.getHost();
+				Double amount = e.getAmount();
+				this.addDebt(h, amount);
+				this.badCCard.add(h);
+			}
+			else if(o.getClass() == LivingOffer.class) {
+				RegisteredUser h = e.getHost();
+				Double amount = e.getAmount();
+				this.addDebt(h, amount);
+				this.badCCard.add(h);
+			}
 		}
 	}
 

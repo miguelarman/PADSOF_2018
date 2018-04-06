@@ -18,7 +18,7 @@ public class Rating extends Opinion {
 	/**
 	 * Numerical rating. Its main part
 	 */
-	private Float rating;
+	private Double rating;
 	
 	
 	/**
@@ -26,7 +26,7 @@ public class Rating extends Opinion {
 	 * 
 	 * @param rating Numerical rating
 	 */
-	public Rating (Float rating) {
+	public Rating (Double rating) {
 		super();
 		this.rating = rating;
 	}
@@ -37,7 +37,7 @@ public class Rating extends Opinion {
 	 * 
 	 * @return Numerical rating
 	 */
-	public Float getRating() {
+	public Double getRating() {
 		return this.rating;
 	}
 	

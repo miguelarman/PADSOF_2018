@@ -130,10 +130,7 @@ public class Reservation implements Serializable{
 			try {
 				this.bookedOffer.payOffer();
 			} catch (NoUserLoggedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidCardNumberException e) {
-				throw e;
+				System.out.println(e);
 			}
 		}
 	}
