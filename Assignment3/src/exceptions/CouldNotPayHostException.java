@@ -34,14 +34,25 @@ public class CouldNotPayHostException extends Exception {
 		this.amount = amount;
 	}
 	
+	/**
+	 * Getter method for amount
+	 * @return the amount that the host has not received
+	 */
 	public Double getAmount() {
 		return this.amount;
 	}
 	
+	/**
+	 * Getter method for host
+	 * @return host that was not paid
+	 */
 	public RegisteredUser getHost() {
 		return this.host;
 	}
 	
+	/**
+	 * Method to generate the string to print the exception message
+	 */
 	@Override
 	public String toString() {
 		return "" + this.amount + " euros could not be paid to host with NIF " + this.host.getNIF();

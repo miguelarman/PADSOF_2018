@@ -725,7 +725,7 @@ public class App implements Serializable {
 				}
 				offers.add(o);
 			} else {
-				throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
+				throw new NotTheOwnerException(App.getLoggedUser());
 			}
 		}
 		else {
@@ -775,7 +775,7 @@ public class App implements Serializable {
 				}
 				offers.add(o);
 			} else {
-				throw new NotTheOwnerException(offeredHouse, App.getLoggedUser());
+				throw new NotTheOwnerException(App.getLoggedUser());
 			}
 		}
 		else {
@@ -852,7 +852,7 @@ public class App implements Serializable {
 	public void approveOffer(Offer o) throws OfferIsPendingForChangesExceptions, InvalidRolException{
 		
 		if (o.getStatus() == OfferStatus.PENDING_FOR_CHANGES) {
-			throw new OfferIsPendingForChangesExceptions(o);
+			throw new OfferIsPendingForChangesExceptions();
 		}
 		else if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
 			throw new InvalidRolException(App.loggedUser.getNIF(),App.loggedUser.getRole(), "approveOffer");
@@ -878,7 +878,7 @@ public class App implements Serializable {
 			throw new InvalidRolException(App.loggedUser.getNIF(),App.loggedUser.getRole(), "requestRevision");
 		}
 		else if(!o.getHouse().getHost().equals(App.loggedUser)) {
-			throw new NotTheOwnerException(o.getHouse(), App.loggedUser);
+			throw new NotTheOwnerException(App.loggedUser);
 		}
 		else {
 			modifyOffer(OfferStatus.PENDING_FOR_APPROVAL, o);
@@ -947,7 +947,7 @@ public class App implements Serializable {
 					System.out.println(e);
 				}
 			} else {
-				throw new NotTheOwnerException(house, App.loggedUser);
+				throw new NotTheOwnerException(App.loggedUser);
 			}
 
 		}
@@ -961,7 +961,7 @@ public class App implements Serializable {
 				}
 				System.out.println(user.getHouses());
 			} else {
-				throw new NotTheOwnerException(house, App.loggedUser);
+				throw new NotTheOwnerException(App.loggedUser);
 			}
 		}
 		else {

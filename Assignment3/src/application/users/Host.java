@@ -54,7 +54,7 @@ public class Host extends RegisteredUser implements HostI{
 	public void addHouse(House house) throws HouseAlreadyCreatedException {
 		for(House h: houses) {
 			if(h.equals(house)) {
-				throw new HouseAlreadyCreatedException(house);
+				throw new HouseAlreadyCreatedException();
 			}
 		}
 		

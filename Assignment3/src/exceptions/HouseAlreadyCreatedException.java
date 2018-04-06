@@ -1,17 +1,20 @@
 package exceptions;
 
-import application.offer.House;
-
+/**
+* @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+*         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+*         
+*/
 public class HouseAlreadyCreatedException extends Exception{
 
+	/**
+	 * ID needed for the class to be Serializable
+	 */
 	private static final long serialVersionUID = -8425575652000587826L;
-	@SuppressWarnings("unused")
-	private final House house;
-
-	public HouseAlreadyCreatedException(House house) {
-		this.house = house;
-	}
 	
+	/**
+	 * Method to generate the string to print the exception message
+	 */
 	@Override
 	public String toString() {
 		return "The house has aready been created";
