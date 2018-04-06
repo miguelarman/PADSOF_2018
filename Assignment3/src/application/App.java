@@ -274,7 +274,7 @@ public class App implements Serializable {
 	 * is trying to log is incorrect
 	 * @throws UnexistentUserException When the user with the specified id cannot be found on the system
 	 */
-	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException,AUserIsAlreadyLoggedException {
+	public void login(String id, String passwd) throws UserIsBannedException, IncorrectPasswordException, UnexistentUserException, AUserIsAlreadyLoggedException {
 		
 		if(App.loggedUser != null) {
 			throw new AUserIsAlreadyLoggedException();
@@ -600,7 +600,7 @@ public class App implements Serializable {
 
 	/**
 	 * This method removes the offers in the System that have not been modified in
-	 * fice days after an admin suggested changes
+	 * five days after an admin suggested changes
 	 */
 	private void deleteExpiredPendingOffers() {
 		List<Offer> offers = this.getPendingOffers();
@@ -652,9 +652,9 @@ public class App implements Serializable {
 	 * @throws OfferAlreadyCreatedException 
 	 */
 	
+
 	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;
-	
 		if(startingDate.isBefore(App.getCurrentDate())){
 			throw new InvalidDateException(startingDate);
 		}
@@ -684,8 +684,7 @@ public class App implements Serializable {
 	}
 	
 	public void createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
-		Offer o= null;
-		
+		Offer o= null;		
 		if(finishDate.isBefore(startingDate)) {
 			LocalDate aux = finishDate;
 			finishDate = startingDate;
@@ -716,8 +715,7 @@ public class App implements Serializable {
 		}
 		else {
 			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "createHolidayOffer");
-		}
-
+		}		
 	}
 
 	/**
