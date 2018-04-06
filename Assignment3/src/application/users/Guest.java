@@ -18,7 +18,6 @@ public class Guest extends RegisteredUser implements GuestI{
 	 */
 	private static final long serialVersionUID = 4989719272790707017L;
 
-	
 	/**
 	 * Constructor of the class Guest
 	 * 
@@ -51,8 +50,6 @@ public class Guest extends RegisteredUser implements GuestI{
 	 * @param reservation Reservation to be added
 	 */
 	public void addReservation(Reservation reservation) {
-		// TODO comprobar algo de las fechas?
-		// TODO comprobar el estado de la oferta?
 		this.reservedOffers.add(reservation);
 		reservation.getBookedOffer().modifyOffer(OfferStatus.BOOKED);
 	}
@@ -63,9 +60,7 @@ public class Guest extends RegisteredUser implements GuestI{
 	 * 
 	 * @param reservation Reservation to be deleted
 	 */
-	public void deleteReservation(Reservation reservation) {
-		// TODO mirar algo con las fechas?
-		
+	public void deleteReservation(Reservation reservation) {		
 		reservation.getBookedOffer().modifyOffer(OfferStatus.APPROVED);
 		
 		this.reservedOffers.remove(reservation);		

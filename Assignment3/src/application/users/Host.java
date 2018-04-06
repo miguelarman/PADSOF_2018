@@ -20,7 +20,6 @@ public class Host extends RegisteredUser implements HostI{
 	 */
 	private static final long serialVersionUID = -7067070176031856975L;
 
-	
 	/**
 	 * Constructor of the class Host
 	 * 

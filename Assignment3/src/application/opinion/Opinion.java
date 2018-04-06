@@ -34,8 +34,6 @@ public abstract class Opinion implements Serializable{
 		this.commenter = App.getLoggedUser();
 	}
 	
-	
-	
 	/**
 	 * Getter method for the attribute commenter
 	 * 
@@ -44,7 +42,6 @@ public abstract class Opinion implements Serializable{
 	public RegisteredUser getCommenter() {
 		return this.commenter;
 	}
-	
 	
 	@Override
 	/**

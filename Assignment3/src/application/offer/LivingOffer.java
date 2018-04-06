@@ -25,7 +25,6 @@ public class LivingOffer extends Offer {
 	 */
 	private int numberOfMonths;
 	
-	
 	/**
 	 * Constructor of the class LivingOffer
 	 * 
@@ -39,7 +38,6 @@ public class LivingOffer extends Offer {
 	public LivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) {
 		super(startingDate, price, deposit, description, offeredHouse);
 		this.numberOfMonths = numberOfMonths;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -80,7 +78,6 @@ public class LivingOffer extends Offer {
 	public void payHost() throws CouldNotPayHostException {
 		Double amount = this.getAmount();
 		
-		// TODO rellenar el asunto
 		String subject = "------------";
 		
 		

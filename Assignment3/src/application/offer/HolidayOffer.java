@@ -25,7 +25,6 @@ public class HolidayOffer extends Offer {
 	 */
 	private LocalDate finishDate;
 	
-	
 	/**
 	 * Constructor of the class HolidayOffer. It uses the constructor of the superclass Offer
 	 * 
@@ -56,7 +55,6 @@ public class HolidayOffer extends Offer {
 	 * 
 	 * @return finish date of the offer
 	 */
-	
 	public LocalDate getFinishLocalDate() {
 		return finishDate;
 	}
@@ -79,7 +77,6 @@ public class HolidayOffer extends Offer {
 	public void payHost() throws CouldNotPayHostException {
 		Double amount = this.getAmount();
 		
-		// TODO rellenar el asunto
 		String subject = "Payment to host of the house in " + this.getHouse().getZipCode() + " (" + this.getHouse().getCity() + ").Amount: " + amount;
 		
 		
@@ -97,7 +94,6 @@ public class HolidayOffer extends Offer {
 			throw new CouldNotPayHostException(this.getHouse().getHost(), amount);
 		}
 	}
-	
 	
 	@Override
 	/**

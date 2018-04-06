@@ -65,7 +65,11 @@ public class App implements Serializable {
 	 */
 	private HashMap<RegisteredUser, Double> toPay; // Must be RegisteredUser as there are multirole users
 	
+	/**
+	 * List of users (host or multirole) that have an invalid creditcard number
+	 */
 	private List<RegisteredUser> badCCard;
+	
 	/**
 	 * Constructor of the class App. Inicializes all the Lists and Maps inside the
 	 * App
@@ -80,7 +84,6 @@ public class App implements Serializable {
 		badCCard = new ArrayList<RegisteredUser>();
 	}
 	
-		
 	// Getters
 
 	/**
@@ -109,10 +112,16 @@ public class App implements Serializable {
 	public List<RegisteredUser> getAuthorizedUsers() {
 		return authorizedUsers;
 	}
-
+	
+	/**
+	 * Getter method for badCCard
+	 * 
+	 * @return list users with an invalid card number in the system
+	 */
 	public List<RegisteredUser> getBadCCard() {
 		return badCCard;
 	}
+	
 	/**
 	 * Getter method for loggedUser
 	 * 
@@ -122,6 +131,11 @@ public class App implements Serializable {
 		return loggedUser;
 	}
 	
+	/**
+	 * Getter method for getToPay
+	 * 
+	 * @return HashMap of users to be paid and the amount
+	 */
 	public HashMap<RegisteredUser, Double> getToPay(){
 		return toPay;
 	}
@@ -158,8 +172,6 @@ public class App implements Serializable {
 				}
 			}
 		}
-		
-		
 		return searchResult;	
 	}
 	
@@ -216,7 +228,7 @@ public class App implements Serializable {
 	 * Method that searches all the offers that have been booked
 	 * 
 	 * @return list of booked offers
-	 * @throws NoUserLoggedException 
+	 * @throws NoUserLoggedException When a non-logged user tries to search
 	 */
 	public List<Offer> searchBooked() throws NoUserLoggedException {
 
@@ -239,7 +251,7 @@ public class App implements Serializable {
 	 * Method that searches all the offers that have been paid
 	 * 
 	 * @return list of paid offers
-	 * @throws NoUserLoggedException 
+	 * @throws NoUserLoggedException When a non-logged user tries to search
 	 */
 	public List<Offer> searchPaid() throws NoUserLoggedException {
 
@@ -263,7 +275,7 @@ public class App implements Serializable {
 	 * 
 	 * @param minRating - Minimum rating of the offers
 	 * @return list of offers with at least the given rating
-	 * @throws NoUserLoggedException 
+	 * @throws NoUserLoggedException When a non-logged user tries to search
 	 */
 	public List<Offer> searchAvgRating(Double minRating) throws NoUserLoggedException {
 
@@ -280,12 +292,9 @@ public class App implements Serializable {
 				}
 			}
 		}
-		
 		return searchResult;
 	}
-	
-	
-	
+
 	// App data functions
 	
 	/**
@@ -327,7 +336,6 @@ public class App implements Serializable {
 	 * Method that logs out the user 
 	 */
 	public void logout() {
-		
 		App.loggedUser = null; //Logs the user out
 	}
 	
@@ -346,7 +354,6 @@ public class App implements Serializable {
 			oos.writeObject(this); //Writes the system in the file
 			oos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 	}
@@ -415,10 +422,8 @@ public class App implements Serializable {
 			return app;
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -472,9 +477,11 @@ public class App implements Serializable {
 		
 		for (RegisteredUser user : pendingHosts) {
 			Double amount = this.toPay.get(user);
-			
+			if(badCCard.contains(user)) {
+				badCCard.remove(user);
+			}
 			// Trying to pay
-			String subject = "__________"; // TODO
+			String subject = "__________";
 			
 			try {
 				TeleChargeAndPaySystem.charge(user.getCreditCard(), subject, -amount);// It is negative to pay the host, not charge
@@ -492,8 +499,7 @@ public class App implements Serializable {
 	 * Method used to modify the starting date of the offer
 	 * 
 	 * @param startingDate New starting date of the offer
-	 * @throws TimeIsUpException 
-	 * @throws NotTheOwnerException 
+	 * @throws TimeIsUpException When a user tries to modify an offer when the 5 day-period has expired
 	 */
 	public void modifyOffer(LocalDate startingDate, Offer o) throws TimeIsUpException {
 		LocalDate changesDate = this.changesRequests.get(o);
@@ -506,10 +512,8 @@ public class App implements Serializable {
 			try {
 				o.modifyOffer(startingDate);
 			} catch (InvalidOfferStatusException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 			} catch (NotTheOwnerException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 			}
 		}
@@ -520,8 +524,7 @@ public class App implements Serializable {
 	 * 
 	 * @param price New price of the offer
 	 * @param deposit New deposit of the offer
-	 * @throws InvalidOfferStatusException 
-	 * @throws NotTheOwnerException 
+	 * @throws TimeIsUpException When a user tries to modify an offer when the 5 day-period has expired
 	 */
 	public void modifyOffer(Double price, Double deposit, Offer o) throws TimeIsUpException {
 		LocalDate changesDate = this.changesRequests.get(o);
@@ -534,10 +537,8 @@ public class App implements Serializable {
 			try {
 				o.modifyOffer(price, deposit);
 			} catch (InvalidOfferStatusException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 			} catch (NotTheOwnerException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 			}
 		}
@@ -547,8 +548,7 @@ public class App implements Serializable {
 	 * Method used to modify the description date of the offer
 	 * 
 	 * @param description New description of the offer
-	 * @throws InvalidOfferStatusException 
-	 * @throws NotTheOwnerException 
+	 * @throws TimeIsUpException When a user tries to modify an offer when the 5 day-period has expired
 	 */
 	public void modifyOffer(String description, Offer o) throws TimeIsUpException {
 		
@@ -562,10 +562,8 @@ public class App implements Serializable {
 			try {
 				o.modifyOffer(description);
 			} catch (InvalidOfferStatusException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 			} catch (NotTheOwnerException e) {
-				// TODO Auto-generated catch block
 				System.out.println(e);
 			}
 		}
@@ -576,8 +574,7 @@ public class App implements Serializable {
 	 * Method used to modify the status of the offer
 	 * 
 	 * @param status New status of the offer
-	 * @throws InvalidRolException 
-	 * @throws InvalidOfferStatusException 
+	 * @throws InvalidRolException When a non-admin user tries to modify the status
 	 */
 	public void modifyOffer(OfferStatus status, Offer o) throws InvalidRolException {
 		if(!App.getLoggedUser().getRole().equals(Role.ADMIN)) {
@@ -585,6 +582,7 @@ public class App implements Serializable {
 		}
 		o.modifyOffer(status);
 	}
+	
 	/**
 	 * This method removes the offers in the System whose starting date has arrived
 	 * without anyone paying for it. It is called every time the system is loaded
@@ -664,20 +662,18 @@ public class App implements Serializable {
 	
 	/**
 	 * Method that creates a living offer and loads it into the system
-	 * @param startingDate
-	 * @param price
-	 * @param deposit
-	 * @param description
-	 * @param offeredHouse
-	 * @param numberOfMonths
-	 * @throws InvalidRolException
-	 * @throws NoUserLoggedException
-	 * @throws InvalidDateException
-	 * @throws NotTheOwnerException
-	 * @throws OfferAlreadyCreatedException 
+	 * @param startingDate Starting date of the offer
+	 * @param price Price per month to be paid
+	 * @param deposit Inicial deposit to be paid
+	 * @param description Description of the offer
+	 * @param offeredHouse House to create the offer with
+	 * @param numberOfMonths Number of months to live in the house
+	 * @throws InvalidRolException When a non-host or a non-multirole user tries to create an offer
+	 * @throws NoUserLoggedException When a non-logged user tries to create an offer
+	 * @throws InvalidDateException When the starting date of the offer is before the date of the system
+	 * @throws NotTheOwnerException When a user that is not the owner of a house tries to create an offer with that house
+	 * @throws OfferAlreadyCreatedException When the same offer is already in the system
 	 */
-	
-
 	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;
 		if(startingDate.isBefore(App.getCurrentDate())){
@@ -708,6 +704,20 @@ public class App implements Serializable {
 
 	}
 	
+	/**
+	 * Method that creates a holiday offer and loads it into the system
+	 * @param startingDate Starting date of the offer
+	 * @param price Price per month to be paid
+	 * @param deposit Inicial deposit to be paid
+	 * @param description Description of the offer
+	 * @param offeredHouse House to create the offer with
+	 * @param finishDate End date of the offer
+	 * @throws InvalidRolException When a non-host or a non-multirole user tries to create an offer
+	 * @throws NoUserLoggedException When a non-logged user tries to create an offer
+	 * @throws InvalidDateException When the starting date of the offer is before the date of the system
+	 * @throws NotTheOwnerException When a user that is not the owner of a house tries to create an offer with that house
+	 * @throws OfferAlreadyCreatedException When the same offer is already in the system
+	 */
 	public void createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;		
 		if(finishDate.isBefore(startingDate)) {
@@ -757,17 +767,16 @@ public class App implements Serializable {
 	 * 
 	 * @param user User to be banned
 	 */
-	public void banUser(RegisteredUser user) throws InvalidRolException {
+	public void banUser(RegisteredUser user) {
 		this.authorizedUsers.remove(user);
 		this.bannedUsers.add(user);
-		
-
 	}
 	
 	/**
 	 * Method that unbans a user from the app
 	 * 
 	 * @param user User to be unbanned
+	 * @throws InvalidRolException When a non-admin user tries to unban a user
 	 */
 	public void unbanUser(RegisteredUser user) throws InvalidRolException {
 		if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
@@ -775,8 +784,6 @@ public class App implements Serializable {
 		}
 		this.authorizedUsers.add(user);
 		this.bannedUsers.remove(user);
-
-		// TODO comprobar si es admin el que llama a esta funcion
 	}
 	
 	/**
@@ -784,16 +791,20 @@ public class App implements Serializable {
 	 * 
 	 * @param o Offer that the admin has reviewed
 	 * @param description Description of the suggestion of changes
+	 * @throws InvalidOfferStatusException When an admin tries to suggest changes to a offer that is not pending for approval
+	 * @throws InvalidRolException When a non-admin user tries to suggest changes
 	 */
-	public void suggestChanges(Offer o, String description) {
-		if (o.getStatus() != OfferStatus.PENDING_FOR_APPROVAL) { // Can only suggest changes to an offer pending for												 // approval
-			return;
-		}
+	public void suggestChanges(Offer o, String description) throws InvalidOfferStatusException, InvalidRolException {
 		
+		if (o.getStatus() != OfferStatus.PENDING_FOR_APPROVAL) { // Can only suggest changes to an offer pending for												 // approval
+			throw new InvalidOfferStatusException(o.getStatus(), "suggestChanges");
+		}
+		if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
+			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "unbanUser");
+		}
 		try {
 			modifyOffer(OfferStatus.PENDING_FOR_CHANGES, o);
 		} catch (InvalidRolException e) {
-			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 		
@@ -805,9 +816,8 @@ public class App implements Serializable {
 	 * Method used by an Admin to mark an offer as approved
 	 * 
 	 * @param o Offer to be approved
-	 * @throws OfferIsPendingForChangesExceptions When the offer that is
-	 * trying to be approved is still pending for changes
-	 * @throws InvalidRolException 
+	 * @throws OfferIsPendingForChangesExceptions When the offer that is trying to be approved is still pending for changes
+	 * @throws InvalidRolException When a non-admin user tries to approve an offer
 	 */
 	public void approveOffer(Offer o) throws OfferIsPendingForChangesExceptions, InvalidRolException{
 		
@@ -823,10 +833,12 @@ public class App implements Serializable {
 	}
 	
 	/**
-	 * Method used by a Guest in order to request approval of an Offer after changes
+	 * Method used by a Host in order to request approval of an Offer after changes
 	 * have been made
 	 * 
 	 * @param o Offer to be reviewed
+	 * @throws InvalidRolException When a non-host or a non-multirole user tries to request a revision
+	 * @throws NotTheOwnerException When a user that does not own the offer tries to use the method
 	 */
 	public void requestRevision(Offer o) throws InvalidRolException, NotTheOwnerException{
 		if (o.getStatus() != OfferStatus.PENDING_FOR_CHANGES) { // Cannot request this if the offer has been approved
@@ -902,7 +914,6 @@ public class App implements Serializable {
 				try {
 					user.addHouse(house);
 				} catch (HouseAlreadyCreatedException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e);
 				}
 			} else {
@@ -916,7 +927,6 @@ public class App implements Serializable {
 				try {
 					user.addHouse(house);
 				} catch (HouseAlreadyCreatedException e) {
-					// TODO Auto-generated catch block
 					System.out.println(e);
 				}
 				System.out.println(user.getHouses());
@@ -928,6 +938,14 @@ public class App implements Serializable {
 			throw new InvalidRolException(App.loggedUser.getNIF(), App.loggedUser.getRole(), "addHouse");
 		}			
 	}
+	
+	/**
+	 * Method that checks the conditions and calls the user method addReservation
+	 * 
+	 * @param o Offer to book
+	 * @throws InvalidRolException When a non-guest or a non-multirole tries to book an offer
+	 * @throws RestrictedUserException When a restricted user tries to book that offer
+	 */
 	public void addReservation(Offer o) throws InvalidRolException, RestrictedUserException {
 		if(!loggedUser.getRole().equals(Role.GUEST) && !loggedUser.getRole().equals(Role.MULTIROLE)) {
 			throw new InvalidRolException(loggedUser.getNIF(), loggedUser.getRole(), "addReservation");
@@ -945,6 +963,12 @@ public class App implements Serializable {
 		}
 	}
 	
+	/**
+	 * Method that checks the user and if the card number is valid and calls the user method changeCreditCard
+	 * @param creditCard new creditcard number
+	 * @param user The user whose creditcard number is going to be changed
+	 * @throws InvalidRolException When a non-admin user tries to change a card number
+	 */
 	public void changeCreditCard(String creditCard, RegisteredUser user) throws InvalidRolException {
 		
 		if(!loggedUser.getRole().equals(Role.ADMIN)) {
@@ -955,7 +979,13 @@ public class App implements Serializable {
 		}
 		user.changeCreditCard(creditCard);
 	}
-	// TODO javadoc
+	
+	/**
+	 * Method that pays an offer
+	 * 
+	 * @param o Offer to be paid
+	 * @throws RestrictedUserException When a restricted user tries to pay that offer
+	 */
 	public void payOffer(Offer o) throws RestrictedUserException {
 		if(o.getRestrictedUsers().contains(loggedUser)){
 			throw new RestrictedUserException(loggedUser.getNIF());
@@ -963,11 +993,7 @@ public class App implements Serializable {
 		try {
 			o.payOffer();
 		} catch (InvalidCardNumberException e) {
-			try {
-				this.banUser(App.getLoggedUser());
-			} catch (InvalidRolException e1) {
-				System.out.println(e1);
-			}
+			this.banUser(App.getLoggedUser());
 		} catch (NoUserLoggedException e) {
 			System.out.println(e);
 		} catch (CouldNotPayHostException e) {
@@ -987,7 +1013,10 @@ public class App implements Serializable {
 	}
 
 
-	// TODO javadoc
+	/**
+	 * Method that pays a reservation
+	 * @param r
+	 */
 	public void payReservation(Reservation r) {
 
 		try {
@@ -995,12 +1024,8 @@ public class App implements Serializable {
 		} catch (NotTheReserverException e) {
 			System.out.println(e);
 		} catch (InvalidCardNumberException e) {
-			try {
-				r.cancelReservation();
-				this.banUser(App.getLoggedUser());
-			} catch (InvalidRolException e1) {
-				System.out.println(e1);
-			}
+			r.cancelReservation();
+			this.banUser(App.getLoggedUser());
 		} catch (TimeIsUpException e) {
 			r.getBookedOffer().getRestrictedUsers().add(loggedUser);
 			r.cancelReservation();
@@ -1012,7 +1037,11 @@ public class App implements Serializable {
 		}
 	}
 	
-	// TODO javadoc
+	/**
+	 * Method that adds a user and an amount of money to the HashMap toPay
+	 * @param user User which the app owes money to 
+	 * @param amount Amount of money owed
+	 */
 	private void addDebt(RegisteredUser user, Double amount) {
 		if (this.toPay.containsKey(user)) {
 			this.toPay.put(user, this.toPay.get(user) + amount);
@@ -1053,6 +1082,4 @@ public class App implements Serializable {
 		string+= "\n\nLoggedUser:\n" + App.getLoggedUser();
 		return string;
 	}
-	
-	// TODO metodo cancelReservation
 }

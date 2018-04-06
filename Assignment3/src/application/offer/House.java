@@ -11,7 +11,6 @@ import exceptions.DuplicateCharacteristicException;
  * 
  * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
  *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
- *
  */
 public class House implements Serializable{
 	
@@ -42,7 +41,6 @@ public class House implements Serializable{
 	 */
 	private RegisteredUser host;
 
-	
 	/**
 	 * Constructor of the class House
 	 * 

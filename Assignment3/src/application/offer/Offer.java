@@ -62,6 +62,11 @@ public abstract class Offer implements Serializable{
 	private List<Opinion> opinions;
 	
 	/**
+	 * List of users that cannot book this offer, because they did not pay the reservation within 5 days
+	 */
+	private List<RegisteredUser> restrictedUsers;
+	
+	/**
 	 * Constructor of the class Offer
 	 * 
 	 * @param startingDate Starting date of the offer
@@ -70,7 +75,7 @@ public abstract class Offer implements Serializable{
 	 * @param description Description of the offer
 	 * @param offeredHouse House in which the offer takes place
 	 */
-	private List<RegisteredUser> restrictedUsers;
+	
 	public Offer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse) {
 		this.startingDate = startingDate;
 		this.price = price;
@@ -109,6 +114,10 @@ public abstract class Offer implements Serializable{
 		return this.startingDate;
 	}
 	
+	/**
+	 * Getter method for all the comments
+	 * @return List of comments
+	 */
 	public List<Opinion> getComments() {
 		List<Opinion> aux = new ArrayList<Opinion>();
 		for(Opinion o: opinions) {
@@ -118,6 +127,7 @@ public abstract class Offer implements Serializable{
 		}
 		return aux;
 	}
+	
 	/**
 	 * Getter method for the description attribute
 	 * 
@@ -127,7 +137,10 @@ public abstract class Offer implements Serializable{
 		return description;
 	}
 	
-	
+	/**
+	 * Getter method for the restrictedUsers attribute
+	 * @return List of restricted users
+	 */
 	public List<RegisteredUser> getRestrictedUsers() {
 		return restrictedUsers;
 	}
@@ -136,7 +149,8 @@ public abstract class Offer implements Serializable{
 	 * Method used to modify the starting date of the offer
 	 * 
 	 * @param startingDate New starting date of the offer
-	 * @throws NotTheOwnerException 
+	 * @throws NotTheOwnerException When the user trying to modify the offer is not the owner of the house
+	 * @throws InvalidOfferStatusException When you try to modify a offer that is not pending for changes
 	 */
 	public void modifyOffer(LocalDate startingDate) throws InvalidOfferStatusException, NotTheOwnerException{
 		if(!this.status.equals(OfferStatus.PENDING_FOR_CHANGES)) {
@@ -155,8 +169,8 @@ public abstract class Offer implements Serializable{
 	 * 
 	 * @param price New price of the offer
 	 * @param deposit New deposit of the offer
-	 * @throws InvalidOfferStatusException 
-	 * @throws NotTheOwnerException 
+	 * @throws NotTheOwnerException When the user trying to modify the offer is not the owner of the house
+	 * @throws InvalidOfferStatusException When you try to modify a offer that is not pending for changes
 	 */
 	public void modifyOffer(Double price, Double deposit) throws InvalidOfferStatusException, NotTheOwnerException {
 		if(!this.status.equals(OfferStatus.PENDING_FOR_CHANGES)) {
@@ -175,8 +189,8 @@ public abstract class Offer implements Serializable{
 	 * Method used to modify the description date of the offer
 	 * 
 	 * @param description New description of the offer
-	 * @throws InvalidOfferStatusException 
-	 * @throws NotTheOwnerException 
+	 * @throws NotTheOwnerException When the user trying to modify the offer is not the owner of the house
+	 * @throws InvalidOfferStatusException When you try to modify a offer that is not pending for changes
 	 */
 	public void modifyOffer(String description) throws InvalidOfferStatusException, NotTheOwnerException {
 		
@@ -196,8 +210,6 @@ public abstract class Offer implements Serializable{
 	 * Method used to modify the status of the offer
 	 * 
 	 * @param status New status of the offer
-	 * @throws InvalidRolException 
-	 * @throws InvalidOfferStatusException 
 	 */
 	public void modifyOffer(OfferStatus status){
 		this.status = status;
@@ -208,12 +220,11 @@ public abstract class Offer implements Serializable{
 	 * 
 	 * @throws NoUserLoggedException When no user is logged in the app
 	 * @throws CouldNotPayHostException When the system could not pay the host
-	 * @throws InvalidCardNumberException 
+	 * @throws InvalidCardNumberException When the card number of the guest is not 16 digits long
 	 */
 	public void payOffer() throws NoUserLoggedException, CouldNotPayHostException, InvalidCardNumberException {
 		Double amount = this.getAmount();
 		
-		// TODO rellenar el asunto
 		String subject = "------------";
 		
 		RegisteredUser user = App.getLoggedUser();
@@ -237,12 +248,11 @@ public abstract class Offer implements Serializable{
 		this.payHost();
 	}
 	
-	
 	/**
 	 * Method used to pay the host what has been paid by the client minus the system
 	 * fees
 	 * 
-	 * @throws CouldNotPayHostException When the app could not pay the host
+	 * @throws CouldNotPayHostException When the app could not pay the host (invalid card number)
 	 */
 	public abstract void payHost() throws CouldNotPayHostException;
 
@@ -250,7 +260,7 @@ public abstract class Offer implements Serializable{
 	 * Method used to add an opinion about the offer
 	 * 
 	 * @param opinion Comment about the offer
-	 * @throws NoUserLoggedException 
+	 * @throws NoUserLoggedException When a non-logged user tries to comment an offer 
 	 */
 	public void rateOffer(String opinion) throws NoUserLoggedException {
 		Opinion o = new Comment(opinion);
@@ -266,7 +276,7 @@ public abstract class Offer implements Serializable{
 	 * Method used to add a rating to the offer
 	 * 
 	 * @param rating Rating of the offer
-	 * @throws NoUserLoggedException 
+	 * @throws NoUserLoggedException When a non-logged user tries to rate a offer 
 	 */
 	public void rateOffer(Double rating) throws NoUserLoggedException {
 		Opinion o = new Rating(rating);
@@ -281,7 +291,7 @@ public abstract class Offer implements Serializable{
 	/**
 	 * Method that calculates the average rating of the offer
 	 * 
-	 * @return The average rating of the offer. Calculated from the rating
+	 * @return The average rating of the offer. Calculated from the rating.
 	 */
 	public Double getAvgRating() {
 		
@@ -320,7 +330,6 @@ public abstract class Offer implements Serializable{
 	 * @return Type of the offer
 	 */
 	public abstract OfferType getType();
-	
 	
 	@Override
 	/**

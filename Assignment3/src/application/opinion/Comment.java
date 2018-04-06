@@ -81,14 +81,20 @@ public class Comment extends Opinion {
 	 * @return Replies of the comment
 	 */
 	public List<Opinion> getReplies() {
-		return this.replies;
+		List<Opinion> aux = new ArrayList<Opinion>();
+		for(Opinion o: replies) {
+			if (o.getClass() == Comment.class) {
+				aux.add(o);
+			}
+		}
+		return aux;
 	}
 	
 	/**
 	 * Method that adds a reply to a Comment
 	 * 
-	 * @param o Opinion with the reply
-	 * @throws NoUserLoggedException 
+	 * @param reply Text of the reply
+	 * @throws NoUserLoggedException When a non-logged user tries to reply a comment
 	 */
 	public void addReply(String reply) throws NoUserLoggedException {
 		if(App.getLoggedUser() == null) {
@@ -103,10 +109,10 @@ public class Comment extends Opinion {
 	}
 	
 	/**
-	 * Method that adds a reply to a Comment
+	 * Method that rates a comment
 	 * 
-	 * @param o Opinion with the reply
-	 * @throws NoUserLoggedException 
+	 * @param rating Rating to rate the comment
+	 * @throws NoUserLoggedException When a non-logged user tries to reply a comment
 	 */
 	public void rateComment(double rating) throws NoUserLoggedException {
 		if(App.getLoggedUser() == null) {
@@ -119,7 +125,6 @@ public class Comment extends Opinion {
 		
 		this.replies.add(o);
 	}
-	
 	
 	@Override
 	/**
@@ -139,7 +144,6 @@ public class Comment extends Opinion {
 				string += "\n\t" + o;
 			}
 		}
-		
 		return string;
 	}
 

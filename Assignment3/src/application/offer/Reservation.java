@@ -42,7 +42,6 @@ public class Reservation implements Serializable{
 	 */
 	private Offer bookedOffer;
 	
-	
 	/**
 	 * Constructor of the class Reservation
 	 * 
@@ -83,12 +82,10 @@ public class Reservation implements Serializable{
 		return bookedOffer;
 	}
 	
-	
 	/**
 	 * Method that cancels a Reservation
 	 */
 	public void cancelReservation() {
-		
 		
 		if(this.client.getRole().equals(Role.GUEST)) {
 			Guest user = (Guest)this.client;
@@ -97,23 +94,20 @@ public class Reservation implements Serializable{
 		else if(this.client.getRole().equals(Role.MULTIROLE)) {
 			MultiRoleUser user = (MultiRoleUser)this.client;
 			user.deleteReservation(this);
-		}
-
-		
+		}		
 		// This assigning prevent errors in the future
 		this.bookedOffer = null;
 		this.client = null;
 		this.bookingDate = null;
 	}
 	
-	
 	/**
-	 * Method that pays for the reservation. It call the method payOffer()
+	 * Method that pays the reservation. It calls the method payOffer()
 	 * 
 	 * @throws NotTheReserverException When the user trying to pay is not the reserver
 	 * @throws InvalidCardNumberException When the credit card is not valid
-	 * @throws CouldNotPayHostException 
-	 * @throws TimeIsUpException 
+	 * @throws CouldNotPayHostException When the app could not pay host
+	 * @throws TimeIsUpException When the five-day period to pay a reservation has passed
 	 */
 	public void payReservation() throws NotTheReserverException, InvalidCardNumberException, CouldNotPayHostException, TimeIsUpException {
 
