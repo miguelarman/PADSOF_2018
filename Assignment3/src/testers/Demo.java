@@ -591,22 +591,22 @@ public class Demo {
 			System.out.println(e);
 		}
 		
-		//Checking if the house was created successfully
-		System.out.println("====================");
-		System.out.println(house1);
-		System.out.println("====================\n");
-		
 		try {
 			house2.addCharacteristic("Toilet", "1"); //We add a characteristic to the created house
 		} catch (DuplicateCharacteristicException e) {
 			System.out.println(e);
 		}
 		try {
-			house1.addCharacteristic("Garden", "WOW"); //We another characteristic to the created house
+			house2.addCharacteristic("Garden", "WOW"); //We another characteristic to the created house
 		} catch (DuplicateCharacteristicException e) {
 			System.out.println(e);
 		}
-			
+		
+		//Checking if the house was created successfully
+		System.out.println("====================");
+		System.out.println(house2);
+		System.out.println("====================\n");
+		
 		try {
 			a.addHouse(house2); //We add the house to the system
 		} catch (InvalidRolException e) {
