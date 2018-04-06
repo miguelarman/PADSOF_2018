@@ -92,10 +92,10 @@ public class HolidayOffer extends Offer {
 	 * @throws CouldNotPayHostException When the app could not pay the host
 	 */
 	public void payHost() throws CouldNotPayHostException {
-Double amount = this.getAmount();
+		Double amount = this.getAmount();
 		
 		// TODO rellenar el asunto
-		String subject = "------------";
+		String subject = "offer";
 		
 		
 		String ccard = this.getHouse().getHost().getCreditCard();

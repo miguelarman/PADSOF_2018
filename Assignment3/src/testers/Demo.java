@@ -736,5 +736,146 @@ public class Demo {
 		System.out.println("====================");
 		System.out.println(a.getAuthorizedUsers());
 		System.out.println("====================\n");
+		
+		a.logout();
+		
+		try {
+			a.login("12345678Z", "hehehe"); //Login with an authorized user (host)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		
+		House house3 = null;
+		try {
+			house3 = a.createHouse(22337, "Teruel"); //We create a house
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		}
+		
+		try {
+			house3.addCharacteristic("Toilet", "1"); //We add a characteristic to the created house
+		} catch (DuplicateCharacteristicException e) {
+			System.out.println(e);
+		}
+		try {
+			house3.addCharacteristic("Garden", "WOW"); //We another characteristic to the created house
+		} catch (DuplicateCharacteristicException e) {
+			System.out.println(e);
+		}
+		try {
+			a.addHouse(house3); //We add the house to the system
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			System.out.println(e);
+		}		
+		//We create a new offer
+		try {
+			a.createLivingOffer(LocalDate.of(2018, 10, 2), 160.89, 32.04, "Even worst than Palencia", house3, 10);
+		} catch (InvalidRolException e) {
+			System.out.println(e);
+		} catch (NoUserLoggedException e) {
+			System.out.println(e);
+		} catch (InvalidDateException e) {
+			System.out.println(e);
+		} catch (NotTheOwnerException e) {
+			System.out.println(e);
+		} catch (OfferAlreadyCreatedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		a.logout();
+		
+		try {
+			a.login("X1130055", "secret"); //Login with an authorized user (admin)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		try {
+			a.approveOffer(a.getOffers().get(2));
+		} catch (OfferIsPendingForChangesExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidRolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		a.logout();
+		
+		try {
+			a.login("55555111Z", "ItIsNoTKnOwN"); //Login with an authorized user (guest)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		
+		//We book the new offer with the host having an invalid creditcard number
+		try {
+			a.payOffer(a.getOffers().get(2));
+		} catch (RestrictedUserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Checking if the debt was added
+		System.out.println("====================");
+		System.out.println(a.getToPay());
+		System.out.println("====================\n");
+		
+		a.logout();
+		
+		try {
+			a.login("X1130055", "secret"); //Login with an authorized user (admin)
+			System.out.println("Login successful with NIF " + App.getLoggedUser().getNIF());
+		} catch (UserIsBannedException e) {
+			System.out.println(e);
+		} catch (IncorrectPasswordException e) {
+			System.out.println(e);
+		} catch (UnexistentUserException e) {
+			System.out.println(e);
+		} catch (AUserIsAlreadyLoggedException e) {
+			System.out.println(e);
+		}
+		
+		try {
+			a.changeCreditCard("1111222244445555", a.getBadCCard().get(0));
+		} catch (InvalidRolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		a.logout();
+		a.closeApp();
+		a = App.openApp();
+		
+		//Checking if the debt was paid
+		System.out.println("====================");
+		System.out.println(a.getToPay());
+		System.out.println("====================\n");
 	}
 }
