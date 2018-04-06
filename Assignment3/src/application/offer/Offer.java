@@ -168,7 +168,7 @@ public abstract class Offer implements Serializable{
 			throw new InvalidOfferStatusException(this.status, "modifyOffer");
 		}
 		else if(!App.getLoggedUser().equals(this.offeredHouse.getHost())) {
-			throw new NotTheOwnerException(this.offeredHouse, App.getLoggedUser());
+			throw new NotTheOwnerException(App.getLoggedUser());
 		}
 		else {
 			this.startingDate = startingDate;
@@ -188,7 +188,7 @@ public abstract class Offer implements Serializable{
 			throw new InvalidOfferStatusException(this.status, "modifyOffer");
 		}
 		else if(!App.getLoggedUser().equals(this.offeredHouse.getHost())) {
-			throw new NotTheOwnerException(this.offeredHouse, App.getLoggedUser());
+			throw new NotTheOwnerException(App.getLoggedUser());
 		}
 		else {
 			this.price = price;
@@ -209,7 +209,7 @@ public abstract class Offer implements Serializable{
 			throw new InvalidOfferStatusException(this.status, "modifyOffer");
 		}
 		else if(!App.getLoggedUser().equals(this.offeredHouse.getHost())) {
-			throw new NotTheOwnerException(this.offeredHouse, App.getLoggedUser());
+			throw new NotTheOwnerException(App.getLoggedUser());
 		}
 		else {
 			this.description = description;

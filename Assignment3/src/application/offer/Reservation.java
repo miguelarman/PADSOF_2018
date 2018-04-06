@@ -119,7 +119,7 @@ public class Reservation implements Serializable{
 		}
 		// We check if the user trying to pay the reservation is the one that booked it
 		if (!this.client.equals(App.getLoggedUser())) {
-			throw new NotTheReserverException(this, App.getLoggedUser());
+			throw new NotTheReserverException(App.getLoggedUser());
 		} else {
 			try {
 				this.bookedOffer.payOffer();

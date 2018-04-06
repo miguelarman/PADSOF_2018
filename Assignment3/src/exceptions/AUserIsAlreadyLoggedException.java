@@ -15,12 +15,7 @@ public class AUserIsAlreadyLoggedException extends Exception {
 	private static final long serialVersionUID = 7270070045063599714L;
 
 	/**
-	 * Empty constructor of the class AUserIsAlreadyLoggedException
-	 */
-	public AUserIsAlreadyLoggedException() {}
-	
-	/**
-	 * Method to print the exception message
+	 * Method to generate the string to print the exception message
 	 */
 	@Override
 	public String toString() {

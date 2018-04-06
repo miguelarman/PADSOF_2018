@@ -52,7 +52,7 @@ public class InvalidOfferStatusException extends Exception{
 	}
 	
 	/**
-	 * Method to print the exception message
+	 * Method to generate the string to print the exception message
 	 */
 	@Override
 	public String toString() {
