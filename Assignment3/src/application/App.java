@@ -1050,7 +1050,8 @@ public class App implements Serializable {
 
 	/**
 	 * Method that pays a reservation
-	 * @param r
+	 * 
+	 * @param r Reservation to be paid
 	 */
 	public void payReservation(Reservation r) {
 
