@@ -21,3 +21,8 @@ public class LoginController implements ActionListener {
 		
 	}
 }
+//WindowXX ventana = new WindowXX();
+//MyController c = new MyCOntroller();
+//ventana.setControlador(c);
+//ventana.setVisible(true);
+//ventanaAnterior.setVisible(false);
