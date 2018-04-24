@@ -21,14 +21,14 @@ public class LoginWindow extends JFrame {
 		
 		// Adding fields for username and password
 		idField = new JTextField(10);
-		idField.setText("NIF");
+		idField.setText("51999111X");//"NIF");
 		this.add(idField);
 		
 		passwordField = new JPasswordField(10);
-		passwordField.setText("Password");
+		passwordField.setText("swordFish");//"Password");
 		this.add(passwordField);
 		
-		button = new JButton("Fuck off");
+		button = new JButton("Log in");
 		this.add(button);
 		
 		this.setSize(400, 500);
