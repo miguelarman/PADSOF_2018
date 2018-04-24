@@ -11,6 +11,7 @@ import org.junit.Test;
 import application.offer.*;
 import application.users.*;
 
+@SuppressWarnings("javadoc")
 public class GuestTest {
 	
 	private static Reservation r;

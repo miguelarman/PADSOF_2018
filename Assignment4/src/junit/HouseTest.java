@@ -11,6 +11,7 @@ import application.offer.House;
 import application.users.Host;
 import exceptions.DuplicateCharacteristicException;
 
+@SuppressWarnings("javadoc")
 public class HouseTest {
 
 	private static House h;

@@ -12,6 +12,7 @@ import application.offer.*;
 import application.users.*;
 import exceptions.HouseAlreadyCreatedException;
 
+@SuppressWarnings("javadoc")
 public class MultiRoleUserTest {
 
 	public static MultiRoleUser user;

@@ -10,6 +10,7 @@ import java.time.LocalDate;
 public class ModifiableDate {
 	
 	// Default initialization. DO NOT CHANGE
+	@SuppressWarnings("javadoc")
 	private static LocalDate modifiableDate 
 	                     =  LocalDate.now().withDayOfMonth(1).withMonth(3).withYear(2017);
 

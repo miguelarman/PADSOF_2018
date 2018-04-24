@@ -15,6 +15,7 @@ import application.offer.Offer;
 import application.users.Host;
 import exceptions.CouldNotPayHostException;
 
+@SuppressWarnings("javadoc")
 public class LivingOfferTest {
 
 	private Offer o;

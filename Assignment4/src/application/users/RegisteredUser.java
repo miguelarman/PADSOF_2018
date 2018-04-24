@@ -30,6 +30,7 @@ public abstract class RegisteredUser implements Serializable {
 	 * @author Usuario
 	 *
 	 */
+	@SuppressWarnings("javadoc")
 	public enum Role {
 		HOST, GUEST, ADMIN, MULTIROLE;
 	}

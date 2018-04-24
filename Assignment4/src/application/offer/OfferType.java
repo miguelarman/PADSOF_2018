@@ -8,6 +8,7 @@ package application.offer;
  *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
  *
  */
+@SuppressWarnings("javadoc")
 public enum OfferType {
 	HOLIDAY, LIVING;
 }

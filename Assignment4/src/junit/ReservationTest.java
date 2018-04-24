@@ -14,6 +14,7 @@ import application.users.*;
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 import exceptions.*;
 
+@SuppressWarnings("javadoc")
 public class ReservationTest {
 	
 	private Reservation r;

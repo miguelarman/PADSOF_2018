@@ -14,6 +14,7 @@ import application.dates.ModifiableDate;
 import exceptions.*;
 
 
+@SuppressWarnings("javadoc")
 public class Demo {
 
 	public static void main(String[] args) {

@@ -7,6 +7,8 @@ package application.offer;
  *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
  *
  */
+@SuppressWarnings("javadoc")
 public enum OfferStatus {
+	
 	PENDING_FOR_APPROVAL, PENDING_FOR_CHANGES, APPROVED, BOOKED, PAID
 }

@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+@SuppressWarnings("javadoc")
 public class WindowTest {
 	public static void main(String... args) {
 		JFrame window = new JFrame("Test window");
