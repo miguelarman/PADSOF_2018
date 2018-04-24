@@ -1,6 +1,5 @@
-/application/
-/exceptions/
-/junit/
-/testers/
 /windows/
 /controllers/
+/junit/
+/application/
+/testers/

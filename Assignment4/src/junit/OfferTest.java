@@ -20,6 +20,7 @@ import exceptions.NotTheOwnerException;
 import exceptions.UnexistentUserException;
 import exceptions.UserIsBannedException;
 
+@SuppressWarnings("javadoc")
 public class OfferTest {
 
 	private Host h;

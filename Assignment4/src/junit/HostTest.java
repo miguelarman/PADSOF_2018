@@ -12,6 +12,7 @@ import application.offer.House;
 import application.users.Host;
 import exceptions.HouseAlreadyCreatedException;
 
+@SuppressWarnings("javadoc")
 public class HostTest {
 	
 	public static House h1;

@@ -11,6 +11,7 @@ import application.opinion.*;
 
 import exceptions.*;
 
+@SuppressWarnings("javadoc")
 public class CommentTest {
 	
 	private Comment comm;

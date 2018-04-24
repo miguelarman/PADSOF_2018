@@ -13,6 +13,7 @@ import application.offer.House;
 import application.users.*;
 import exceptions.*;
 
+@SuppressWarnings("javadoc")
 public class AppTest {
 
 	@BeforeClass
