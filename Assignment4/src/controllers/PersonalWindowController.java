@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import application.App;
 import windows.PersonalWindow;
+import windows.SearchWindow;
 
 public class PersonalWindowController implements ActionListener {
 
@@ -19,9 +20,13 @@ public class PersonalWindowController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
+		if(arg0.getActionCommand() == "Search") {
+			SearchWindow newWindow = new SearchWindow(App.getLoggedUser());
+			SearchController s = new SearchController(app, newWindow);
+			newWindow.setVisible(true);
+			this.window.setVisible(false);
+		}
 		
-		
-		this.window.setVisible(false);
 	}
 
 }

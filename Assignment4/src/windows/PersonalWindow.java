@@ -36,7 +36,7 @@ public class PersonalWindow extends JFrame {
 		searchButton = new JButton("Search");
 		
 		personalPanel = new JPanel();
-		
+		personalPanel.add(searchButton);
 		// TODO Adding content to personalPanel
 		
 		pestanias.addTab("Personal zone", null, personalPanel);
