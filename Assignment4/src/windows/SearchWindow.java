@@ -25,6 +25,7 @@ public class SearchWindow extends JFrame {
 	
 	public SearchWindow(RegisteredUser user) {
 		super("Search offers");
+		
 		JPanel options = new JPanel(new FlowLayout());
 		dates = new JRadioButton("Search by dates");
 		zipCode = new JRadioButton("Search by ZIP code");
@@ -53,6 +54,7 @@ public class SearchWindow extends JFrame {
 			options.add(paid);
 			options.add(avgRating);
 		}
+		this.setContentPane(options);
 		this.setSize(400, 500);
 		this.setVisible(false);
 		
