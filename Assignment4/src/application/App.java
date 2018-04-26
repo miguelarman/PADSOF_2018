@@ -672,7 +672,7 @@ public class App implements Serializable {
 	 * 
 	 * @return The list of offers that are pending
 	 */
-	private List<Offer> getPendingOffers() {
+	public List<Offer> getPendingOffers() {
 		List<Offer> offers = new ArrayList<Offer>();
 		
 		for (Offer o : this.offers) {
