@@ -24,12 +24,7 @@ public class PersonalWindow extends JFrame {
 		
 		JComponent personalPanel = new JPanel();
 		
-		// Adding content to personalPanel
-		JLabel profileLabel = new JLabel("View your profile:");
-		JButton profileButton = new JButton("Profile");
-		personalPanel.add(profileLabel);
-		personalPanel.add(profileButton);
-		personalPanel.add(logoutButton);
+		// TODO Adding content to personalPanel
 		
 		pestanias.addTab("Personal zone", null, personalPanel);
 		
@@ -39,7 +34,6 @@ public class PersonalWindow extends JFrame {
 			
 			// TODO Adding content to guestPanel
 			
-			guestPanel.add(logoutButton);
 			
 			pestanias.addTab("Guest zone", null, guestPanel);
 		}
@@ -49,7 +43,6 @@ public class PersonalWindow extends JFrame {
 			
 			// TODO Adding content to hostPanel
 			
-			hostPanel.add(logoutButton);
 			
 			pestanias.addTab("Host zone", null, hostPanel);
 		}
@@ -58,10 +51,6 @@ public class PersonalWindow extends JFrame {
 			JComponent adminPanel = new JPanel();
 			
 			// TODO Adding content to adminPanel
-			
-			
-			adminPanel.add(logoutButton);
-			
 			
 			pestanias.addTab("Admin zone", null, adminPanel);
 		}
@@ -73,6 +62,10 @@ public class PersonalWindow extends JFrame {
 		this.setVisible(false);
 	}
 
+	public void setLogoutController(PersonalWindowController c) {
+		logoutButton.addActionListener(c);
+	}
+	
 	public void setController(PersonalWindowController c) {
 		// TODO Auto-generated method stub
 		

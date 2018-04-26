@@ -25,7 +25,10 @@ public class LoginController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+		
+		PersonalWindow newWindow;
+		
+		if (arg0.getActionCommand() == "Log in") {
 		
 		String id = this.window.getIdField();
 		String password = this.window.getPasswordField();
@@ -44,10 +47,16 @@ public class LoginController implements ActionListener {
 			return;
 		}
 		
-		JOptionPane.showMessageDialog(null, "Welcome dear " + id + " with password " + password);
+		JOptionPane.showMessageDialog(null, "Welcome dear " + id + " with password " + password + "("+ arg0.getActionCommand() + ")");
+		
+		
+		newWindow = new PersonalWindow(App.getLoggedUser().getRole());
+		
+		} else {
+			newWindow = new PersonalWindow(null);
+		}
 		
 		// Show the next window
-		PersonalWindow newWindow = new PersonalWindow(App.getLoggedUser().getRole());
 		PersonalWindowController c = new PersonalWindowController(app, newWindow);
 		newWindow.setController(c);
 		newWindow.setVisible(true);

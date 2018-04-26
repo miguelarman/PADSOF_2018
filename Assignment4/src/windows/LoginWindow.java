@@ -8,6 +8,7 @@ import javax.swing.*;
 public class LoginWindow extends JFrame {
 	
 	private JButton button;
+	private JButton noUserButton;
 	final private JTextField idField;
 	final private JPasswordField passwordField;
 	
@@ -31,6 +32,9 @@ public class LoginWindow extends JFrame {
 		button = new JButton("Log in");
 		this.add(button);
 		
+		noUserButton = new JButton("Enter without account");
+		this.add(noUserButton);
+		
 		this.setSize(400, 500);
 		this.setVisible(false);
 	}
@@ -45,5 +49,6 @@ public class LoginWindow extends JFrame {
 	
 	public void setController(ActionListener c) {
 		button.addActionListener(c);
+		noUserButton.addActionListener(c);
 	}
 }
