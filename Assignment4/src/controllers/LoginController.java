@@ -27,31 +27,34 @@ public class LoginController implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		PersonalWindow newWindow;
-		
-		if (arg0.getActionCommand() == "Log in") {
-		
-		String id = this.window.getIdField();
-		String password = this.window.getPasswordField();
-		
-		try {
-			this.app.login(id, password);
-		} catch (UserIsBannedException e) {
-			JOptionPane.showMessageDialog(null, "The user with id " + id + " has been banned from the system. Please contact our Customer Service from Mondays to Fridays", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		} catch (IncorrectPasswordException | UnexistentUserException e) {
-			JOptionPane.showMessageDialog(null, "Incorrect password or user. Please try again", "Warning",
-			        JOptionPane.WARNING_MESSAGE);
-			return;
-		} catch (AUserIsAlreadyLoggedException e) {
-			JOptionPane.showMessageDialog(null, "I really don't know how you got here", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
-		JOptionPane.showMessageDialog(null, "Welcome dear " + id + " with password " + password + "("+ arg0.getActionCommand() + ")");
-		
-		
-		newWindow = new PersonalWindow(App.getLoggedUser().getRole());
-		
+
+		if (arg0.getActionCommand().equals("Log in")) {
+
+			String id = this.window.getIdField();
+			String password = this.window.getPasswordField();
+
+			try {
+				this.app.login(id, password);
+			} catch (UserIsBannedException e) {
+				JOptionPane.showMessageDialog(null, "The user with id " + id
+						+ " has been banned from the system. Please contact our Customer Service from Mondays to Fridays",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			} catch (IncorrectPasswordException | UnexistentUserException e) {
+				JOptionPane.showMessageDialog(null, "Incorrect password or user. Please try again", "Warning",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			} catch (AUserIsAlreadyLoggedException e) {
+				JOptionPane.showMessageDialog(null, "I really don't know how you got here", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			JOptionPane.showMessageDialog(null,
+					"Welcome dear " + id + " with password " + password + "(" + arg0.getActionCommand() + ")");
+
+			newWindow = new PersonalWindow(App.getLoggedUser().getRole());
+
 		} else {
 			newWindow = new PersonalWindow(null);
 		}

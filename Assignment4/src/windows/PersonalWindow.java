@@ -13,16 +13,21 @@ public class PersonalWindow extends JFrame {
 
 	private JTabbedPane pestanias;
 	private JButton logoutButton;
+	private JComponent personalPanel;
+	private JComponent guestPanel;
+	private JComponent hostPanel;
+	private JComponent adminPanel;
 	
 	public PersonalWindow(Role role) {
 		super("Pestañas");
+		
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
 		pestanias = new JTabbedPane();
 		
 		logoutButton = new JButton("Log out");
 		
-		JComponent personalPanel = new JPanel();
+		personalPanel = new JPanel();
 		
 		// TODO Adding content to personalPanel
 		
@@ -30,7 +35,7 @@ public class PersonalWindow extends JFrame {
 		
 		// We add panels depending on the user's role
 		if (role == Role.GUEST || role == Role.MULTIROLE) {
-			JComponent guestPanel = new JPanel();
+			guestPanel = new JPanel();
 			
 			// TODO Adding content to guestPanel
 			
@@ -39,7 +44,7 @@ public class PersonalWindow extends JFrame {
 		}
 		
 		if (role == Role.HOST || role == Role.MULTIROLE) {
-			JComponent hostPanel = new JPanel();
+			hostPanel = new JPanel();
 			
 			// TODO Adding content to hostPanel
 			
@@ -48,7 +53,7 @@ public class PersonalWindow extends JFrame {
 		}
 		
 		if (role == Role.ADMIN) {
-			JComponent adminPanel = new JPanel();
+			adminPanel = new JPanel();
 			
 			// TODO Adding content to adminPanel
 			
