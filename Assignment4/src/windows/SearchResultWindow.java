@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.*;
 
 import application.offer.*;
+import controllers.GoBackController;
 
 public class SearchResultWindow extends JFrame {
 	
