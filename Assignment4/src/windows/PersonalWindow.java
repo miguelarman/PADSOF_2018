@@ -17,6 +17,13 @@ public class PersonalWindow extends JFrame {
 	private JComponent guestPanel;
 	private JComponent hostPanel;
 	private JComponent adminPanel;
+	private JButton searchButton;
+	private JButton reservedOffersButton;
+	private JButton paidOffersButton;
+	private JButton pendingButton;
+	private JButton creditCardButton;
+	private JButton offersButton;
+	private JButton housesButton;
 	
 	public PersonalWindow(Role role) {
 		super("Pestañas");
@@ -26,6 +33,7 @@ public class PersonalWindow extends JFrame {
 		pestanias = new JTabbedPane();
 		
 		logoutButton = new JButton("Log out");
+		searchButton = new JButton("Search");
 		
 		personalPanel = new JPanel();
 		
