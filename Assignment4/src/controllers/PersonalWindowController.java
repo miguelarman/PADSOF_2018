@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import application.App;
 import windows.PersonalWindow;
+import windows.SearchWindow;
 
 public class PersonalWindowController implements ActionListener {
 
@@ -23,12 +24,12 @@ public class PersonalWindowController implements ActionListener {
 		
 		switch(pressedButton) {
 		case("Search"):
-			// TODO
-//			SearchWindow newWindow = new SearchWindow(App.getLoggedUser());
-//			SearchController s = new SearchController(this.app, newWindow);
-//			newWindow.setController(s);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
+	
+			SearchWindow newWindow = new SearchWindow(App.getLoggedUser());
+			SearchController s = new SearchController(this.app, newWindow);
+			newWindow.setController(s);
+			newWindow.setVisible(true);
+			this.window.setVisible(false);
 			break;
 		
 		case("Booked offers"):
