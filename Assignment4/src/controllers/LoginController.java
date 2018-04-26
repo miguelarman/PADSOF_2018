@@ -61,7 +61,9 @@ public class LoginController implements ActionListener {
 		
 		// Show the next window
 		PersonalWindowController c = new PersonalWindowController(app, newWindow);
+		LogoutController l = new LogoutController(app, newWindow);
 		newWindow.setController(c);
+		newWindow.setLogoutController(l);
 		newWindow.setVisible(true);
 		this.window.setVisible(false);
 	}

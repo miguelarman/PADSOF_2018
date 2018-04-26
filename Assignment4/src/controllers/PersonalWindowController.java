@@ -20,8 +20,6 @@ public class PersonalWindowController implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
-		
-		this.window.setVisible(false);
 	}
 
 }

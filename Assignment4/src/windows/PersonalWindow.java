@@ -2,6 +2,7 @@ package windows;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
@@ -67,11 +68,11 @@ public class PersonalWindow extends JFrame {
 		this.setVisible(false);
 	}
 
-	public void setLogoutController(PersonalWindowController c) {
+	public void setLogoutController(ActionListener c) {
 		logoutButton.addActionListener(c);
 	}
 	
-	public void setController(PersonalWindowController c) {
+	public void setController(ActionListener c) {
 		// TODO Auto-generated method stub
 		
 	}
