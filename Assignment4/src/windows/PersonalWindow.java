@@ -12,6 +12,7 @@ import controllers.PersonalWindowController;
 public class PersonalWindow extends JFrame {
 
 	private JTabbedPane pestanias;
+	private JButton logoutButton;
 	
 	public PersonalWindow(Role role) {
 		super("Pestañas");
@@ -19,7 +20,7 @@ public class PersonalWindow extends JFrame {
 		cont.setLayout(new BorderLayout());
 		pestanias = new JTabbedPane();
 		
-		JButton logoutButton = new JButton("Log out");
+		logoutButton = new JButton("Log out");
 		
 		JComponent personalPanel = new JPanel();
 		
