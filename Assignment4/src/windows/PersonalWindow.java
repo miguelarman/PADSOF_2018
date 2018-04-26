@@ -3,14 +3,16 @@ package windows;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
 import javax.swing.*;
 
 import application.users.RegisteredUser.Role;
-import controllers.PersonalWindowController;
 
 public class PersonalWindow extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3900066860728430861L;
 
 	private JTabbedPane pestanias;
 	

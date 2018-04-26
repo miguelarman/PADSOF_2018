@@ -7,6 +7,10 @@ import javax.swing.*;
 
 public class LoginWindow extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8342207357186589030L;
 	private JButton button;
 	private JButton noUserButton;
 	final private JTextField idField;
