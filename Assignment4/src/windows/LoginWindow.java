@@ -15,25 +15,27 @@ public class LoginWindow extends JFrame {
 	public LoginWindow() {
 		super("Login to our app");
 		
+		Container cont = super.getContentPane();
+		cont.setLayout(new FlowLayout());
+		
 		// Adding a label
 		JLabel label  = new JLabel("Welcome. Please log in");
-		this.setLayout(new FlowLayout());
-		this.add(label);
+		cont.add(label);
 		
 		// Adding fields for username and password
 		idField = new JTextField(10);
 		idField.setText("51999111X");//"NIF");
-		this.add(idField);
+		cont.add(idField);
 		
 		passwordField = new JPasswordField(10);
 		passwordField.setText("swordFish");//"Password");
-		this.add(passwordField);
+		cont.add(passwordField);
 		
 		button = new JButton("Log in");
-		this.add(button);
+		cont.add(button);
 		
 		noUserButton = new JButton("Enter without account");
-		this.add(noUserButton);
+		cont.add(noUserButton);
 		
 		this.setSize(400, 500);
 		this.setVisible(false);
