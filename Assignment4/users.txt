@@ -5,3 +5,7 @@ A;X1130055;Lopez, Mary ;secret;111133337777222
 H;55535121Z;Perez Lopez, Maria Luisa;lolol;2222333344445555
 HG;2334322D;De los Remedios Cristianos, Alfonsina;jesusRules;333212312
 H;12345678Z;Lul Lmao, Maria;hehehe;22223333444455
+H;host;-------, -----;host;--------
+G;guest;-------, -----;guest;--------
+HG;multirole;-------, -----;multirole;--------
+A;admin;-------, -----;admin;--------

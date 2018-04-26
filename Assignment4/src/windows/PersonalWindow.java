@@ -2,6 +2,7 @@ package windows;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.*;
@@ -12,18 +13,30 @@ import controllers.PersonalWindowController;
 public class PersonalWindow extends JFrame {
 
 	private JTabbedPane pestanias;
-	private JButton logoutButton;
+	
 	private JComponent personalPanel;
-	private JComponent guestPanel;
-	private JComponent hostPanel;
-	private JComponent adminPanel;
+	
+	private JButton logoutButton;
+	private JLabel searchLabel;
 	private JButton searchButton;
-	private JButton reservedOffersButton;
+	
+	private JComponent guestPanel;
+	private JLabel bookedOffersLabel;
+	private JButton bookedOffersButton;
+	private JLabel paidOffersLabel;
 	private JButton paidOffersButton;
-	private JButton pendingButton;
-	private JButton creditCardButton;
+	
+	private JComponent hostPanel;
+	private JLabel offersLabel;
 	private JButton offersButton;
+	private JLabel housesLabel;
 	private JButton housesButton;
+	
+	private JComponent adminPanel;
+	private JLabel pendingLabel;
+	private JButton pendingButton;
+	private JLabel creditCardLabel;
+	private JButton creditCardButton;
 	
 	public PersonalWindow(Role role) {
 		super("Pestañas");
@@ -33,11 +46,13 @@ public class PersonalWindow extends JFrame {
 		pestanias = new JTabbedPane();
 		
 		logoutButton = new JButton("Log out");
-		searchButton = new JButton("Search");
 		
 		personalPanel = new JPanel();
 		personalPanel.add(searchButton);
 		// TODO Adding content to personalPanel
+		searchLabel = new JLabel("Search offers in our database!");
+		searchButton = new JButton("Search");
+		personalPanel.add(searchLabel); personalPanel.add(searchButton);
 		
 		pestanias.addTab("Personal zone", null, personalPanel);
 		
@@ -46,6 +61,13 @@ public class PersonalWindow extends JFrame {
 			guestPanel = new JPanel();
 			
 			// TODO Adding content to guestPanel
+			bookedOffersLabel = new JLabel("Check out your booked offers:");
+			bookedOffersButton = new JButton("Booked offers");
+			paidOffersLabel = new JLabel("Check out your paid offers:");
+			paidOffersButton = new JButton("Paid offers");
+			
+			guestPanel.add(bookedOffersLabel); guestPanel.add(bookedOffersButton);
+			guestPanel.add(paidOffersLabel); guestPanel.add(paidOffersButton);
 			
 			
 			pestanias.addTab("Guest zone", null, guestPanel);
@@ -55,7 +77,13 @@ public class PersonalWindow extends JFrame {
 			hostPanel = new JPanel();
 			
 			// TODO Adding content to hostPanel
+			offersLabel = new JLabel("Check out your offers:");
+			offersButton = new JButton("My offers");
+			housesLabel = new JLabel("Check out your houses:");
+			housesButton = new JButton("My houses");
 			
+			hostPanel.add(offersLabel); hostPanel.add(offersButton);
+			hostPanel.add(housesLabel); hostPanel.add(housesButton);
 			
 			pestanias.addTab("Host zone", null, hostPanel);
 		}
@@ -64,6 +92,13 @@ public class PersonalWindow extends JFrame {
 			adminPanel = new JPanel();
 			
 			// TODO Adding content to adminPanel
+			pendingLabel = new JLabel("See all the offers pending for approval:");
+			pendingButton = new JButton("Pending offers");
+			creditCardLabel = new JLabel("Modify credit card number of any user:");
+			creditCardButton = new JButton("Modify credit cards");
+			
+			adminPanel.add(pendingLabel); adminPanel.add(pendingButton);
+			adminPanel.add(creditCardLabel); adminPanel.add(creditCardButton);
 			
 			pestanias.addTab("Admin zone", null, adminPanel);
 		}
@@ -75,11 +110,11 @@ public class PersonalWindow extends JFrame {
 		this.setVisible(false);
 	}
 
-	public void setLogoutController(PersonalWindowController c) {
+	public void setLogoutController(ActionListener c) {
 		logoutButton.addActionListener(c);
 	}
 	
-	public void setController(PersonalWindowController c) {
+	public void setController(ActionListener c) {
 		// TODO Auto-generated method stub
 		
 	}
