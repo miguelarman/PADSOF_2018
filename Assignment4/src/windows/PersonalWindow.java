@@ -17,7 +17,6 @@ public class PersonalWindow extends JFrame {
 	private JTabbedPane pestanias;
 	
 	private JComponent personalPanel;
-	
 	private JButton logoutButton;
 	private JLabel searchLabel;
 	private JButton searchButton;
@@ -39,9 +38,13 @@ public class PersonalWindow extends JFrame {
 	private JButton pendingButton;
 	private JLabel creditCardLabel;
 	private JButton creditCardButton;
+
+	private Role role;
 	
 	public PersonalWindow(Role role) {
 		super("Pestañas");
+		
+		this.role = role;
 		
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
@@ -50,10 +53,11 @@ public class PersonalWindow extends JFrame {
 		logoutButton = new JButton("Log out");
 		
 		personalPanel = new JPanel();
-		personalPanel.add(searchButton);
+
 		// TODO Adding content to personalPanel
 		searchLabel = new JLabel("Search offers in our database!");
 		searchButton = new JButton("Search");
+		
 		personalPanel.add(searchLabel); personalPanel.add(searchButton);
 		
 		pestanias.addTab("Personal zone", null, personalPanel);
@@ -117,8 +121,22 @@ public class PersonalWindow extends JFrame {
 	}
 	
 	public void setController(ActionListener c) {
-		// TODO Auto-generated method stub
+		this.searchButton.addActionListener(c);
 		
+		if (this.role == Role.GUEST || this.role == Role.MULTIROLE) {
+			bookedOffersButton.addActionListener(c);
+			paidOffersButton.addActionListener(c);
+		}
+		
+		if (role == Role.HOST || role == Role.MULTIROLE) {
+			offersButton.addActionListener(c);
+			housesButton.addActionListener(c);
+		}
+		
+		if (role == Role.ADMIN) {
+			pendingButton.addActionListener(c);
+			creditCardButton.addActionListener(c);
+		}
 	}
 
 }

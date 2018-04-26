@@ -20,7 +20,7 @@ public class PersonalWindowController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		if(arg0.getActionCommand() == "Search") {
+		if (arg0.getActionCommand() == "Search") {
 			SearchWindow newWindow = new SearchWindow(App.getLoggedUser());
 			SearchController s = new SearchController(app, newWindow);
 			newWindow.setController(s);
