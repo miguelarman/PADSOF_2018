@@ -9,9 +9,6 @@ import application.users.RegisteredUser.Role;
 
 public class PersonalWindow extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -3900066860728430861L;
 
 	private JTabbedPane pestanias;
