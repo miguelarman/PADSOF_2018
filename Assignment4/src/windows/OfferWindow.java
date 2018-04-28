@@ -79,7 +79,7 @@ public class OfferWindow extends JFrame {
 	public static void main(String...strings) {
 		House h = new House(28049, null, new MultiRoleUser(null, null, null, null, null));
 		
-		Offer o = new HolidayOffer(LocalDate.now(), 2.0, 2.0, "This offer is perfect for nature lovers. Spend a weekend here and you will come back", h, null);
+		Offer o = new HolidayOffer(LocalDate.now(), 2.0, 2.0, "This offer is perfect for mature lovers who enjoy walking through forests... Spend a weekend here and you will come back", h, null);
 		
 		OfferWindow w = new OfferWindow(o, Role.MULTIROLE);
 		w.setController(new OfferWindowController(null, w));
