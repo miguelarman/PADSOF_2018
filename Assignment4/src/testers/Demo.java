@@ -127,7 +127,7 @@ public class Demo {
 		
 		House house1 = null;
 		try {
-			house1 = a.createHouse(29087, "Madrid"); //We create a house
+			house1 = a.createHouse("29087", "Madrid"); //We create a house
 		} catch (InvalidRolException e) {
 			System.out.println(e);
 		} catch (NoUserLoggedException e) {
@@ -585,7 +585,7 @@ public class Demo {
 		//We create a house and an offer as a multirole user
 		House house2 = null;
 		try {
-			house2 = a.createHouse(22437, "Palencia"); //We create a house
+			house2 = a.createHouse("22437", "Palencia"); //We create a house
 		} catch (InvalidRolException e) {
 			System.out.println(e);
 		} catch (NoUserLoggedException e) {
@@ -748,7 +748,7 @@ public class Demo {
 		
 		House house3 = null;
 		try {
-			house3 = a.createHouse(22337, "Teruel"); //We create a house
+			house3 = a.createHouse("22337", "Teruel"); //We create a house
 		} catch (InvalidRolException e) {
 			System.out.println(e);
 		} catch (NoUserLoggedException e) {
@@ -951,7 +951,7 @@ public class Demo {
 		//Now we are going to add some offers to try the searches
 		House house4 = null;
 		try {
-			house4 = a.createHouse(34337, "ValdeMingoMez"); //We create a house
+			house4 = a.createHouse("34337", "ValdeMingoMez"); //We create a house
 		} catch (InvalidRolException e) {
 			System.out.println(e);
 		} catch (NoUserLoggedException e) {
@@ -994,7 +994,7 @@ public class Demo {
 		
 		House house5 = null;
 		try {
-			house5 = a.createHouse(12337, "Valencia"); //We create a house
+			house5 = a.createHouse("12337", "Valencia"); //We create a house
 		} catch (InvalidRolException e) {
 			System.out.println(e);
 		} catch (NoUserLoggedException e) {
@@ -1097,7 +1097,7 @@ public class Demo {
 		
 		//Search by zip code
 		System.out.println("====================");
-		System.out.println(a.searchZipCode(12337));
+		System.out.println(a.searchZipCode("12337"));
 		System.out.println("====================\n");
 		
 		//Search by dates

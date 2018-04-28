@@ -28,9 +28,9 @@ public class HostTest {
 		
 		host = new Host("Host Jesus", "de los hosts", "password", "23871298371", "92837492F");
 		
-		h1 = new House(28049, "Cantoblanco", host);
-		h2 = new House(28050, "Cantoblanco", host);
-		h3 = new House(28049, "Cantonegro", host);
+		h1 = new House("28049", "Cantoblanco", host);
+		h2 = new House("28050", "Cantoblanco", host);
+		h3 = new House("28049", "Cantonegro", host);
 		
 	}
 

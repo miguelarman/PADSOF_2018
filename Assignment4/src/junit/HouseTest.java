@@ -23,7 +23,7 @@ public class HouseTest {
 		
 		
 		Host host = new Host("Host Jesus", "de los hosts", "password", "23871298371", "92837492F");
-		h = new House(280922, "cantowhite", host);
+		h = new House("280922", "cantowhite", host);
 		
 		try {
 			h.addCharacteristic("repeated", "yes");

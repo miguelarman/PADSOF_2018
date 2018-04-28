@@ -30,7 +30,7 @@ public class HolidayOfferTest {
 	@Before
 	public void setUp() {
 		h = new Host("Host Jesus", "de los hosts", "password", "2387129837134534", "92837492F");
-		House house = new House(4730, "cantblanc", h);
+		House house = new House("4730", "cantblanc", h);
 		
 		o = new HolidayOffer(LocalDate.now(), 100.0, 10.0, "description", house, LocalDate.now().plusDays(1));
 	}

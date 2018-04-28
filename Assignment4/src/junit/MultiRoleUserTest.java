@@ -29,15 +29,15 @@ public class MultiRoleUserTest {
 		user = new MultiRoleUser("Multi Jesus", "de los multis", "password", "23871298371", "92837492F");
 		
 		Host host = new Host("Host Jesus", "de los hosts", "password", "23871298371", "92837492F");
-		House h = new House(28049, "Cantoblanco", host);
+		House h = new House("28049", "Cantoblanco", host);
 		
 		Offer o = new LivingOffer(LocalDate.now(), 0.0, 0.0, "description", h, 3);
 		
 		r = new Reservation(host, o);
 		
-		h1 = new House(28049, "Cantoblanco", host);
-		h2 = new House(28050, "Cantoblanco", host);
-		h3 = new House(28049, "Cantonegro", host);
+		h1 = new House("28049", "Cantoblanco", host);
+		h2 = new House("28050", "Cantoblanco", host);
+		h3 = new House("28049", "Cantonegro", host);
 	}
 	
 	

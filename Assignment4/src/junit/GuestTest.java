@@ -23,7 +23,7 @@ public class GuestTest {
 		File file = new File("data.obj"); file.delete();
 				
 		Host host = new Host("Host Jesus", "de los hosts", "password", "23871298371", "92837492F");
-		House h = new House(28049, "Cantoblanco", host);
+		House h = new House("28049", "Cantoblanco", host);
 		
 		Offer o = new LivingOffer(LocalDate.now(), 0.0, 0.0, "description", h, 3);
 		

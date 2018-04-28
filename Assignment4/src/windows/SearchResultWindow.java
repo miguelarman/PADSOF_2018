@@ -81,7 +81,7 @@ public class SearchResultWindow extends JFrame {
 	public static void main(String... args) {
 		
 		List<Offer> list = new ArrayList<Offer>();
-		House h = new House(28049, null, new MultiRoleUser(null, null, null, null, null));
+		House h = new House("28049", null, new MultiRoleUser(null, null, null, null, null));
 		list.add(new HolidayOffer(LocalDate.now(), 2.0, 2.0, "aaaaaa", h, null));
 		
 		for (int i = 0; i < 3; i++) {

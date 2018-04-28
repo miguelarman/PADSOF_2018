@@ -34,7 +34,7 @@ public class OfferTest {
 	@Before
 	public void setUp() {
 		h = new Host("Ana Maria", "Garcia Serrano", "swordFish", "9999666633330000", "51999111X");
-		House house = new House(4730, "cantblanc", h);
+		House house = new House("4730", "cantblanc", h);
 		
 		o = new HolidayOffer(LocalDate.now(), 100.0, 10.0, "description", house, LocalDate.now().plusDays(1));
 	}
@@ -53,7 +53,7 @@ public class OfferTest {
 		}
 		
 		h = (Host)App.getLoggedUser();
-		o = new HolidayOffer(LocalDate.now(), 100.0, 10.0, "description", new House(4730, "cantblanc", h), LocalDate.now().plusDays(1));
+		o = new HolidayOffer(LocalDate.now(), 100.0, 10.0, "description", new House("4730", "cantblanc", h), LocalDate.now().plusDays(1));
 		
 		
 		

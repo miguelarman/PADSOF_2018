@@ -148,7 +148,7 @@ public class App implements Serializable {
 	 * @param zip ZIP code of the house in the offer
 	 * @return list of offers whose house has the given ZIP code
 	 */
-	public List<Offer> searchZipCode(Integer zip) {
+	public List<Offer> searchZipCode(String zip) {
 		
 		List<Offer> searchResult = new ArrayList<Offer>();
 		
@@ -900,7 +900,7 @@ public class App implements Serializable {
 	 * @throws NoUserLoggedException When the app could not retrieve the logged user
 	 * @return the created house
 	 */
-	public House createHouse(Integer zip, String city) throws InvalidRolException, NoUserLoggedException {
+	public House createHouse(String zip, String city) throws InvalidRolException, NoUserLoggedException {
 		House h = null;
 		if(App.loggedUser == null) {
 			throw new NoUserLoggedException();
