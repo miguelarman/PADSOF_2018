@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import application.users.RegisteredUser;
+import controllers.GoBackController;
 import controllers.SearchController;
 
 public class SearchWindow extends JFrame {
@@ -28,7 +29,7 @@ public class SearchWindow extends JFrame {
 	final private JComboBox<String> options;
 	
 	private JButton searchButton;
-	private JButton previousButton;
+	private JButton goBackButton;
 	
 //	final private JTextField zipCodeField;
 //	final private JComboBox<String> offerTypeBox;
@@ -54,9 +55,9 @@ public class SearchWindow extends JFrame {
 		
 		searches.add(options, BorderLayout.NORTH);
 		
-		previousButton = new JButton("Previous");
+		goBackButton = new JButton("Previous");
 		searchButton = new JButton("Search");
-		buttons.add(previousButton);
+		buttons.add(goBackButton);
 		buttons.add(searchButton);
 		cont.add(searches, BorderLayout.CENTER);
 		cont.add(buttons, BorderLayout.SOUTH);
@@ -70,13 +71,13 @@ public class SearchWindow extends JFrame {
 		options.addActionListener(s);
 	}
 	
-	public void setSearchController(ActionListerner b) {
-		searchButton.addActionListener(s);
+	public void setSearchController(ActionListener b) {
+		searchButton.addActionListener(b);
 		
 	}
 	
-	public void setPreviousController(GoBackController gb) {
-		previousButton.addActionListener(gb);
+	public void setGoBackController(GoBackController g) {
+		this.goBackButton.addActionListener(g);
 	}
 	
 }
