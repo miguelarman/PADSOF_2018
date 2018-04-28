@@ -5,12 +5,14 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import application.offer.Offer;
+import exceptions.NoRowSelectedException;
 
 public class SearchResultTableModel extends AbstractTableModel {
 
 	// In this example table data are attributes of the class
 	private Object[] titles;
 	private Object[][] contents;
+	private Offer[] offersArray;
 
 	// In this example the constructor initializes the attributes
 	public SearchResultTableModel(List<Offer> offers) {
@@ -21,13 +23,15 @@ public class SearchResultTableModel extends AbstractTableModel {
 
 		// Create a matrix of table contents
 		Object[][] contents = new Object[offers.size()][4];
+		offersArray = new Offer[offers.size()];
 		
 		int i = 0;
 		
-		for (Offer o : offers) {
-			Object[] offer = {/*o.getHouse().getZipCode()*/"house", o.getDate(), o.getAmount(), o.getAvgRating()};
+		for (Offer o : offers) { // TODO
+			Object[] offer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating()};
 
 			contents[i] = offer;
+			offersArray[i] = o;
 			i++;
 		}
 		
@@ -52,5 +56,18 @@ public class SearchResultTableModel extends AbstractTableModel {
 	@Override
 	public boolean isCellEditable(int row, int col) {
 		return false;
+	}
+	
+	@Override
+	public String getColumnName(int col) {
+		return (String) this.titles[col];
+	}
+
+	public Offer getRow(int selectedRow) throws NoRowSelectedException {
+		if (selectedRow >= this.offersArray.length || selectedRow < 0) {
+			throw new NoRowSelectedException();
+		} else {
+			return offersArray[selectedRow];
+		}
 	}
 }

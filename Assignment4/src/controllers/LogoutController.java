@@ -10,10 +10,10 @@ import windows.PersonalWindow;
 
 public class LogoutController implements ActionListener {
 
-	private PersonalWindow window;
+	private JFrame window;
 	private App app;
 
-	public LogoutController(App app, PersonalWindow window) {
+	public LogoutController(App app, JFrame window) {
 		this.window = window;
 		this.app = app;
 	}
