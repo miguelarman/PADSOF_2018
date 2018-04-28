@@ -28,7 +28,7 @@ public class SearchResultController implements ActionListener {
 			selectedOffer = this.window.getSelection();
 			
 			// Show the next window
-			OfferWindow newWindow = new OfferWindow(selectedOffer);
+			OfferWindow newWindow = new OfferWindow(selectedOffer, App.getLoggedUser().getRole());
 			OfferWindowController c = new OfferWindowController(app, newWindow);
 			GoBackController g = new GoBackController(this.window, newWindow);
 			newWindow.setController(c);

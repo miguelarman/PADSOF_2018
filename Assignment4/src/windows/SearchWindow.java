@@ -2,23 +2,20 @@ package windows;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
 
 import application.users.RegisteredUser;
 import controllers.GoBackController;
+<<<<<<< HEAD
 import controllers.SearchController;
+=======
+>>>>>>> 9c41fea5df8b7546aa179663f74a3374bdfa250d
 
 public class SearchWindow extends JFrame {
 	
