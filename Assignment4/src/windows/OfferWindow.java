@@ -14,6 +14,7 @@ import application.offer.HolidayOffer;
 import application.offer.House;
 import application.offer.Offer;
 import application.users.MultiRoleUser;
+import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
 import controllers.OfferWindowController;
 
@@ -21,8 +22,11 @@ public class OfferWindow extends JFrame {
 
 	private JButton viewHouseButton;
 	private JButton viewOpinionsButton;
+	private JButton bookOfferButton;
+	private JButton purchaseOfferButton;
 
-	public OfferWindow(Offer offer) {
+	public OfferWindow(Offer offer, Role role) {
+		super("Offer");
 		
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
@@ -47,6 +51,16 @@ public class OfferWindow extends JFrame {
 		buttonsPanel.setLayout(new FlowLayout());
 		viewHouseButton = new JButton("View house"); 		buttonsPanel.add(viewHouseButton);
 		viewOpinionsButton = new JButton("View Opinions");	buttonsPanel.add(viewOpinionsButton);
+		bookOfferButton = new JButton("Book this offer");
+		purchaseOfferButton = new JButton("Purchase this offer");
+		if (role == Role.GUEST || role == Role.MULTIROLE) {
+			buttonsPanel.add(bookOfferButton);
+			buttonsPanel.add(purchaseOfferButton);
+		}
+//		rateOfferButton = new JButton("Rate this offer");
+		cont.add(buttonsPanel, BorderLayout.SOUTH);
+		
+		
 		
 		
 		this.setSize(600,  400);
@@ -67,7 +81,7 @@ public class OfferWindow extends JFrame {
 		
 		Offer o = new HolidayOffer(LocalDate.now(), 2.0, 2.0, "This offer is perfect for nature lovers. Spend a weekend here and you will come back", h, null);
 		
-		OfferWindow w = new OfferWindow(o);
+		OfferWindow w = new OfferWindow(o, Role.MULTIROLE);
 		w.setController(new OfferWindowController(null, w));
 		w.setGoBackController(new GoBackController(new LoginWindow(), w));
 		
