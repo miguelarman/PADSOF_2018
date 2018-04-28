@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -51,7 +52,6 @@ public class SearchWindow extends JFrame {
 		}
 		//offerTypeBox = new JComboBox<String>(typesOfOffer);
 		
-		options.add(new JLabel("Select a type of search:\n"));
 		searches.add(options, BorderLayout.NORTH);
 		
 		previousButton = new JButton("Previous");
@@ -66,8 +66,17 @@ public class SearchWindow extends JFrame {
 		
 	}
 
-	public void setController(SearchController s) {
-		// TODO Auto-generated method stub
+	public void setBoxController(ActionListener s) {
+		options.addActionListener(s);
+	}
+	
+	public void setSearchController(ActionListerner b) {
+		searchButton.addActionListener(s);
 		
 	}
+	
+	public void setPreviousController(GoBackController gb) {
+		previousButton.addActionListener(gb);
+	}
+	
 }

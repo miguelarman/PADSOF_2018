@@ -1,11 +1,12 @@
 package controllers;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import application.App;
 import windows.SearchWindow;
 
-public class SearchController {
+public class SearchController implements ActionListener {
 	
 	SearchWindow window;
 	App app;
@@ -16,6 +17,6 @@ public class SearchController {
 	}
 	
 	public void actionPerformed(ActionEvent arg0) {
-		//TODO
+		
 	}
 }
