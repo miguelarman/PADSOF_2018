@@ -5,6 +5,7 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +18,9 @@ import controllers.GoBackController;
 import controllers.OfferWindowController;
 
 public class OfferWindow extends JFrame {
+
+	private JButton viewHouseButton;
+	private JButton viewOpinionsButton;
 
 	public OfferWindow(Offer offer) {
 		
@@ -39,7 +43,13 @@ public class OfferWindow extends JFrame {
 		JLabel avgRatingLabel = new JLabel("Average rating: " + offer.getAvgRating());	offerPanel.add(avgRatingLabel);
 		cont.add(offerPanel, BorderLayout.CENTER);
 		
-		this.setSize(400,  400);
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(new FlowLayout());
+		viewHouseButton = new JButton("View house"); 		buttonsPanel.add(viewHouseButton);
+		viewOpinionsButton = new JButton("View Opinions");	buttonsPanel.add(viewOpinionsButton);
+		
+		
+		this.setSize(600,  400);
 		this.setVisible(false);
 	}
 
