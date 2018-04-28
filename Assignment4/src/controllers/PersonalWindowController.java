@@ -27,7 +27,7 @@ public class PersonalWindowController implements ActionListener {
 	
 			SearchWindow newWindow = new SearchWindow(App.getLoggedUser());
 			SearchController s = new SearchController(this.app, newWindow);
-			newWindow.setPreviousController(new GoBackController(this, newWindow));
+			newWindow.setPreviousController(new GoBackController(this.window, newWindow));
 			newWindow.setSearchController(s);
 			newWindow.setVisible(true);
 			this.window.setVisible(false);
