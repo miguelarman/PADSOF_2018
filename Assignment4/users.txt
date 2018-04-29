@@ -7,5 +7,5 @@ HG;2334322D;De los Remedios Cristianos, Alfonsina;jesusRules;333212312
 H;12345678Z;Lul Lmao, Maria;hehehe;22223333444455
 H;host;-------, -----;host;--------
 G;guest;-------, -----;guest;--------
-HG;multirole;-------, -----;multirole;--------
+HG;multirole;Multirolez, Multirolio;multirole;--------
 A;admin;-------, -----;admin;--------

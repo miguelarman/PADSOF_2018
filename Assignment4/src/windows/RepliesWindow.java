@@ -1,7 +1,9 @@
 package windows;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -11,33 +13,41 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import application.offer.Offer;
+import application.App;
+import application.opinion.Comment;
 import application.opinion.Opinion;
-import controllers.OfferOpinionsWindowController;
+import controllers.GoBackController;
+import controllers.RepliesWindowController;
+import exceptions.AUserIsAlreadyLoggedException;
+import exceptions.IncorrectPasswordException;
 import exceptions.NoRowSelectedException;
+import exceptions.NoUserLoggedException;
+import exceptions.UnexistentUserException;
+import exceptions.UserIsBannedException;
 import windows.tableModels.OfferOpinionsTableModel;
 
-public class OfferOpinionsWindow extends JFrame {
-	
+public class RepliesWindow extends JFrame {
+
 	private JTextField comment;
 	private JTextField rating;
-	private JButton addReply;
 	private JButton addRating;
-	private JTable table;
+	private JButton addReply;
 	private JButton viewReplies;
 	private OfferOpinionsTableModel dataModel;
+	private JTable table;
 
-	public OfferOpinionsWindow(Offer offer) {
-		super("Opinions of the offer");
+	public RepliesWindow(Comment opinion) {
+		
+		super("Replies");
 		
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
 		
-		// TODO poner algo de la oferta encima? el zip?
 		
+		// TODO poner el comentario arriba?
 		
-		dataModel = new OfferOpinionsTableModel(offer.getOpinions());
-		this.table = new JTable(dataModel);
+		dataModel = new OfferOpinionsTableModel(opinion.getReplies());
+		table = new JTable(dataModel);
 		
 		table.getTableHeader().setReorderingAllowed(false);
 //		table.setAutoCreateRowSorter(true);
@@ -58,43 +68,57 @@ public class OfferOpinionsWindow extends JFrame {
 
 		cont.add(tablePanel, BorderLayout.CENTER);
 		
-		
 		JPanel replyPanel = new JPanel();
 		replyPanel.setLayout(new GridLayout(2, 2));
-		this.comment = new JTextField(30);	this.comment.setText("Your opinion about this offer");
+		this.comment = new JTextField(30);	this.comment.setText("Your reply to this comment");
 		this.rating = new JTextField(4);	this.rating.setText("Your rating");
-		this.addRating = new JButton("Rate this offer");
-		this.addReply = new JButton("Comment on this offer");
+		this.addRating = new JButton("Rate this comment");
+		this.addReply = new JButton("Reply to this comment");
 		replyPanel.add(this.comment);
 		replyPanel.add(this.addReply);
 		replyPanel.add(this.rating);
 		replyPanel.add(this.addRating);
 		
 		cont.add(replyPanel, BorderLayout.SOUTH);
-
 		
-		this.setSize(400,  400);
+		
+		
+		this.setSize(750, 500);
 		this.setVisible(false);
 	}
 
-	public void setController(OfferOpinionsWindowController c) {
-		this.addReply.addActionListener(c);
-		this.addRating.addActionListener(c);
-		this.viewReplies.addActionListener(c);
+	public void setController(RepliesWindowController r) {
+		this.addRating.addActionListener(r);
+		this.addReply.addActionListener(r);
+		this.viewReplies.addActionListener(r);
 	}
 
-	public String getWrittenComment() {
-		return this.comment.getText();
+	public void setGoBackController(GoBackController g) {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public String getWrittenRating() {
-		return this.rating.getText();
-	}
-	
 	public Opinion getSelection() throws NoRowSelectedException {
 		int selectedRow = this.table.getSelectedRow();
 		
 		return this.dataModel.getRow(selectedRow);
+	}
+	
+	public static void main(String...strings) throws Exception {
+		App app = App.openApp();
+		app.login("multirole", "multirole");
+		
+		Comment c = new Comment("My comment");
+		c.addReply("I agree with you");
+		((Comment)c.getComments().get(0)).addReply("You are totally correct");
+		c.rateComment(5.0);
+		
+		RepliesWindow w = new RepliesWindow(c);
+		RepliesWindowController controller = new RepliesWindowController(app, w);
+		w.setController(controller);
+		
+		
+		w.setVisible(true);
 	}
 
 }

@@ -26,7 +26,7 @@ public class OfferWindowController implements ActionListener {
 		case("View opinions"):
 			// TODO
 			OfferOpinionsWindow w = new OfferOpinionsWindow(this.window.getOffer());
-			OfferOpinionsWindowController c = new OfferOpinionsWindowController(this.app, w);
+			OfferOpinionsWindowController c = new OfferOpinionsWindowController(this.app, w, this.window.getOffer());
 			w.setController(c);
 			w.setVisible(true);
 			break;
