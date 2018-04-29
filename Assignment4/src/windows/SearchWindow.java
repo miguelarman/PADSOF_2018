@@ -4,14 +4,22 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import com.toedter.calendar.JDateChooser;
+
+import application.dates.ModifiableDate;
 import application.users.RegisteredUser;
 import controllers.GoBackController;
+import controllers.SearchBoxController;
+
 
 public class SearchWindow extends JFrame {
 	
@@ -22,11 +30,13 @@ public class SearchWindow extends JFrame {
 	final private JComboBox<String> options;
 	
 	private JButton searchButton;
-	private JButton previousButton;
+	private JButton goBackButton;
 	
-//	final private JTextField zipCodeField;
-//	final private JComboBox<String> offerTypeBox;
-	
+	final private JTextField zipCodeField;
+	final private JComboBox<String> offerTypeBox;
+	final private JTextField avgRatingField;
+	private JDateChooser iniDate;
+	private JDateChooser endDate;
 	
 	public SearchWindow(RegisteredUser user) {
 		super("Search offers");
@@ -34,8 +44,9 @@ public class SearchWindow extends JFrame {
 		Container cont = super.getContentPane();
 		JPanel buttons = new JPanel(new GridLayout(1, 2));
 		JPanel searches = new JPanel(new BorderLayout());
-		
+		JPanel dates = new JPanel(new GridLayout(1, 2));
 		String[] typesOfOffer = {"Living offer", "Holiday offer"};
+		
 		if(user == null) {
 			String[] typesOfSearch = {"ZIP code", "Type of offer", "Dates"};
 			options = new JComboBox<String>(typesOfSearch);
@@ -44,24 +55,52 @@ public class SearchWindow extends JFrame {
 			String[] typesOfSearch = {"ZIP code", "Type of offer", "Dates", "Booked offers", "Paid offers", "Average rating"};
 			options = new JComboBox<String>(typesOfSearch);
 		}
-		//offerTypeBox = new JComboBox<String>(typesOfOffer);
 		
+		zipCodeField = new JTextField(10);
+		searches.add(zipCodeField, BorderLayout.CENTER);
+		
+		offerTypeBox = new JComboBox<String>(typesOfOffer);
+		offerTypeBox.setBounds(100, 150, 200, 35);
+		searches.add(offerTypeBox, BorderLayout.CENTER);
+		
+		avgRatingField = new JTextField(10);
+		searches.add(avgRatingField, BorderLayout.CENTER);
+		
+		iniDate = new JDateChooser();
+		dates.add(iniDate, BorderLayout.CENTER);
+		iniDate.getJCalendar().setTodayButtonVisible(true);
+		iniDate.getJCalendar().setWeekOfYearVisible(false);
+		iniDate.setDate(Date.from(ModifiableDate.getModifiableDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+
+		
+		endDate = new JDateChooser();
+		dates.add(endDate, BorderLayout.WEST);
+		endDate.getJCalendar().setTodayButtonVisible(true);
+		endDate.getJCalendar().setWeekOfYearVisible(false);
+		endDate.setDate(Date.from(ModifiableDate.getModifiableDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+		
+		searches.add(dates, BorderLayout.CENTER);
 		searches.add(options, BorderLayout.NORTH);
 		
-		previousButton = new JButton("Previous");
+		goBackButton = new JButton("Previous");
 		searchButton = new JButton("Search");
-		buttons.add(previousButton);
+		buttons.add(goBackButton);
 		buttons.add(searchButton);
 		cont.add(searches, BorderLayout.CENTER);
 		cont.add(buttons, BorderLayout.SOUTH);
 		this.setContentPane(cont);
 		this.setSize(400, 500);
-		this.setVisible(false);
 		
+		zipCodeField.setVisible(false);
+		iniDate.setVisible(false);
+		endDate.setVisible(false);
+		avgRatingField.setVisible(false);
+		offerTypeBox.setVisible(false);
+		this.setVisible(false);
 	}
 
-	public void setBoxController(ActionListener s) {
-		options.addActionListener(s);
+	public void setBoxController(SearchBoxController s) {
+		options.addItemListener(s);
 	}
 	
 	public void setSearchController(ActionListener b) {
@@ -69,8 +108,76 @@ public class SearchWindow extends JFrame {
 		
 	}
 	
-	public void setPreviousController(GoBackController gb) {
-		previousButton.addActionListener(gb);
+	public void setGoBackController(GoBackController g) {
+		this.goBackButton.addActionListener(g);
 	}
 	
+	public String getCurrentBoxOption() {
+		return (String)this.options.getSelectedItem();
+	}
+	
+	public void setVisibleZipCodeField() {
+		this.offerTypeBox.setVisible(false);
+		this.avgRatingField.setVisible(false);
+		this.iniDate.setVisible(false);
+		this.endDate.setVisible(false);
+		this.zipCodeField.setVisible(true);
+	}
+	
+	public void setVisibleOfferTypeBox() {
+		this.zipCodeField.setVisible(false);
+		this.avgRatingField.setVisible(false);
+		this.iniDate.setVisible(false);
+		this.endDate.setVisible(false);
+		this.offerTypeBox.setVisible(true);
+	}
+	
+	public void setVisibleDates() {
+		this.zipCodeField.setVisible(false);
+		this.avgRatingField.setVisible(false);
+		this.offerTypeBox.setVisible(false);
+		this.iniDate.setVisible(true);
+		this.endDate.setVisible(true);
+
+	}
+	
+	public void setVisibleRating() {
+		this.zipCodeField.setVisible(false);
+		this.offerTypeBox.setVisible(false);
+		this.iniDate.setVisible(false);
+		this.endDate.setVisible(false);
+		this.avgRatingField.setVisible(true);
+
+	}
+	public void hideAll() {
+		this.zipCodeField.setVisible(false);
+		this.avgRatingField.setVisible(false);
+		this.iniDate.setVisible(false);
+		this.endDate.setVisible(false);
+		this.offerTypeBox.setVisible(false);
+	}
+	public JComboBox<String> getOfferTypeBox() {
+		return this.offerTypeBox;
+	}
+	public JTextField getZipCodeField() {
+		return this.zipCodeField;
+	}
+	public JDateChooser getIniDate() {
+		return this.iniDate;
+	}
+	public JDateChooser getEndDate() {
+		return this.endDate;
+	}
+	public JTextField getAvgRatingField() {
+		return this.avgRatingField;
+	}
+	
+	public void setUp() {
+		this.setVisible(true);
+		iniDate.setVisible(false);
+		endDate.setVisible(false);
+		avgRatingField.setVisible(false);
+		offerTypeBox.setVisible(false);
+		zipCodeField.setVisible(true);
+	}
 }

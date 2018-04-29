@@ -148,7 +148,7 @@ public class AppTest {
 		
 		Host host = (Host)App.getLoggedUser();
 		
-		House house = new House(28049, "Cantoblanco", host);
+		House house = new House("28049", "Cantoblanco", host);
 		try {
 			app.createHolidayOffer(ModifiableDate.getModifiableDate().plusDays(3), 0.0, 0.0, "description", house, ModifiableDate.getModifiableDate().plusDays(18));
 		} catch (InvalidRolException | NoUserLoggedException | InvalidDateException | NotTheOwnerException
@@ -191,7 +191,7 @@ public class AppTest {
 		
 		Host host = (Host)App.getLoggedUser();
 		
-		House house = new House(28049, "Cantoblanco", host);
+		House house = new House("28049", "Cantoblanco", host);
 		
 		try {
 			app.createHolidayOffer(ModifiableDate.getModifiableDate().plusDays(3), 0.0, 0.0, "description", house, ModifiableDate.getModifiableDate().plusDays(18));

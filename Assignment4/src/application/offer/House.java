@@ -22,7 +22,7 @@ public class House implements Serializable{
 	/**
 	 * ZIP code of the house
 	 */
-	private Integer zipCode;
+	private String zipCode;
 	
 	/**
 	 * City of the house
@@ -48,7 +48,7 @@ public class House implements Serializable{
 	 * @param city City of the house
 	 * @param host Host that owns the house
 	 */
-	public House(Integer zipCode, String city, Host host) {
+	public House(String zipCode, String city, Host host) {
 		this.zipCode = zipCode;
 		this.city = city;
 		this.chs = new HashMap<String, String>();
@@ -62,7 +62,7 @@ public class House implements Serializable{
 	 * @param city City of the house
 	 * @param host MultiRoleUser that owns the house
 	 */
-	public House(Integer zipCode, String city, MultiRoleUser host) {
+	public House(String zipCode, String city, MultiRoleUser host) {
 		this.zipCode = zipCode;
 		this.city = city;
 		this.chs = new HashMap<String, String>();
@@ -93,7 +93,7 @@ public class House implements Serializable{
 	 * 
 	 * @return zip code of the house
 	 */
-	public Integer getZipCode() {
+	public String getZipCode() {
 		return zipCode;
 	}
 	
