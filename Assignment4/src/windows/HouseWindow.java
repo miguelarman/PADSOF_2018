@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import application.offer.House;
@@ -39,12 +40,19 @@ public class HouseWindow extends JFrame {
 		houseData.add(new JLabel("House city"));			houseData.add(new JLabel(house.getCity()));
 		houseData.add(new JLabel("House zip code"));		houseData.add(new JLabel(house.getZipCode()));
 		houseData.add(new JLabel("House owner"));			houseData.add(new JLabel(house.getHost().getName() + " " + house.getHost().getSurname()));
-		houseData.add(new JLabel("House characteristics"));	houseData.add(new JTable(new HouseCharacteristicsTableModel(house.getCharacteristics())));
+		houseData.add(new JLabel("House characteristics"));	
+		
+		JTable table = new JTable(new HouseCharacteristicsTableModel(house.getCharacteristics()));
+		table.getTableHeader().setReorderingAllowed(false);
+		JScrollPane scrollBar = new JScrollPane(table);
+		houseData.add(scrollBar);
+		
+		
 		
 		cont.add(houseData, BorderLayout.CENTER);
 		
 		
-		this.setSize(400, 400);
+		this.setSize(400, 412);
 		this.setVisible(false);
 	}
 
@@ -59,15 +67,22 @@ public class HouseWindow extends JFrame {
 	
 	
 	public static void main(String...strings) throws DuplicateCharacteristicException {
-		House h = new House("28080", "Madrid", new Host(null, null, null, null, null));
+		House h = new House("28080", "Madrid", new Host("Nombre", "Apellidos", null, null, null));
 		h.addCharacteristic("Pool", "covered");
 		h.addCharacteristic("Bathrooms", "four");
 		h.addCharacteristic("Bedrooms", "three");
+		h.addCharacteristic("Other", "three");
+		h.addCharacteristic("Another", "three");
+		h.addCharacteristic("Other one", "three");
 		
 		HouseWindow w = new HouseWindow(h);
 		w.setController(new HouseWindowController(null, w, h));
 		w.setGoBackController(new GoBackController(new LoginWindow(), w));
 		w.setVisible(true);
+		
+		while(true) {
+			System.out.println(w.size());
+		}
 		
 	}
 
