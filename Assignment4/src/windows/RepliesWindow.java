@@ -1,13 +1,12 @@
 package windows;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,12 +17,7 @@ import application.opinion.Comment;
 import application.opinion.Opinion;
 import controllers.GoBackController;
 import controllers.RepliesWindowController;
-import exceptions.AUserIsAlreadyLoggedException;
-import exceptions.IncorrectPasswordException;
 import exceptions.NoRowSelectedException;
-import exceptions.NoUserLoggedException;
-import exceptions.UnexistentUserException;
-import exceptions.UserIsBannedException;
 import windows.tableModels.OfferOpinionsTableModel;
 
 public class RepliesWindow extends JFrame {
@@ -45,6 +39,9 @@ public class RepliesWindow extends JFrame {
 		
 		
 		// TODO poner el comentario arriba?
+		
+		JLabel title = new JLabel("Replies to opinion from " + opinion.getCommenter().getName() + ". \"" + opinion.getText() + "\"");
+		cont.add(title, BorderLayout.NORTH);
 		
 		dataModel = new OfferOpinionsTableModel(opinion.getReplies());
 		table = new JTable(dataModel);

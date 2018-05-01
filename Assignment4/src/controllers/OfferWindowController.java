@@ -3,7 +3,10 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import application.App;
+import windows.HouseWindow;
 import windows.OfferOpinionsWindow;
 import windows.OfferWindow;
 
@@ -22,13 +25,19 @@ public class OfferWindowController implements ActionListener {
 		switch(arg0.getActionCommand()) {
 		case("View house"):
 			// TODO
+			HouseWindow newWindow = new HouseWindow(this.window.getOffer().getHouse());
+			HouseWindowController h = new HouseWindowController(this.app, newWindow, this.window.getOffer().getHouse());
+			newWindow.setController(h);
+			newWindow.setGoBackController(new GoBackController(this.window, newWindow));
+			newWindow.setVisible(true);
 			break;
 		case("View opinions"):
-			// TODO
 			OfferOpinionsWindow w = new OfferOpinionsWindow(this.window.getOffer());
-			OfferOpinionsWindowController c = new OfferOpinionsWindowController(this.app, w, this.window.getOffer());
-			w.setController(c);
+			OfferOpinionsWindowController o = new OfferOpinionsWindowController(this.app, w, this.window.getOffer());
+			w.setController(o);
 			w.setVisible(true);
+
+			// w.setLocation(this.window.location().x + 20, this.window.location().y + 20);
 			break;
 		case("Book this offer"):
 			// TODO

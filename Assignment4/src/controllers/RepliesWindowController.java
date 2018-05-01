@@ -1,5 +1,6 @@
 package controllers;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -50,6 +51,8 @@ public class RepliesWindowController implements ActionListener {
 				newWindow.setGoBackController(g);
 				newWindow.setVisible(true);
 //				this.window.setVisible(false);
+				
+//				newWindow.setLocation(this.window.location().x + 20, this.window.location().y + 20);
 			} catch (NoRowSelectedException e) {
 				JOptionPane.showMessageDialog(null, "You must select an offer before clicking this button", "Warning",
 						JOptionPane.WARNING_MESSAGE);

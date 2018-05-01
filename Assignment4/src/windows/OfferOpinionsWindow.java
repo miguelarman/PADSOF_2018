@@ -69,7 +69,7 @@ public class OfferOpinionsWindow extends JFrame {
 		replyPanel.add(this.addReply);
 		replyPanel.add(this.rating);
 		replyPanel.add(this.addRating);
-		
+				
 		cont.add(replyPanel, BorderLayout.SOUTH);
 
 		

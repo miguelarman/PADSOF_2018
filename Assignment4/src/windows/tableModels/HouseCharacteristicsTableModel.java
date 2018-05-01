@@ -1,36 +1,35 @@
 package windows.tableModels;
 
-import java.util.List;
+import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
 import application.offer.Offer;
 import exceptions.NoRowSelectedException;
 
-public class SearchResultTableModel extends AbstractTableModel {
-
-	// In this example table data are attributes of the class
+public class HouseCharacteristicsTableModel extends AbstractTableModel {
+	
+	private Object[][] characteristicsArray;
 	private Object[] titles;
 	private Object[][] contents;
-	private Offer[] offersArray;
 
-	public SearchResultTableModel(List<Offer> offers) {
+	public HouseCharacteristicsTableModel(HashMap<String, String> chs) {
 		// Create an array of column titles
 		// TODO
-		Object[] titles = {"ZIP code", "Starting date", "Price", "Average rating"};
+		Object[] titles = {"Characteristic", "Description"};
 		this.titles = titles;
 
 		// Create a matrix of table contents
-		Object[][] contents = new Object[offers.size()][4];
-		offersArray = new Offer[offers.size()];
+		Object[][] contents = new Object[chs.size()][2];
+		characteristicsArray = new Object[chs.size()][2];
 		
 		int i = 0;
 		
-		for (Offer o : offers) { // TODO
-			Object[] offer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating()};
+		for (String ch : chs.keySet()) { // TODO
+			Object[] characteristic = {ch, chs.get(ch)};
 
-			contents[i] = offer;
-			offersArray[i] = o;
+			contents[i] = characteristic;
+			characteristicsArray[i] = characteristic;
 			i++;
 		}
 		
@@ -62,11 +61,12 @@ public class SearchResultTableModel extends AbstractTableModel {
 		return (String) this.titles[col];
 	}
 
-	public Offer getRow(int selectedRow) throws NoRowSelectedException {
-		if (selectedRow >= this.offersArray.length || selectedRow < 0) {
+	/*public Object[] getRow(int selectedRow) throws NoRowSelectedException {
+		if (selectedRow >= this.characteristicsArray.length || selectedRow < 0) {
 			throw new NoRowSelectedException();
 		} else {
-			return offersArray[selectedRow];
+			return characteristicsArray[selectedRow];
 		}
-	}
+	}*/
+
 }
