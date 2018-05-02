@@ -47,6 +47,7 @@ public class HouseWindow extends JFrame {
 		JScrollPane scrollBar = new JScrollPane(table);
 		houseData.add(scrollBar);
 		
+		// TODO poner el boton para modificarlo el admin
 		
 		
 		cont.add(houseData, BorderLayout.CENTER);
@@ -79,10 +80,6 @@ public class HouseWindow extends JFrame {
 		w.setController(new HouseWindowController(null, w, h));
 		w.setGoBackController(new GoBackController(new LoginWindow(), w));
 		w.setVisible(true);
-		
-		while(true) {
-			System.out.println(w.size());
-		}
 		
 	}
 
