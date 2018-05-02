@@ -28,7 +28,13 @@ public class SearchResultController implements ActionListener {
 			selectedOffer = this.window.getSelection();
 			
 			// Show the next window
-			OfferWindow newWindow = new OfferWindow(selectedOffer, App.getLoggedUser().getRole());
+			OfferWindow newWindow;
+			try {
+				newWindow = new OfferWindow(selectedOffer, App.getLoggedUser().getRole());
+			} catch (NullPointerException ex) {
+				JOptionPane.showMessageDialog(null, "You must be logged in te system before accessing this feature", "Please log in", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			OfferWindowController c = new OfferWindowController(app, newWindow);
 			GoBackController g = new GoBackController(this.window, newWindow);
 			newWindow.setController(c);
