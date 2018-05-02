@@ -4,6 +4,7 @@ import java.awt.event.*;
 
 import application.App;
 import windows.ChangeCardWindow;
+import windows.PendingOffersWindow;
 import windows.PersonalWindow;
 import windows.SearchWindow;
 
@@ -85,14 +86,14 @@ public class PersonalWindowController implements ActionListener {
 		
 		case("Pending offers"):
 			// TODO
-//			PendingOffersWindow newWindow = new PendingOffersWindow(this.app.getPendingOffers());
-//			PendingOffersController p = new PendingOffersController(this.app, newWindow);
-//			newWindow.setController(p);
-//			
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
+			PendingOffersWindow newWindow2 = new PendingOffersWindow(this.app.getPendingOffers());
+			PendingOffersController p = new PendingOffersController(this.app, newWindow2);
+			newWindow2.setController(p);
+			
+			GoBackController gb = new GoBackController(this.window, newWindow2);
+			newWindow2.setGoBackController(gb);
+			newWindow2.setVisible(true);
+			this.window.setVisible(false);
 			break;
 		
 		case("Modify credit cards"):
@@ -101,8 +102,8 @@ public class PersonalWindowController implements ActionListener {
 			ChangeCardController s1 = new ChangeCardController(newWindow1);
 			newWindow1.setController(s1);
 			
-			GoBackController gb = new GoBackController(this.window, newWindow1);
-			newWindow1.setGoBackController(gb);
+			GoBackController gb1 = new GoBackController(this.window, newWindow1);
+			newWindow1.setGoBackController(gb1);
 			newWindow1.setVisible(true);
 			this.window.setVisible(false);
 			break;

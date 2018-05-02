@@ -857,6 +857,23 @@ public class App implements Serializable {
 	}
 	
 	/**
+	 * Method used by an Admin deny an offer
+	 * 
+	 * @param o Offer to be denied
+	 * @throws OfferIsPendingForChangesExceptions When the offer that is trying to be denied is still pending for changes
+	 * @throws InvalidRolException When a non-admin user tries to deny an offer
+	 */
+	public void denyOffer(Offer o) throws OfferIsPendingForChangesExceptions, InvalidRolException {
+		if (o.getStatus() == OfferStatus.PENDING_FOR_CHANGES) {
+			throw new OfferIsPendingForChangesExceptions();
+		}
+		else if(!App.loggedUser.getRole().equals(Role.ADMIN)) {
+			throw new InvalidRolException(App.loggedUser.getNIF(),App.loggedUser.getRole(), "approveOffer");
+		}
+		this.offers.remove(o);
+		this.changesRequests.remove(o); // Remove the changes suggestion from the HashMap
+	}
+	/**
 	 * Method used by a Host in order to request approval of an Offer after changes
 	 * have been made
 	 * 
