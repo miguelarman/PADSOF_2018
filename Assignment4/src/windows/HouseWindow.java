@@ -22,36 +22,35 @@ public class HouseWindow extends JFrame {
 
 	private JButton goBackButton;
 
-
 	public HouseWindow(House house) {
 		super("House in " + house.getZipCode() + " (" + house.getCity() + ")");
-		
+
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
-		
+
 		this.goBackButton = new JButton("Go back");
 		cont.add(goBackButton, BorderLayout.SOUTH);
-		
+
 		// TODO poner los componentes que queramos en la pagina
-		
+
 		JPanel houseData = new JPanel();
 		houseData.setLayout(new GridLayout(0, 2));
-		
-		houseData.add(new JLabel("House city"));			houseData.add(new JLabel(house.getCity()));
-		houseData.add(new JLabel("House zip code"));		houseData.add(new JLabel(house.getZipCode()));
-		houseData.add(new JLabel("House owner"));			houseData.add(new JLabel(house.getHost().getName() + " " + house.getHost().getSurname()));
-		houseData.add(new JLabel("House characteristics"));	
-		
+
+		houseData.add(new JLabel("House city"));
+		houseData.add(new JLabel(house.getCity()));
+		houseData.add(new JLabel("House zip code"));
+		houseData.add(new JLabel(house.getZipCode()));
+		houseData.add(new JLabel("House owner"));
+		houseData.add(new JLabel(house.getHost().getName() + " " + house.getHost().getSurname()));
+		houseData.add(new JLabel("House characteristics"));
+
 		JTable table = new JTable(new HouseCharacteristicsTableModel(house.getCharacteristics()));
 		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollBar = new JScrollPane(table);
 		houseData.add(scrollBar);
-		
-		
-		
+
 		cont.add(houseData, BorderLayout.CENTER);
-		
-		
+
 		this.setSize(400, 412);
 		this.setVisible(false);
 	}
@@ -62,7 +61,7 @@ public class HouseWindow extends JFrame {
 	}
 
 	public void setGoBackController(GoBackController g) {
-		 this.goBackButton.addActionListener(g);
+		this.goBackButton.addActionListener(g);
 	}
 	
 	
@@ -79,10 +78,6 @@ public class HouseWindow extends JFrame {
 		w.setController(new HouseWindowController(null, w, h));
 		w.setGoBackController(new GoBackController(new LoginWindow(), w));
 		w.setVisible(true);
-		
-		while(true) {
-			System.out.println(w.size());
-		}
 		
 	}
 
