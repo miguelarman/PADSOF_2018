@@ -3,6 +3,7 @@ package controllers;
 import java.awt.event.*;
 
 import application.App;
+import windows.ChangeCardWindow;
 import windows.PersonalWindow;
 import windows.SearchWindow;
 
@@ -96,14 +97,14 @@ public class PersonalWindowController implements ActionListener {
 		
 		case("Modify credit cards"):
 			// TODO
-//			CreditCardsWindow newWindow = new CreditCardsWindow(this.app.getBannedUsers());
-//			CreditCardsController s = new CreditCardsController(this.app, newWindow);
-//			newWindow.setController(s);
-//			
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
+			ChangeCardWindow newWindow1 = new ChangeCardWindow(this.app.getBannedUsers());
+			ChangeCardController s1 = new ChangeCardController(newWindow1);
+			newWindow1.setController(s1);
+			
+			GoBackController gb = new GoBackController(this.window, newWindow1);
+			newWindow1.setGoBackController(gb);
+			newWindow1.setVisible(true);
+			this.window.setVisible(false);
 			break;
 		default:
 			break;
