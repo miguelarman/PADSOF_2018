@@ -3,11 +3,13 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 import application.App;
-import application.offer.OfferStatus;
+import exceptions.InvalidOfferStatusException;
 import exceptions.InvalidRolException;
 import exceptions.OfferIsPendingForChangesExceptions;
-import windows.ChangesWindow;
 import windows.HouseWindow;
 import windows.PendingOffersWindow;
 import windows.WatchOfferWindow;
@@ -49,12 +51,27 @@ public class WatchOfferController implements ActionListener {
 			this.window.setVisible(false);
 			break;
 		case("Suggest changes"):
-			ChangesWindow newWindow1 = new ChangesWindow();
-			ChangesController c = new ChangesController(this.app, newWindow1, this.previousWindow);
-			newWindow1.setController(c);
-			newWindow1.setGoBackController(new GoBackController(this.window, newWindow1));
-			newWindow1.setVisible(true);
+			JTextField changes = new JTextField();
+			Object[] content = { "Suggest changes:", changes};
+			
+			int option = JOptionPane.showConfirmDialog(null, content, "Changes", JOptionPane.OK_CANCEL_OPTION);
+			if (option == JOptionPane.OK_OPTION) {
+				String suggestedChanges = changes.getText();
+				if (suggestedChanges.equals("") || suggestedChanges == null) {
+					JOptionPane.showMessageDialog(null, "Please, suggest some changes", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				try {
+					this.app.suggestChanges(this.window.getOffer(), suggestedChanges);
+				} catch (InvalidOfferStatusException | InvalidRolException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			JOptionPane.showMessageDialog(null, "Operation completed successfully!");
 			this.window.setVisible(false);
+			this.previousWindow.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "Operation cancelled correctly");
+			}
 			break;
 		case("View house"):
 			// TODO

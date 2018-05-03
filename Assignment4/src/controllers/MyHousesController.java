@@ -35,8 +35,9 @@ public class MyHousesController implements ActionListener {
 				HouseWindow window = new HouseWindow(house);
 				HouseWindowController controller = new HouseWindowController(this.app, window, house);
 				window.setController(controller);
-				// window.setGoBackController(g);
+				window.setGoBackController(new GoBackController(this.window, window));
 				window.setVisible(true);
+				this.window.setVisible(false);
 
 			} catch (NoRowSelectedException e) {
 				JOptionPane.showMessageDialog(null, "You must select a house before clicking this button", "Warning",
@@ -56,6 +57,7 @@ public class MyHousesController implements ActionListener {
 			
 			int option = JOptionPane.showConfirmDialog(null, answer, "Create a house", JOptionPane.OK_CANCEL_OPTION);
 			if (option == JOptionPane.OK_OPTION) {
+				//TODO comprobar que no es vacio
 				
 				try {
 					House h = new House(zip.getText(), city.getText(), (Host)App.getLoggedUser());

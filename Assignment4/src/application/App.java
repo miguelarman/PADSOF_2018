@@ -132,6 +132,19 @@ public class App implements Serializable {
 	}
 	
 	/**
+	 * 
+	 */
+	public String getChangesRequests(Offer o) {
+		String string = "";
+		for(Offer offer: changesRequests.keySet()) {
+			if(offer.equals(o)) {
+				string+=changesRequests.get(offer);
+				string+="\n";
+			}
+		}
+		return string;
+	}
+	/**
 	 * Getter method for getToPay
 	 * 
 	 * @return HashMap of users to be paid and the amount

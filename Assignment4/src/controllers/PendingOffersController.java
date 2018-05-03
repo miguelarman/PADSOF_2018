@@ -7,9 +7,7 @@ import javax.swing.JOptionPane;
 
 import application.App;
 import application.offer.Offer;
-import application.users.RegisteredUser;
 import exceptions.NoRowSelectedException;
-import windows.IntroduceCardWindow;
 import windows.PendingOffersWindow;
 import windows.WatchOfferWindow;
 

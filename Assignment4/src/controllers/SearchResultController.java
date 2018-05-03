@@ -3,8 +3,6 @@ package controllers;
 import java.awt.event.*;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-
 import application.App;
 import application.offer.Offer;
 import exceptions.NoRowSelectedException;

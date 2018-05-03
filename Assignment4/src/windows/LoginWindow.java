@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import controllers.LoginController;
+
 public class LoginWindow extends JFrame {
 	
 	/**
@@ -53,7 +55,7 @@ public class LoginWindow extends JFrame {
 		return String.valueOf(this.passwordField.getPassword());
 	}
 	
-	public void setController(ActionListener c) {
+	public void setController(LoginController c) {
 		button.addActionListener(c);
 		noUserButton.addActionListener(c);
 	}

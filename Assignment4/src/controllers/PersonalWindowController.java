@@ -98,7 +98,7 @@ public class PersonalWindowController implements ActionListener {
 		case("Modify credit cards"):
 			// TODO
 			ChangeCardWindow newWindow1 = new ChangeCardWindow(this.app.getBannedUsers());
-			ChangeCardController s1 = new ChangeCardController(newWindow1);
+			ChangeCardController s1 = new ChangeCardController(this.app, newWindow1);
 			newWindow1.setController(s1);
 			
 			GoBackController gb1 = new GoBackController(this.window, newWindow1);

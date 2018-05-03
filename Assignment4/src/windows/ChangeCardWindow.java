@@ -10,16 +10,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import application.offer.Offer;
 import application.users.RegisteredUser;
 import controllers.ChangeCardController;
 import controllers.GoBackController;
-import controllers.SearchResultController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.ChangeCardTableModel;
 
 public class ChangeCardWindow extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1860964590268350725L;
 	private JButton goBackButton;
 	private JButton changeButton;
 	private JTable table;

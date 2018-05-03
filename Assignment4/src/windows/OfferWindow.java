@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import application.offer.HolidayOffer;
 import application.offer.House;
 import application.offer.Offer;
+import application.offer.OfferStatus;
 import application.users.MultiRoleUser;
 import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
@@ -23,11 +24,16 @@ import controllers.OfferWindowController;
 
 public class OfferWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2920513769048554961L;
 	private Offer offer;
 	private JButton viewHouseButton;
 	private JButton viewOpinionsButton;
 	private JButton bookOfferButton;
 	private JButton purchaseOfferButton;
+	private JButton changesButton;
 
 	public OfferWindow(Offer offer, Role role) {
 		super("Offer");
@@ -69,6 +75,10 @@ public class OfferWindow extends JFrame {
 		if (role == Role.GUEST || role == Role.MULTIROLE) {
 			buttonsPanel.add(bookOfferButton);
 			buttonsPanel.add(purchaseOfferButton);
+		}
+		if(offer.getStatus().equals(OfferStatus.PENDING_FOR_CHANGES)) {
+			changesButton = new JButton("View suggestions");
+			buttonsPanel.add(changesButton);
 		}
 //		rateOfferButton = new JButton("Rate this offer");
 		cont.add(buttonsPanel, BorderLayout.SOUTH);

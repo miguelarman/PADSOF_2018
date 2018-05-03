@@ -4,18 +4,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
+import application.App;
 import application.users.RegisteredUser;
+import exceptions.InvalidRolException;
 import exceptions.NoRowSelectedException;
 import windows.ChangeCardWindow;
-import windows.IntroduceCardWindow;
 
 public class ChangeCardController implements ActionListener {
 	
 	private ChangeCardWindow window;
+	private App app;
 	
-	public ChangeCardController(ChangeCardWindow w) {
+	public ChangeCardController(App app, ChangeCardWindow w) {
 		this.window = w;
+		this.app = app;
 	}
 
 	@Override
@@ -28,14 +32,25 @@ public class ChangeCardController implements ActionListener {
 			return;
 		}
 		
-		// Show the next window
-		IntroduceCardWindow newWindow = new IntroduceCardWindow();
-		IntroduceCardController c = new IntroduceCardController(this.window, newWindow, selectedUser);
-		GoBackController g = new GoBackController(this.window, newWindow);
-		newWindow.setController(c);
-		newWindow.setGoBackController(g);
-		newWindow.setVisible(true);
-		this.window.setVisible(false);
+		JTextField ccard = new JTextField();
+		Object[] content = { "Credit card:", ccard};
+		
+		int option = JOptionPane.showConfirmDialog(null, content, "New credit card", JOptionPane.OK_CANCEL_OPTION);
+		if (option == JOptionPane.OK_OPTION) {
+			String newCreditCard = ccard.getText();
+			if (newCreditCard.equals("") || newCreditCard == null) {
+				JOptionPane.showMessageDialog(null, "Please, introduce a credit card", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			try {
+				this.app.changeCreditCard(newCreditCard, selectedUser);
+			} catch (InvalidRolException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			JOptionPane.showMessageDialog(null, "The credit card has been changed successfully");
+		} else {
+			JOptionPane.showMessageDialog(null, "Operation cancelled correctly");
+		}
 		
 	}
 }

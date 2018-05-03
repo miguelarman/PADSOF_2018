@@ -3,12 +3,11 @@ package controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
-
 import application.App;
 import windows.HouseWindow;
 import windows.OfferOpinionsWindow;
 import windows.OfferWindow;
+import windows.SuggestionsWindow;
 
 public class OfferWindowController implements ActionListener {
 
@@ -44,6 +43,11 @@ public class OfferWindowController implements ActionListener {
 			break;
 		case("Purchase this offer"):
 			// TODO
+			break;
+		case("View suggestions"):
+			SuggestionsWindow window2 = new SuggestionsWindow(this.app.getChangesRequests(this.window.getOffer()));
+			window2.setGoBackController(new GoBackController(this.window, window2));
+			window2.setVisible(true);
 			break;
 		default:
 			break;
