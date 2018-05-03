@@ -149,6 +149,7 @@ public class SearchWindow extends JFrame {
 		this.avgRatingField.setVisible(true);
 
 	}
+	
 	public void hideAll() {
 		this.zipCodeField.setVisible(false);
 		this.avgRatingField.setVisible(false);
@@ -156,18 +157,23 @@ public class SearchWindow extends JFrame {
 		this.endDate.setVisible(false);
 		this.offerTypeBox.setVisible(false);
 	}
+	
 	public JComboBox<String> getOfferTypeBox() {
 		return this.offerTypeBox;
 	}
+	
 	public JTextField getZipCodeField() {
 		return this.zipCodeField;
 	}
+	
 	public JDateChooser getIniDate() {
 		return this.iniDate;
 	}
+	
 	public JDateChooser getEndDate() {
 		return this.endDate;
 	}
+	
 	public JTextField getAvgRatingField() {
 		return this.avgRatingField;
 	}

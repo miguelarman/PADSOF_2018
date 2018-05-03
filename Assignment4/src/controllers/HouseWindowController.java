@@ -34,7 +34,7 @@ public class HouseWindowController implements ActionListener {
 		};		
 		
 		
-		int option = JOptionPane.showConfirmDialog(null, answer, "Aasda", JOptionPane.OK_CANCEL_OPTION);
+		int option = JOptionPane.showConfirmDialog(null, answer, "Add a characteristic", JOptionPane.OK_CANCEL_OPTION);
 		if (option == JOptionPane.OK_OPTION) {
 			String characteristic = ch.getText();
 			String description = descr.getText();
@@ -56,8 +56,7 @@ public class HouseWindowController implements ActionListener {
 			JOptionPane.showMessageDialog(null, "The characteristic was successfully added to the house");
 			
 		} else {
-			// TODO
-			System.out.println("Cancelled");
+			JOptionPane.showMessageDialog(null, "Operation cancelled correctly");
 		}
 	}
 

@@ -3,10 +3,10 @@ package controllers;
 import java.awt.event.*;
 
 import application.App;
-import windows.ChangeCardWindow;
-import windows.PendingOffersWindow;
-import windows.PersonalWindow;
-import windows.SearchWindow;
+import houses.MyHousesWindow;
+import windows.*;
+
+import application.users.*;
 
 public class PersonalWindowController implements ActionListener {
 
@@ -74,14 +74,13 @@ public class PersonalWindowController implements ActionListener {
 		
 		case("My houses"):
 			// TODO
-//			MyHousesWindow newWindow = new MyHousesWindow(((Host)App.getLoggedUser()).getHouses());
-//			MyHousesController h = new MyHousesController(this.app, newWindow);
-//			newWindow.setController(h);
-//	
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
+			MyHousesWindow mhw = new MyHousesWindow(((Host)App.getLoggedUser()).getHouses());
+			MyHousesController h = new MyHousesController(this.app, mhw);
+			mhw.setController(h);
+			GoBackController gb = new GoBackController(this.window, mhw);
+			mhw.setGoBackController(gb);
+			mhw.setVisible(true);
+			this.window.setVisible(false);
 			break;
 		
 		case("Pending offers"):
@@ -90,8 +89,8 @@ public class PersonalWindowController implements ActionListener {
 			PendingOffersController p = new PendingOffersController(this.app, newWindow2);
 			newWindow2.setController(p);
 			
-			GoBackController gb = new GoBackController(this.window, newWindow2);
-			newWindow2.setGoBackController(gb);
+			GoBackController gbc = new GoBackController(this.window, newWindow2);
+			newWindow2.setGoBackController(gbc);
 			newWindow2.setVisible(true);
 			this.window.setVisible(false);
 			break;
@@ -112,9 +111,3 @@ public class PersonalWindowController implements ActionListener {
 		}
 	}
 }
-
-
-
-
-//GoBackController gb = new GoBackController(this.window, newWindow);
-//newWindow.setGoBackController(gb);
