@@ -9,7 +9,7 @@ import exceptions.NoRowSelectedException;
 
 public class HouseCharacteristicsTableModel extends AbstractTableModel {
 	
-	private Object[][] characteristicsArray;
+//	private Object[][] characteristicsArray;
 	private Object[] titles;
 	private Object[][] contents;
 
@@ -21,7 +21,7 @@ public class HouseCharacteristicsTableModel extends AbstractTableModel {
 
 		// Create a matrix of table contents
 		Object[][] contents = new Object[chs.size()][2];
-		characteristicsArray = new Object[chs.size()][2];
+//		characteristicsArray = new Object[chs.size()][2];
 		
 		int i = 0;
 		
@@ -29,7 +29,7 @@ public class HouseCharacteristicsTableModel extends AbstractTableModel {
 			Object[] characteristic = {ch, chs.get(ch)};
 
 			contents[i] = characteristic;
-			characteristicsArray[i] = characteristic;
+//			characteristicsArray[i] = characteristic;
 			i++;
 		}
 		
@@ -59,6 +59,22 @@ public class HouseCharacteristicsTableModel extends AbstractTableModel {
 	@Override
 	public String getColumnName(int col) {
 		return (String) this.titles[col];
+	}
+	
+	public void addCharacteristic(String ch, String de) {
+		Object[][] newContents = new Object[this.contents.length + 1][2];
+		
+		for (int i = 0; i < this.contents.length; i++) {
+			newContents[i][0] = this.contents[i][0];
+			newContents[i][1] = this.contents[i][1];
+		}
+		
+		newContents[this.contents.length][0] = ch;
+		newContents[this.contents.length][1] = de;
+		
+		this.contents = newContents;
+		
+		this.fireTableDataChanged();
 	}
 
 	/*public Object[] getRow(int selectedRow) throws NoRowSelectedException {
