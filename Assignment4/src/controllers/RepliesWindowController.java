@@ -10,6 +10,7 @@ import application.App;
 import application.opinion.Comment;
 import application.opinion.Opinion;
 import exceptions.NoRowSelectedException;
+import exceptions.NoUserLoggedException;
 import windows.RepliesWindow;
 
 public class RepliesWindowController implements ActionListener {
@@ -25,9 +26,36 @@ public class RepliesWindowController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("Rate this comment")) {
-			// TODO
+			
+			Double rating;
+			try {
+				rating = Double.parseDouble(this.window.getWrittenRating());
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "You must enter a numerical rating. For example 2.0 or 0.5",
+						"Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			Comment c = this.window.getComment();
+			try {
+				c.rateComment(rating);
+			} catch (NoUserLoggedException e) {
+				JOptionPane.showMessageDialog(null, "Please log in before rating comments");
+			}
 		} else if (arg0.getActionCommand().equals("Reply to this comment")) {
-			// TODO
+			String answer = this.window.getWrittenComment();
+			if (answer.equals("") || answer == null) {
+				JOptionPane.showMessageDialog(null, "Please write something before clicking", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			Comment c = this.window.getComment();
+			try {
+				c.addReply(answer);
+			} catch (NoUserLoggedException e) {
+				JOptionPane.showMessageDialog(null, "Please log in before answering to comments", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
 		} else if (arg0.getActionCommand().equals("View replies")) {
 			try {
 

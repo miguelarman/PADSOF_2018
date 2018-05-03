@@ -29,6 +29,7 @@ public class RepliesWindow extends JFrame {
 	private JButton viewReplies;
 	private OfferOpinionsTableModel dataModel;
 	private JTable table;
+	private Comment opinion;
 
 	public RepliesWindow(Comment opinion) {
 		
@@ -38,7 +39,7 @@ public class RepliesWindow extends JFrame {
 		cont.setLayout(new BorderLayout());
 		
 		
-		// TODO poner el comentario arriba?
+		this.opinion = opinion;
 		
 		JLabel title = new JLabel("Replies to opinion from " + opinion.getCommenter().getName() + ". \"" + opinion.getText() + "\"");
 		cont.add(title, BorderLayout.NORTH);
@@ -100,6 +101,10 @@ public class RepliesWindow extends JFrame {
 		
 		return this.dataModel.getRow(selectedRow);
 	}
+
+	public Comment getComment() {
+		return this.opinion;
+	}
 	
 	public static void main(String...strings) throws Exception {
 		App app = App.openApp();
@@ -116,6 +121,14 @@ public class RepliesWindow extends JFrame {
 		
 		
 		w.setVisible(true);
+	}
+
+	public String getWrittenComment() {
+		return this.rating.getText();
+	}
+
+	public String getWrittenRating() {
+		return this.rating.getText();
 	}
 
 }
