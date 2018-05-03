@@ -2,6 +2,7 @@ package windows;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.time.ZoneId;
@@ -58,6 +59,8 @@ public class SearchWindow extends JFrame {
 		}
 		
 		zipCodeField = new JTextField(10);
+		zipCodeField.setSize(new Dimension(50,100));
+		zipCodeField.setBounds(100, 150, 200, 35);
 		searches.add(zipCodeField, BorderLayout.CENTER);
 		
 		offerTypeBox = new JComboBox<String>(typesOfOffer);
@@ -65,6 +68,8 @@ public class SearchWindow extends JFrame {
 		searches.add(offerTypeBox, BorderLayout.CENTER);
 		
 		avgRatingField = new JTextField(10);
+		avgRatingField.setSize(new Dimension(50,100));
+		avgRatingField.setBounds(100, 150, 200, 35);
 		searches.add(avgRatingField, BorderLayout.CENTER);
 		
 		iniDate = new JCalendar();
