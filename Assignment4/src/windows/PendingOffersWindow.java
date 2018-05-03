@@ -15,6 +15,7 @@ import application.offer.Offer;
 import controllers.GoBackController;
 import controllers.PendingOffersController;
 import exceptions.NoRowSelectedException;
+import windows.tableModels.MyHousesTableModel;
 import windows.tableModels.SearchResultTableModel;
 
 public class PendingOffersWindow extends JFrame {
@@ -74,6 +75,11 @@ public class PendingOffersWindow extends JFrame {
 		int selectedRow = this.table.getSelectedRow();
 		
 		return this.dataModel.getRow(selectedRow);
+	}
+
+	public void deleteOfferFromTable(Offer offer) {
+		SearchResultTableModel model = (SearchResultTableModel) this.table.getModel();
+		model.removeOffer(offer);
 	}
 
 }

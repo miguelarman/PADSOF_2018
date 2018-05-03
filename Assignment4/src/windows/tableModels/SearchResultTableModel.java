@@ -73,4 +73,26 @@ public class SearchResultTableModel extends AbstractTableModel {
 			return offersArray[selectedRow];
 		}
 	}
+
+	public void removeOffer(Offer offer) {
+		int index = 0;
+		
+		Object[][] newContents = new Object[this.contents.length - 1][2];
+		Offer[] newOffersArray = new Offer[this.contents.length - 1];
+		
+		for (int i = 0; i < this.contents.length; i++) {
+			// We delete the offer that has been approved or denied from the table
+			if (this.offersArray[i] != offer) {
+				for (int j = 0; j < this.titles.length; j++) { // Copy of all the fields of the object
+					newContents[index][j] = this.contents[i][j];
+				}
+				
+				newOffersArray[index] = this.offersArray[i];
+				index++;
+			}
+		}
+		
+		this.contents = newContents;
+		this.offersArray = newOffersArray;
+	}
 }

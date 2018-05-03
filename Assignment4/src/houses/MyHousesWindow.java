@@ -50,7 +50,7 @@ public class MyHousesWindow extends JFrame {
 		buttonsPanel.add(viewHouse);
 		cont.add(buttonsPanel, BorderLayout.EAST);
 		
-		this.goBack = new JButton("Go back");
+		this.goBack = new JButton("Go back");	
 		cont.add(goBack, BorderLayout.SOUTH);
 		
 		

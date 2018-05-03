@@ -33,6 +33,7 @@ public class WatchOfferController implements ActionListener {
 		case("Accept"):
 			try {
 				this.app.approveOffer(this.window.getOffer());
+				this.previousWindow.deleteOfferFromTable(this.window.getOffer());
 			} catch (OfferIsPendingForChangesExceptions | InvalidRolException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
@@ -43,6 +44,7 @@ public class WatchOfferController implements ActionListener {
 		case("Deny"):
 			try {
 				this.app.denyOffer(this.window.getOffer());
+				this.previousWindow.deleteOfferFromTable(this.window.getOffer());
 			} catch (OfferIsPendingForChangesExceptions | InvalidRolException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
