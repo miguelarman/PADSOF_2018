@@ -83,7 +83,7 @@ public class SearchResultTableModel extends AbstractTableModel {
 		for (int i = 0; i < this.contents.length; i++) {
 			// We delete the offer that has been approved or denied from the table
 			if (this.offersArray[i] != offer) {
-				for (int j = 0; j < 4; j++) { // Copy of the object
+				for (int j = 0; j < this.titles.length; j++) { // Copy of all the fields of the object
 					newContents[index][j] = this.contents[i][j];
 				}
 				
@@ -93,5 +93,6 @@ public class SearchResultTableModel extends AbstractTableModel {
 		}
 		
 		this.contents = newContents;
+		this.offersArray = newOffersArray;
 	}
 }
