@@ -83,7 +83,7 @@ public class SearchWindow extends JFrame {
 		searches.add(dates, BorderLayout.CENTER);
 		searches.add(options, BorderLayout.NORTH);
 		
-		goBackButton = new JButton("Previous");
+		goBackButton = new JButton("Go back");
 		searchButton = new JButton("Search");
 		buttons.add(goBackButton);
 		buttons.add(searchButton);
