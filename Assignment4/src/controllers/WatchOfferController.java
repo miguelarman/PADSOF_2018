@@ -66,9 +66,10 @@ public class WatchOfferController implements ActionListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-			JOptionPane.showMessageDialog(null, "Operation completed successfully!");
-			this.window.setVisible(false);
-			this.previousWindow.setVisible(true);
+				
+				JOptionPane.showMessageDialog(null, "Operation completed successfully!");
+				this.window.setVisible(false);
+				this.previousWindow.setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(null, "Operation cancelled correctly");
 			}
