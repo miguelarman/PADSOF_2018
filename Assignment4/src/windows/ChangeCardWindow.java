@@ -15,6 +15,7 @@ import controllers.ChangeCardController;
 import controllers.GoBackController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.ChangeCardTableModel;
+import windows.tableModels.MyHousesTableModel;
 
 public class ChangeCardWindow extends JFrame {
 	
@@ -66,5 +67,10 @@ public class ChangeCardWindow extends JFrame {
 		int selectedRow = this.table.getSelectedRow();
 		
 		return this.dataModel.getRow(selectedRow);
+	}
+
+	public void delete(RegisteredUser selectedUser) {
+		ChangeCardTableModel model = (ChangeCardTableModel) this.table.getModel();
+		model.delete(selectedUser);
 	}
 }

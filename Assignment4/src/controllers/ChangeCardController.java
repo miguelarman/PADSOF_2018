@@ -43,6 +43,7 @@ public class ChangeCardController implements ActionListener {
 			}
 			try {
 				this.app.changeCreditCard(newCreditCard, selectedUser);
+				this.window.delete(selectedUser);
 			} catch (InvalidRolException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

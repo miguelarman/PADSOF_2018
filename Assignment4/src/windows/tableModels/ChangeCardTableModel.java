@@ -59,4 +59,21 @@ public class ChangeCardTableModel extends AbstractTableModel {
 		}
 	}
 
+	public void delete(RegisteredUser selectedUser) {
+		int index = 0;
+		
+		Object[][] newContents = new Object[this.contents.length - 1][2];
+		
+		for (int i = 0; i < this.contents.length; i++) {
+			// We delete the selected user from the table
+			if (!selectedUser.getNIF().equals(contents[i][0])) {
+				newContents[index][0] = this.contents[i][0];
+				newContents[index][1] = this.contents[i][1];
+				index++;
+			}
+		}
+		
+		this.contents = newContents;
+	}
+
 }
