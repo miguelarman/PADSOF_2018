@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import application.dates.ModifiableDate;
@@ -35,8 +36,8 @@ public class SearchWindow extends JFrame {
 	final private JTextField zipCodeField;
 	final private JComboBox<String> offerTypeBox;
 	final private JTextField avgRatingField;
-	private JDateChooser iniDate;
-	private JDateChooser endDate;
+	private JCalendar iniDate;
+	private JCalendar endDate;
 	
 	public SearchWindow(RegisteredUser user) {
 		super("Search offers");
@@ -66,17 +67,17 @@ public class SearchWindow extends JFrame {
 		avgRatingField = new JTextField(10);
 		searches.add(avgRatingField, BorderLayout.CENTER);
 		
-		iniDate = new JDateChooser();
+		iniDate = new JCalendar();
 		dates.add(iniDate, BorderLayout.CENTER);
-		iniDate.getJCalendar().setTodayButtonVisible(true);
-		iniDate.getJCalendar().setWeekOfYearVisible(false);
+		iniDate.setTodayButtonVisible(true);
+		iniDate.setWeekOfYearVisible(false);
 		iniDate.setDate(Date.from(ModifiableDate.getModifiableDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 
 		
-		endDate = new JDateChooser();
+		endDate = new JCalendar();
 		dates.add(endDate, BorderLayout.WEST);
-		endDate.getJCalendar().setTodayButtonVisible(true);
-		endDate.getJCalendar().setWeekOfYearVisible(false);
+		endDate.setTodayButtonVisible(true);
+		endDate.setWeekOfYearVisible(false);
 		endDate.setDate(Date.from(ModifiableDate.getModifiableDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 		
 		searches.add(dates, BorderLayout.CENTER);
@@ -166,11 +167,11 @@ public class SearchWindow extends JFrame {
 		return this.zipCodeField;
 	}
 	
-	public JDateChooser getIniDate() {
+	public JCalendar getIniDate() {
 		return this.iniDate;
 	}
 	
-	public JDateChooser getEndDate() {
+	public JCalendar getEndDate() {
 		return this.endDate;
 	}
 	

@@ -4,12 +4,15 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import application.offer.Offer;
 import application.users.RegisteredUser;
 import exceptions.NoRowSelectedException;
 
 public class ChangeCardTableModel extends AbstractTableModel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3936695391075292789L;
 	private Object[] titles;
 	private Object[][] contents;
 	private RegisteredUser[] bannedUsersArray;
@@ -36,19 +39,29 @@ public class ChangeCardTableModel extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.titles.length;
 	}
 
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.contents.length;
 	}
 
 	@Override
-	public Object getValueAt(int arg0, int arg1) {
+	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.contents[rowIndex][columnIndex];
+	}
+	
+	@Override
+	public boolean isCellEditable(int row, int col) {
+		return false;
+	}
+	
+	@Override
+	public String getColumnName(int col) {
+		return (String) this.titles[col];
 	}
 	
 	public RegisteredUser getRow(int selectedRow) throws NoRowSelectedException {

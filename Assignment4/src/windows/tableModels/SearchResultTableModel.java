@@ -9,6 +9,10 @@ import exceptions.NoRowSelectedException;
 
 public class SearchResultTableModel extends AbstractTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6080066385334434387L;
 	// In this example table data are attributes of the class
 	private Object[] titles;
 	private Object[][] contents;
