@@ -6,6 +6,7 @@ import application.offer.OfferStatus;
 import application.offer.OfferType;
 import application.opinion.Comment;
 import application.users.MultiRoleUser;
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
 
 import java.time.LocalDate;
 
@@ -534,7 +535,12 @@ public class Demo {
 		ModifiableDate.plusDays(10);
 		
 		//We try to pay the offer
-		a.payReservation(App.getLoggedUser().getReservedOffers().get(0));
+		try {
+			a.payReservation(App.getLoggedUser().getReservedOffers().get(0));
+		} catch (InvalidCardNumberException | NotTheReserverException | TimeIsUpException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//We check that the reservation has been deleted from the user's list
 		System.out.println("====================");
@@ -560,6 +566,9 @@ public class Demo {
 			a.payOffer(a.getOffers().get(0));
 		} catch (RestrictedUserException e) {
 			System.out.println(e);
+		} catch (InvalidCardNumberException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		//We check the offer status
@@ -696,7 +705,12 @@ public class Demo {
 		System.out.println("====================\n");
 		//We try to pay the offer (invalid creditcard)
 		
-		a.payReservation(m.getReservedOffers().get(0));
+		try {
+			a.payReservation(m.getReservedOffers().get(0));
+		} catch (InvalidCardNumberException | NotTheReserverException | TimeIsUpException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		//Check if the user lists have been updated
 		System.out.println("====================");
@@ -827,7 +841,12 @@ public class Demo {
 		
 		//We book the new offer with the host having an invalid creditcard number
 		try {
-			a.payOffer(a.getOffers().get(2));
+			try {
+				a.payOffer(a.getOffers().get(2));
+			} catch (InvalidCardNumberException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (RestrictedUserException e) {
 			System.out.println(e);
 		}

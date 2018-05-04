@@ -2,6 +2,7 @@ package windows;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.GridLayout;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -35,6 +36,7 @@ public class BookedOffersWindow extends JFrame {
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
 		
+		JPanel buttons = new JPanel(new GridLayout(2, 1));
 		JLabel label = new JLabel("Here are the offers you have searched for:");
 		cont.add(label, BorderLayout.NORTH);
 		
@@ -50,11 +52,12 @@ public class BookedOffersWindow extends JFrame {
 		tablePanel.add(scrollBar, BorderLayout.CENTER);
 		
 		payButton = new JButton("Pay reservation");
-		tablePanel.add(payButton, BorderLayout.EAST);
+		buttons.add(payButton);
 		
 		viewOffer = new JButton("View offer");
-		tablePanel.add(viewOffer, BorderLayout.EAST);
-
+		buttons.add(viewOffer);
+		
+		tablePanel.add(buttons, BorderLayout.EAST);
 		cont.add(tablePanel, BorderLayout.CENTER);
 		
 		this.goBackButton = new JButton("Go back");
