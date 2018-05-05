@@ -2,6 +2,7 @@ package windows;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import controllers.LoginController;
 
@@ -25,48 +26,93 @@ public class LoginWindow extends JFrame {
 	 * Button that goes into the system as¡
 	 */
 	private JButton noUserButton;
+	
+	/**
+	 * Field to introduce the id of the user (NIF)
+	 */
 	private JTextField idField;
+	
+	/**
+	 * Field to introduce the password of the user
+	 */
 	private JPasswordField passwordField;
 	
+	/**
+	 * Constructor of the class LoginWindow
+	 */
 	public LoginWindow() {
 		super("Login to our app");
 		
-		Container cont = super.getContentPane();
+		JPanel cont = new JPanel();
+		Border padding = BorderFactory.createEmptyBorder(20, 30, 10, 30);
+
+		cont.setBorder(padding);
 		cont.setLayout(new GridLayout(0, 1));
 		
 		// Adding a label
-		JLabel label  = new JLabel("Welcome. Please log in");
-		cont.add(label);
 		
+		JLabel label  = new JLabel("Welcome. Please log in");
+		JPanel labelPanel = new JPanel(new FlowLayout());
+		labelPanel.add(label);
+		cont.add(labelPanel);
+		
+		JLabel label2 = new JLabel("NIF:");
+		cont.add(label2);
 		// Adding fields for username and password
 		idField = new JTextField(10);
 		idField.setText("X1130055");//"NIF");
-		idField.setSize(new Dimension(50,100));
-		idField.setBounds(100, 150, 200, 35);
-		cont.add(idField);
-		
+		JPanel idPanel = new JPanel(new GridLayout(1, 1));
+		Border padding3 = BorderFactory.createEmptyBorder(15, 75, 15, 75);
+		idPanel.setBorder(padding3);
+		idPanel.add(idField);
+		cont.add(idPanel);
+		JLabel label3 = new JLabel("Password:");
+		cont.add(label3);
+		JPanel passwordPanel = new JPanel(new GridLayout(1, 1));
+		Border padding2 = BorderFactory.createEmptyBorder(15, 75, 15, 75);
+		passwordPanel.setBorder(padding2);
 		passwordField = new JPasswordField(10);
 		passwordField.setText("secret");//"Password");
-		cont.add(passwordField);
 		
+		passwordPanel.add(passwordField);
+		cont.add(passwordPanel);
+		
+		JPanel loginPanel = new JPanel(new FlowLayout());
 		loginButton = new JButton("Log in");
-		cont.add(loginButton);
+		loginPanel.add(loginButton);
+		cont.add(loginPanel);
 		
+		JLabel label4 = new JLabel("You are not a registered user? Press here:");
+		cont.add(label4);
+		JPanel noUserPanel = new JPanel(new FlowLayout());
 		noUserButton = new JButton("Enter without account");
-		cont.add(noUserButton);
-		
+		noUserPanel.add(noUserButton);
+		cont.add(noUserPanel);
+		this.setContentPane(cont);
 		this.setSize(400, 500);
 		this.setVisible(false);
 	}
 	
+	/**
+	 * Getter method for the introduced text in the idField
+	 * @return The text that the user has introduced in the idField
+	 */
 	public String getIdField() {
 		return this.idField.getText();
 	}
 	
+	/**
+	 * Getter method for the introduced text in the passwordField
+	 * @return The text that the user has introduced in the passwordField
+	 */
 	public String getPasswordField() {
 		return String.valueOf(this.passwordField.getPassword());
 	}
 	
+	/**
+	 * Method that assigns the loginButton and the noUserButton with the ChangeCardController 
+	 * @param c Controller that allows you to do the needed functionality
+	 */
 	public void setController(LoginController c) {
 		loginButton.addActionListener(c);
 		noUserButton.addActionListener(c);

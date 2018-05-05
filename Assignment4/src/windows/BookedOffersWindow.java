@@ -51,7 +51,7 @@ public class BookedOffersWindow extends JFrame {
 	private JTable table;
 	
 	/**
-	 * Model to show the reservations offers
+	 * Model to show the reservations
 	 */
 	private ReservationTableModel dataModel;
 	

@@ -28,14 +28,42 @@ import exceptions.UserIsBannedException;
 import windows.tableModels.MyHousesTableModel;
 import windows.tableModels.SearchResultTableModel;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class MyOffersWindow extends JFrame {
 
+	/**
+	* ID needed for the class to be Serializable
+	*/
+	private static final long serialVersionUID = -1609869068714772919L;
+	
+	/**
+	 * Model to show the offers of the logged user
+	 */
 	private SearchResultTableModel dataModel;
+	
+	/**
+	 * Structure to deploy the offers of the logged user
+	 */
 	private JTable table;
+	
+	/**
+	 * Button to go back to the previous window
+	 */
 	private JButton goBackButton;
+	
+	/**
+	 * Button to see the information of the selected offer
+	 */
 	private JButton viewOffer;
 	private JButton createOffer;
 
+	/**
+	 * Constructor of the class MyOffersWindow
+	 * @param offers List of offers created by the logged user
+	 */
 	public MyOffersWindow(List<Offer> offers) {
 		super("My offers");
 		
@@ -73,12 +101,20 @@ public class MyOffersWindow extends JFrame {
 		this.setSize(620, 525);
 		this.setVisible(false);
 	}
-
+	
+	/**
+	 * Method that assigns the viewOffer with the MyOffersController 
+	 * @param c Controller that allows you to do the needed functionality
+	 */
 	public void setController(MyOffersController o) {
 		this.createOffer.addActionListener(o);
 		this.viewOffer.addActionListener(o);
 	}
-
+	
+	/**
+	 * Method that assigns the goBackButton with the goBackController
+	 * @param gb Controller that allows you to go to the previous window
+	 */
 	public void setGoBackController(GoBackController gb) {
 		this.goBackButton.addActionListener(gb);
 	}
