@@ -1,7 +1,11 @@
-/application/
 /controllers/
+<<<<<<< HEAD
+/windows/
+/application/
+=======
 /exceptions/
 /houses/
 /junit/
 /testers/
 /windows/
+>>>>>>> e6a64654c5c0bb5edb4d31ed6b95076abd464798

@@ -50,14 +50,14 @@ public class PersonalWindowController implements ActionListener {
 		
 		case("My offers"):
 			// TODO
-//			MyOffersWindow newWindow = new MyOffersWindow(this.app.getCreatedOffersByLoggerUser());
-//			MyOffersController o = new MyOffersController(this.app, newWindow);
-//			newWindow.setController(o);
-//	
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
+			MyOffersWindow mow = new MyOffersWindow(this.app.getCreatedOffersByLoggerUser());
+			MyOffersController o = new MyOffersController(this.app, mow);
+			mow.setController(o);
+	
+			GoBackController gbc = new GoBackController(this.window, mow);
+			mow.setGoBackController(gbc);
+			mow.setVisible(true);
+			this.window.setVisible(false);
 			break;
 		
 		case("My houses"):
@@ -77,8 +77,8 @@ public class PersonalWindowController implements ActionListener {
 			PendingOffersController p = new PendingOffersController(this.app, newWindow2);
 			newWindow2.setController(p);
 			
-			GoBackController gbc = new GoBackController(this.window, newWindow2);
-			newWindow2.setGoBackController(gbc);
+			GoBackController gbc2 = new GoBackController(this.window, newWindow2);
+			newWindow2.setGoBackController(gbc2);
 			newWindow2.setVisible(true);
 			this.window.setVisible(false);
 			break;
