@@ -773,7 +773,7 @@ public class App implements Serializable {
 		
 		else if(App.loggedUser.getRole().equals(Role.HOST) || App.loggedUser.getRole().equals(Role.MULTIROLE)){ //Checks if the loggedUser is a host
 			
-			if(offeredHouse.getHost().equals(App.getLoggedUser())){
+			if(offeredHouse.getHost().getNIF().equals(App.getLoggedUser().getNIF())){
 				o = new HolidayOffer(startingDate, price, deposit, description, offeredHouse, finishDate);
 				for(Offer offer: offers) {
 					if(offer.equals(o)) {
@@ -1136,5 +1136,17 @@ public class App implements Serializable {
 		}
 		string+= "\n\nLoggedUser:\n" + App.getLoggedUser();
 		return string;
+	}
+
+	public List<Offer> getCreatedOffersByLoggerUser() {
+		List<Offer> list = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getHouse().getHost().getNIF() == App.loggedUser.getNIF()) {
+				list.add(o);
+			}
+		}
+		
+		return list;
 	}
 }

@@ -48,28 +48,16 @@ public class PersonalWindowController implements ActionListener {
 //			this.window.setVisible(false);
 			break;
 		
-		case("Paid offers"):
-			// TODO
-//			PaidOffersWindow newWindow = new PaidOffersWindow(this.app.getPaidOffersByLoggedUser());
-//			PaidOffersController p = new PaidOffersController(this.app, newWindow);
-//			newWindow.setController(p);
-//
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
-			break;
-		
 		case("My offers"):
 			// TODO
-//			MyOffersWindow newWindow = new MyOffersWindow(this.app.getCreatedOffersByLoggerUser());
-//			MyOffersController o = new MyOffersController(this.app, newWindow);
-//			newWindow.setController(o);
-//	
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
+			MyOffersWindow mow = new MyOffersWindow(this.app.getCreatedOffersByLoggerUser());
+			MyOffersController o = new MyOffersController(this.app, mow);
+			mow.setController(o);
+	
+			GoBackController gb = new GoBackController(this.window, mow);
+			mow.setGoBackController(gb);
+			mow.setVisible(true);
+			this.window.setVisible(false);
 			break;
 		
 		case("My houses"):
@@ -77,8 +65,8 @@ public class PersonalWindowController implements ActionListener {
 			MyHousesWindow mhw = new MyHousesWindow(((Host)App.getLoggedUser()).getHouses());
 			MyHousesController h = new MyHousesController(this.app, mhw);
 			mhw.setController(h);
-			GoBackController gb = new GoBackController(this.window, mhw);
-			mhw.setGoBackController(gb);
+			GoBackController gbc = new GoBackController(this.window, mhw);
+			mhw.setGoBackController(gbc);
 			mhw.setVisible(true);
 			this.window.setVisible(false);
 			break;
@@ -89,8 +77,8 @@ public class PersonalWindowController implements ActionListener {
 			PendingOffersController p = new PendingOffersController(this.app, newWindow2);
 			newWindow2.setController(p);
 			
-			GoBackController gbc = new GoBackController(this.window, newWindow2);
-			newWindow2.setGoBackController(gbc);
+			GoBackController gbc2 = new GoBackController(this.window, newWindow2);
+			newWindow2.setGoBackController(gbc2);
 			newWindow2.setVisible(true);
 			this.window.setVisible(false);
 			break;
