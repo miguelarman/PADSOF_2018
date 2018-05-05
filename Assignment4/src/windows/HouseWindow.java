@@ -79,10 +79,10 @@ public class HouseWindow extends JFrame {
 		JScrollPane scrollBar = new JScrollPane(table);
 		houseData.add(scrollBar);
 		
+		addCharacteristic = new JButton("Add a characteristic");
 		try {
 			Role role = App.getLoggedUser().getRole();
 			if (role == Role.MULTIROLE || role == Role.HOST) {
-				addCharacteristic = new JButton("Add a characteristic");
 				bottomPanel.add(addCharacteristic, BorderLayout.SOUTH);
 			}
 		} catch (NullPointerException e) {

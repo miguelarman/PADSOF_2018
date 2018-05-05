@@ -46,6 +46,7 @@ public class OfferWindow extends JFrame {
 	private JButton purchaseOfferButton;
 	private JButton changesButton;
 	private JButton modifyOffer;
+	private JButton goBackButton;
 
 	public OfferWindow(Offer offer, Role role) {
 		super("Offer");
@@ -100,13 +101,15 @@ public class OfferWindow extends JFrame {
 			buttonsPanel.add(modifyOffer);
 			buttonsPanel.add(changesButton);
 		}
+		
+		this.goBackButton = new JButton("Go back");
+		buttonsPanel.add(goBackButton);
 		cont.add(buttonsPanel, BorderLayout.SOUTH);
 		
 		// We add left and right margins
 		JPanel leftMargin = new JPanel(); JPanel rightMargin = new JPanel();
 		leftMargin.setPreferredSize(new Dimension(50, 0)); rightMargin.setPreferredSize(new Dimension(50, 0));
 		cont.add(leftMargin, BorderLayout.WEST); cont.add(rightMargin, BorderLayout.EAST);
-		
 		
 		this.setSize(600,  400);
 		this.setVisible(false);
@@ -122,7 +125,7 @@ public class OfferWindow extends JFrame {
 	}
 
 	public void setGoBackController(GoBackController g) {
-//		this.goBackButton.addActionListener(g);
+		this.goBackButton.addActionListener(g);
 	}
 	
 	public Offer getOffer() {

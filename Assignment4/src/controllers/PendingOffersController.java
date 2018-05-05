@@ -38,7 +38,7 @@ public class PendingOffersController implements ActionListener {
 		newWindow.setController(c);
 		newWindow.setGoBackController(g);
 		newWindow.setVisible(true);
-		this.window.setVisible(false);
+//		this.window.setVisible(false);
 		
 	}
 

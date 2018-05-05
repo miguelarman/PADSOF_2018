@@ -77,7 +77,7 @@ public class SearchResultTableModel extends AbstractTableModel {
 	public void removeOffer(Offer offer) {
 		int index = 0;
 		
-		Object[][] newContents = new Object[this.contents.length - 1][2];
+		Object[][] newContents = new Object[this.contents.length - 1][this.titles.length];
 		Offer[] newOffersArray = new Offer[this.contents.length - 1];
 		
 		for (int i = 0; i < this.contents.length; i++) {
@@ -94,5 +94,29 @@ public class SearchResultTableModel extends AbstractTableModel {
 		
 		this.contents = newContents;
 		this.offersArray = newOffersArray;
+		
+		this.fireTableDataChanged();
+	}
+
+	public void addOfferToTable(Offer o) {
+		Object[][] newContents = new Object[this.contents.length + 1][this.titles.length];
+		Offer[] newOffersArray = new Offer[this.contents.length + 1];
+		
+		// We copy the existing contents
+		for (int i = 0; i < this.contents.length; i++) {
+			for (int j = 0; j < this.titles.length; j++) {
+				newContents[i][j] = this.contents[i][j];
+			}
+			
+			newOffersArray[i] = this.offersArray[i];
+		}
+		Object[] newOffer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating()};
+		newContents[this.contents.length] = newOffer;
+		newOffersArray[this.offersArray.length] = o;
+		
+		this.contents = newContents;
+		this.offersArray = newOffersArray;
+		
+		this.fireTableDataChanged();
 	}
 }

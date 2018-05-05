@@ -3,7 +3,6 @@ package controllers;
 import java.awt.event.*;
 
 import application.App;
-import houses.MyHousesWindow;
 import windows.*;
 
 import application.users.*;
@@ -73,7 +72,7 @@ public class PersonalWindowController implements ActionListener {
 		
 		case("Pending offers"):
 			// TODO
-			PendingOffersWindow newWindow2 = new PendingOffersWindow(this.app.getPendingOffers());
+			PendingOffersWindow newWindow2 = new PendingOffersWindow(this.app.getPendingForApprovalOffers());
 			PendingOffersController p = new PendingOffersController(this.app, newWindow2);
 			newWindow2.setController(p);
 			
