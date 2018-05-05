@@ -38,14 +38,14 @@ public class PersonalWindowController implements ActionListener {
 		
 		case("Booked offers"):
 			// TODO
-//			BookedOffersWindow newWindow = new BookedOffersWindow(App.getLoggedUser().getReservedOffers());
-//			BookedOffersController b = new BookedOffersController(this.app, newWindow);
-//			newWindow.setController(b);
-//			
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
+			BookedOffersWindow newWindow3 = new BookedOffersWindow(App.getLoggedUser().getReservedOffers());
+			BookedOffersController b = new BookedOffersController(this.app, newWindow3);
+			newWindow3.setController(b);
+			
+			GoBackController gb = new GoBackController(this.window, newWindow3);
+			newWindow3.setGoBackController(gb);
+			newWindow3.setVisible(true);
+			this.window.setVisible(false);
 			break;
 		
 		case("My offers"):
@@ -54,8 +54,8 @@ public class PersonalWindowController implements ActionListener {
 			MyOffersController o = new MyOffersController(this.app, mow);
 			mow.setController(o);
 	
-			GoBackController gb = new GoBackController(this.window, mow);
-			mow.setGoBackController(gb);
+			GoBackController gbc = new GoBackController(this.window, mow);
+			mow.setGoBackController(gbc);
 			mow.setVisible(true);
 			this.window.setVisible(false);
 			break;
@@ -65,8 +65,8 @@ public class PersonalWindowController implements ActionListener {
 			MyHousesWindow mhw = new MyHousesWindow(((Host)App.getLoggedUser()).getHouses());
 			MyHousesController h = new MyHousesController(this.app, mhw);
 			mhw.setController(h);
-			GoBackController gbc = new GoBackController(this.window, mhw);
-			mhw.setGoBackController(gbc);
+			GoBackController gb3 = new GoBackController(this.window, mhw);
+			mhw.setGoBackController(gb3);
 			mhw.setVisible(true);
 			this.window.setVisible(false);
 			break;

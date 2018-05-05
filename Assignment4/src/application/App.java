@@ -134,16 +134,16 @@ public class App implements Serializable {
 	/**
 	 * 
 	 */
-	public String getChangesRequests(Offer o) {
+	public String getRequests(Offer o) {
 		String string = "";
-		for(Offer offer: changesRequests.keySet()) {
-			if(offer.equals(o)) {
-				string+=changesRequests.get(offer);
-				string+="\n";
-			}
+		for(String s: o.getSuggestedChanges()) {
+			string+=s;
+			string+="\n";
+			
 		}
 		return string;
 	}
+
 	/**
 	 * Getter method for getToPay
 	 * 
@@ -846,6 +846,7 @@ public class App implements Serializable {
 		}
 		
 		this.changesRequests.put(o, App.getCurrentDate());
+		o.getSuggestedChanges().add(description);
 	}
 
 
@@ -1039,8 +1040,9 @@ public class App implements Serializable {
 	 * 
 	 * @param o Offer to be paid
 	 * @throws RestrictedUserException When a restricted user tries to pay that offer
+	 * @throws InvalidCardNumberException 
 	 */
-	public void payOffer(Offer o) throws RestrictedUserException {
+	public void payOffer(Offer o) throws RestrictedUserException, InvalidCardNumberException {
 		if(o.getRestrictedUsers().contains(loggedUser)){
 			throw new RestrictedUserException(loggedUser.getNIF());
 		}
@@ -1048,6 +1050,7 @@ public class App implements Serializable {
 			o.payOffer();
 		} catch (InvalidCardNumberException e) {
 			this.banUser(App.getLoggedUser());
+			throw(e);
 		} catch (NoUserLoggedException e) {
 			System.out.println(e);
 		} catch (CouldNotPayHostException e) {
@@ -1071,19 +1074,25 @@ public class App implements Serializable {
 	 * Method that pays a reservation
 	 * 
 	 * @param r Reservation to be paid
+	 * @throws NotTheReserverException 
+	 * @throws InvalidCardNumberException 
+	 * @throws TimeIsUpException 
+	 * @throws CouldNotPayHostException 
 	 */
-	public void payReservation(Reservation r) {
+	public void payReservation(Reservation r) throws NotTheReserverException, InvalidCardNumberException, TimeIsUpException{
 
 		try {
 			r.payReservation();
 		} catch (NotTheReserverException e) {
-			System.out.println(e);
+			throw(e);
 		} catch (InvalidCardNumberException e) {
 			r.cancelReservation();
 			this.banUser(App.getLoggedUser());
+			throw(e);
 		} catch (TimeIsUpException e) {
 			r.getBookedOffer().getRestrictedUsers().add(loggedUser);
 			r.cancelReservation();
+			throw(e);
 		} catch (CouldNotPayHostException e) {
 			RegisteredUser user = e.getHost();
 			Double amount = e.getAmount();

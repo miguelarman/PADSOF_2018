@@ -56,6 +56,7 @@ public abstract class Offer implements Serializable{
 	 */
 	private House offeredHouse;
 	
+	private List<String> suggestedChanges;
 	/**
 	 * All the opinions about the offer
 	 */
@@ -85,6 +86,7 @@ public abstract class Offer implements Serializable{
 		this.offeredHouse = offeredHouse;
 		this.opinions = new ArrayList<Opinion>();
 		this.restrictedUsers = new ArrayList<RegisteredUser>();
+		this.suggestedChanges = new ArrayList<String>();
 	}
 	
 	/**
@@ -126,6 +128,10 @@ public abstract class Offer implements Serializable{
 			}
 		}
 		return aux;
+	}
+	
+	public List<String> getSuggestedChanges() {
+		return this.suggestedChanges;
 	}
 	
 	/**
