@@ -12,7 +12,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import application.offer.Offer;
+import application.opinion.Comment;
 import application.opinion.Opinion;
+import application.opinion.Rating;
 import controllers.OfferOpinionsWindowController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.OfferOpinionsTableModel;
@@ -95,6 +97,16 @@ public class OfferOpinionsWindow extends JFrame {
 		int selectedRow = this.table.getSelectedRow();
 		
 		return this.dataModel.getRow(selectedRow);
+	}
+
+	public void addComment(String comment) {
+		OfferOpinionsTableModel panel = (OfferOpinionsTableModel)table.getModel();
+		panel.addOpinion(new Comment(comment));
+	}
+
+	public void addRating(Double numericalRating) {
+		OfferOpinionsTableModel panel = (OfferOpinionsTableModel)table.getModel();
+		panel.addOpinion(new Rating(numericalRating));
 	}
 
 }
