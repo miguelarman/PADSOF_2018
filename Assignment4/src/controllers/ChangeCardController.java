@@ -12,6 +12,10 @@ import exceptions.InvalidRolException;
 import exceptions.NoRowSelectedException;
 import windows.ChangeCardWindow;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class ChangeCardController implements ActionListener {
 	
 	private ChangeCardWindow window;

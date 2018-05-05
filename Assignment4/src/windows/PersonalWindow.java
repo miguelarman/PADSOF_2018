@@ -21,8 +21,6 @@ public class PersonalWindow extends JFrame {
 	private JComponent guestPanel;
 	private JLabel bookedOffersLabel;
 	private JButton bookedOffersButton;
-	private JLabel paidOffersLabel;
-	private JButton paidOffersButton;
 	
 	private JComponent hostPanel;
 	private JLabel offersLabel;
@@ -66,11 +64,8 @@ public class PersonalWindow extends JFrame {
 			// TODO Adding content to guestPanel
 			bookedOffersLabel = new JLabel("Check out your booked offers:");
 			bookedOffersButton = new JButton("Booked offers");
-			paidOffersLabel = new JLabel("Check out your paid offers:");
-			paidOffersButton = new JButton("Paid offers");
 			
 			guestPanel.add(bookedOffersLabel); guestPanel.add(bookedOffersButton);
-			guestPanel.add(paidOffersLabel); guestPanel.add(paidOffersButton);
 			
 			
 			pestanias.addTab("Guest zone", null, guestPanel);
@@ -122,7 +117,6 @@ public class PersonalWindow extends JFrame {
 		
 		if (this.role == Role.GUEST || this.role == Role.MULTIROLE) {
 			bookedOffersButton.addActionListener(c);
-			paidOffersButton.addActionListener(c);
 		}
 		
 		if (role == Role.HOST || role == Role.MULTIROLE) {
