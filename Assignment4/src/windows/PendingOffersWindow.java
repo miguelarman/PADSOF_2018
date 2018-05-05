@@ -31,7 +31,7 @@ public class PendingOffersWindow extends JFrame {
 	
 	public PendingOffersWindow(List<Offer> list) {
 		super("Pending for approval");
-
+		
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
 		

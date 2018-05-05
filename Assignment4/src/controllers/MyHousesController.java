@@ -13,8 +13,8 @@ import exceptions.InvalidRolException;
 import exceptions.NoRowSelectedException;
 import exceptions.NoUserLoggedException;
 import exceptions.NotTheOwnerException;
-import houses.MyHousesWindow;
 import windows.HouseWindow;
+import windows.MyHousesWindow;
 
 public class MyHousesController implements ActionListener {
 

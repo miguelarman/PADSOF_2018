@@ -663,7 +663,7 @@ public class App implements Serializable {
 	 * five days after an admin suggested changes
 	 */
 	private void deleteExpiredPendingOffers() {
-		List<Offer> offers = this.getPendingOffers();
+		List<Offer> offers = this.getPendingForChangesOffers();
 		
 		for (Offer o : offers) {
 			LocalDate changesDate = this.changesRequests.get(o);
@@ -685,7 +685,25 @@ public class App implements Serializable {
 	 * 
 	 * @return The list of offers that are pending
 	 */
-	public List<Offer> getPendingOffers() {
+	public List<Offer> getPendingForApprovalOffers() {
+		List<Offer> offers = new ArrayList<Offer>();
+		
+		for (Offer o : this.offers) {
+			if (o.getStatus() == OfferStatus.PENDING_FOR_APPROVAL) {
+				offers.add(o);
+			}
+		}
+		
+		return offers;
+	}
+	
+	/**
+	 * Method that returns all the offers in the system that are pending for
+	 * approval
+	 * 
+	 * @return The list of offers that are pending
+	 */
+	public List<Offer> getPendingForChangesOffers() {
 		List<Offer> offers = new ArrayList<Offer>();
 		
 		for (Offer o : this.offers) {
@@ -711,7 +729,7 @@ public class App implements Serializable {
 	 * @throws NotTheOwnerException When a user that is not the owner of a house tries to create an offer with that house
 	 * @throws OfferAlreadyCreatedException When the same offer is already in the system
 	 */
-	public void createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
+	public Offer createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;
 		if(startingDate.isBefore(App.getCurrentDate())){
 			throw new InvalidDateException(startingDate);
@@ -731,6 +749,7 @@ public class App implements Serializable {
 					}
 				}
 				offers.add(o);
+				return o;
 			} else {
 				throw new NotTheOwnerException(App.getLoggedUser());
 			}
@@ -755,7 +774,7 @@ public class App implements Serializable {
 	 * @throws NotTheOwnerException When a user that is not the owner of a house tries to create an offer with that house
 	 * @throws OfferAlreadyCreatedException When the same offer is already in the system
 	 */
-	public void createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
+	public Offer createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;		
 		if(finishDate.isBefore(startingDate)) {
 			LocalDate aux = finishDate;
@@ -781,6 +800,8 @@ public class App implements Serializable {
 					}
 				}
 				offers.add(o);
+				
+				return o;
 			} else {
 				throw new NotTheOwnerException(App.getLoggedUser());
 			}
