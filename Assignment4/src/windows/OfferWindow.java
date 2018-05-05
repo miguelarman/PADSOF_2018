@@ -94,9 +94,9 @@ public class OfferWindow extends JFrame {
 			buttonsPanel.add(purchaseOfferButton);
 		}
 		
-		if (offer.getStatus() == OfferStatus.PENDING_FOR_CHANGES) {// && App.getLoggedUser().getNIF() == offer.getHouse().getHost().getNIF()) {
-			changesButton = new JButton("View suggestions");
-			modifyOffer = new JButton("Modify offer");
+		changesButton = new JButton("View suggestions");
+		modifyOffer = new JButton("Modify offer");
+		if (offer.getStatus() == OfferStatus.PENDING_FOR_CHANGES && App.getLoggedUser().getNIF().equals(offer.getHouse().getHost().getNIF())) {
 			buttonsPanel.add(modifyOffer);
 			buttonsPanel.add(changesButton);
 		}
