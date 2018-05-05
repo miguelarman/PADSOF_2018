@@ -11,8 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-
 import application.App;
 import application.offer.House;
 import application.users.Host;
@@ -52,7 +50,10 @@ public class HouseWindow extends JFrame {
 	 */
 	private JTable table;
 
-
+	/**
+	 * Constructor of the class HouseWindow
+	 * @param house House to be showed in the window
+	 */
 	public HouseWindow(House house) {
 		super("House in " + house.getZipCode() + " (" + house.getCity() + ")");
 		
@@ -95,15 +96,28 @@ public class HouseWindow extends JFrame {
 		this.setSize(400, 412);
 		this.setVisible(false);
 	}
-
+	
+	/**
+	 * Method that assigns the addCharacteristic with the HouseWindowController
+	 * @param h Controller that allows you to do the needed functionality
+	 */
 	public void setController(HouseWindowController h) {
 		this.addCharacteristic.addActionListener(h);
 	}
-
+	
+	/**
+	 * Method that assigns the goBackButton with the goBackController
+	 * @param g Controller that allows you to go to the previous window
+	 */
 	public void setGoBackController(GoBackController g) {
 		 this.goBackButton.addActionListener(g);
 	}
 	
+	/**
+	 * Method that adds a characteristic to the table
+	 * @param ch Name of the characteristic
+	 * @param de Description of the characteristic
+	 */
 	public void addCharacteristic(String ch, String de) {
 		HouseCharacteristicsTableModel model = (HouseCharacteristicsTableModel) this.table.getModel();
 		model.addCharacteristic(ch, de);
