@@ -48,18 +48,6 @@ public class PersonalWindowController implements ActionListener {
 			this.window.setVisible(false);
 			break;
 		
-		case("Paid offers"):
-			// TODO
-//			PaidOffersWindow newWindow = new PaidOffersWindow(this.app.getPaidOffersByLoggedUser());
-//			PaidOffersController p = new PaidOffersController(this.app, newWindow);
-//			newWindow.setController(p);
-//
-//			GoBackController gb = new GoBackController(this.window, newWindow);
-//			newWindow.setGoBackController(gb);
-//			newWindow.setVisible(true);
-//			this.window.setVisible(false);
-			break;
-		
 		case("My offers"):
 			// TODO
 //			MyOffersWindow newWindow = new MyOffersWindow(this.app.getCreatedOffersByLoggerUser());

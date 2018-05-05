@@ -26,10 +26,30 @@ import exceptions.UnexistentUserException;
 import exceptions.UserIsBannedException;
 import windows.tableModels.HouseCharacteristicsTableModel;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class HouseWindow extends JFrame {
 
+	/**
+	* ID needed for the class to be Serializable
+	*/
+	private static final long serialVersionUID = 4361594776654443001L;
+	
+	/**
+	 * Button to go back to the previous window
+	 */
 	private JButton goBackButton;
+	
+	/**
+	 * Button to add a characteristic to the house
+	 */
 	private JButton addCharacteristic;
+	
+	/**
+	 * Structure to deploy the characteristics of the house
+	 */
 	private JTable table;
 
 
