@@ -17,11 +17,35 @@ import controllers.OfferOpinionsWindowController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.OfferOpinionsTableModel;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class OfferOpinionsWindow extends JFrame {
 	
+	/**
+	* ID needed for the class to be Serializable
+	*/
+	private static final long serialVersionUID = 3219031551265265948L;
+	
+	/**
+	 * Field to introduce a text comment
+	 */
 	private JTextField comment;
+	
+	/**
+	 * Field to introduce a rating
+	 */
 	private JTextField rating;
+	
+	/**
+	 * Button to add a reply to the comment
+	 */
 	private JButton addReply;
+	
+	/**
+	 * Button to add a rating
+	 */
 	private JButton addRating;
 	private JTable table;
 	private JButton viewReplies;
