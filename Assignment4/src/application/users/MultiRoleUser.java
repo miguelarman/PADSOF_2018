@@ -111,6 +111,11 @@ public class MultiRoleUser extends RegisteredUser implements GuestI, HostI {
 	}
 	
 	@Override
+	public boolean hasBooked(Offer o) {
+		return this.guestRole.hasBooked(o);
+	}
+	
+	@Override
 	/**
 	 * Method that returns all the data of a RegisteredUser in a String with
 	 * printable format

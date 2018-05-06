@@ -61,7 +61,6 @@ public class LoginWindow extends JFrame {
 		cont.add(label2);
 		// Adding fields for username and password
 		idField = new JTextField(10);
-		idField.setText("X1130055");//"NIF");
 		JPanel idPanel = new JPanel(new GridLayout(1, 1));
 		Border padding3 = BorderFactory.createEmptyBorder(15, 75, 15, 75);
 		idPanel.setBorder(padding3);
@@ -73,7 +72,6 @@ public class LoginWindow extends JFrame {
 		Border padding2 = BorderFactory.createEmptyBorder(15, 75, 15, 75);
 		passwordPanel.setBorder(padding2);
 		passwordField = new JPasswordField(10);
-		passwordField.setText("secret");//"Password");
 		
 		passwordPanel.add(passwordField);
 		cont.add(passwordPanel);

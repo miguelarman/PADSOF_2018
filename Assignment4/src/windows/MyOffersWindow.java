@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import application.offer.HolidayOffer;
 import application.offer.Offer;
 import controllers.GoBackController;
 import controllers.MyOffersController;
@@ -131,8 +132,13 @@ public class MyOffersWindow extends JFrame {
 	 * @param createdOffer Offer to be added
 	 */
 	public void addOfferToTable(Offer createdOffer) {
-		SearchResultTableModel model = (SearchResultTableModel) this.table.getModel();
+		MyOffersTableModel model = (MyOffersTableModel) this.table.getModel();
 		model.addOfferToTable(createdOffer);
+	}
+
+	public void refreshStatus() {
+		MyOffersTableModel model = (MyOffersTableModel) this.table.getModel();
+		model.refreshStatus();
 	}
 
 }

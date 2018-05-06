@@ -1,13 +1,11 @@
 package windows;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,12 +14,11 @@ import javax.swing.JPanel;
 
 import application.App;
 import application.offer.HolidayOffer;
-import application.offer.House;
 import application.offer.LivingOffer;
 import application.offer.Offer;
 import application.offer.OfferStatus;
 import application.offer.OfferType;
-import application.users.Host;
+import application.users.MultiRoleUser;
 import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
 import controllers.OfferWindowController;
@@ -113,13 +110,14 @@ public class OfferWindow extends JFrame {
 			buttonsPanel.add(bookOfferButton);
 		}
 		
-		
-		System.out.println(App.getLoggedUser().hasBooked(offer));
-		
-		
-		
-		if (((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) || (offer.getStatus().equals(OfferStatus.BOOKED) && App.getLoggedUser().hasBooked(offer))) {
-			buttonsPanel.add(purchaseOfferButton);
+		if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+			if (((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) || (offer.getStatus().equals(OfferStatus.BOOKED) && ((MultiRoleUser)App.getLoggedUser()).hasBooked(offer))) {
+				buttonsPanel.add(purchaseOfferButton);
+			}
+		} else {
+			if (((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) || (offer.getStatus().equals(OfferStatus.BOOKED) && App.getLoggedUser().hasBooked(offer))) {
+				buttonsPanel.add(purchaseOfferButton);
+			}
 		}
 		
 		changesButton = new JButton("View suggestions");

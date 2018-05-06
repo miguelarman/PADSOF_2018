@@ -48,9 +48,7 @@ public class OfferOpinionsWindowController implements ActionListener {
 			Double numericalRating;
 			
 			for(Opinion r: offer.getOpinions()) {
-				System.out.println("1");
 				if(r.getClass() == Rating.class) {
-					System.out.println("2");
 					if(App.getLoggedUser().getNIF().equals(r.getCommenter().getNIF())) {
 						JOptionPane.showMessageDialog(null, "You can only rate an offer once",
 								"Warning", JOptionPane.WARNING_MESSAGE);

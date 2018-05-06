@@ -50,7 +50,7 @@ public class LoginController implements ActionListener {
 			}
 
 			JOptionPane.showMessageDialog(null,
-					"Welcome dear " + id);
+					"<html>Welcome dear" + App.getLoggedUser().getName() + " " + App.getLoggedUser().getSurname());
 
 			newWindow = new PersonalWindow(App.getLoggedUser().getRole());
 

@@ -19,17 +19,17 @@ public class ReservationTableModel extends AbstractTableModel {
 	public ReservationTableModel(List<Reservation> bookedOffers) {
 		// Create an array of column titles
 		// TODO
-		Object[] titles = {"ZIP code", "Booking date", "Price", "Average rating"};
+		Object[] titles = {"ZIP code", "Booking date", "Price"};
 		this.titles = titles;
 
 		// Create a matrix of table contents
-		Object[][] contents = new Object[bookedOffers.size()][4];
+		Object[][] contents = new Object[bookedOffers.size()][this.titles.length];
 		reservationsArray = new Reservation[bookedOffers.size()];
 		
 		int i = 0;
 		
 		for (Reservation r : bookedOffers) { // TODO
-			Object[] offer = {r.getBookedOffer().getHouse().getZipCode(), r.getBookingDate(), r.getBookedOffer().getAmount(), r.getBookedOffer().getAvgRating()};
+			Object[] offer = {r.getBookedOffer().getHouse().getZipCode(), r.getBookingDate(), r.getBookedOffer().getAmount()};
 
 			contents[i] = offer;
 			reservationsArray[i] = r;

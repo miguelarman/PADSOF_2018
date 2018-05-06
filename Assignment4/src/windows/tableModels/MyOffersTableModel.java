@@ -138,4 +138,21 @@ public class MyOffersTableModel extends AbstractTableModel {
 		
 		this.fireTableDataChanged();
 	}
+
+	public void refreshStatus() {
+		for (int i = 0; i < contents.length; i++) {
+			String strStatus;
+			
+			if (offersArray[i].getStatus().equals(OfferStatus.PENDING_FOR_APPROVAL)) {
+				strStatus = "APPROVAL";
+			} else if(offersArray[i].getStatus().equals(OfferStatus.PENDING_FOR_CHANGES)) {
+				strStatus = "CHANGES";
+			} else {
+				strStatus = offersArray[i].getStatus().toString(); 
+			}
+			contents[i][5] = strStatus;
+		}
+		
+		this.fireTableDataChanged();
+	}
 }

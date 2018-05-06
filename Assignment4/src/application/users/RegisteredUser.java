@@ -171,7 +171,6 @@ public abstract class RegisteredUser implements Serializable {
 		string += "CreditCard: " + creditCard + "\n";
 		string += "NIF: " + NIF + "\n";
 		if (this.getRole().equals(Role.HOST) || this.getRole().equals(Role.MULTIROLE)) {
-			System.out.println(houses);
 			string += "Houses: \n";
 			int i = 1;
 			for (House h : houses) {
@@ -193,7 +192,7 @@ public abstract class RegisteredUser implements Serializable {
 	}
 
 	public boolean hasBooked(Offer offer) {
-		
+				
 		for (Reservation r : this.reservedOffers) {
 			Offer o = r.getBookedOffer();
 			

@@ -30,7 +30,7 @@ public class SuggestionsWindow extends JFrame{
 		
 		JPanel messagePanel = new JPanel(new FlowLayout());
 		goBackButton = new JButton("Go back");
-		JLabel message = new JLabel(suggestions);
+		JLabel message = new JLabel("<html>" + suggestions.replaceAll("\n", "<br>") + "</html>");
 		messagePanel.add(message);
 		cont.add(goBackButton, BorderLayout.SOUTH);
 		cont.add(message, BorderLayout.CENTER);

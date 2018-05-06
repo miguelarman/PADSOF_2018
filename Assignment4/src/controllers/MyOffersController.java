@@ -48,7 +48,7 @@ public class MyOffersController implements ActionListener {
 				Offer offer = this.window.getSelection();
 
 				OfferWindow window = new OfferWindow(offer, App.getLoggedUser().getRole());
-				OfferWindowController controller = new OfferWindowController(this.app, window);
+				OfferWindowController controller = new OfferWindowController(this.app, window, this.window);
 				window.setController(controller);
 				window.setGoBackController(new GoBackController(this.window, window));
 				window.setVisible(true);

@@ -71,22 +71,10 @@ public class SearchResultWindow extends JFrame {
 		
 		return this.dataModel.getRow(selectedRow);
 	}
-	
-	public static void main(String... args) {
-		
-		List<Offer> list = new ArrayList<Offer>();
-		House h = new House("28049", null, new MultiRoleUser(null, null, null, null, null));
-		list.add(new HolidayOffer(LocalDate.now(), 2.0, 2.0, "aaaaaa", h, null));
-		
-		for (int i = 0; i < 3; i++) {
-			list.add(new HolidayOffer(LocalDate.now().plusDays(2), 20.0, 20.0, "bbbbbb", h, null));
-		}
-		SearchResultWindow w = new SearchResultWindow(list);
-		
-		w.setController(new SearchResultController(null, w));
-		w.setGoBackController(new GoBackController(new LoginWindow(), w));
-		
-		w.setVisible(true);
+
+	public void removeOffer(Offer o) {
+		SearchResultTableModel model = (SearchResultTableModel)table.getModel();
+		model.removeOffer(o);
 	}
 
 }
