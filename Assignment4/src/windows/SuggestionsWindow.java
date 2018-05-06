@@ -3,10 +3,12 @@ package windows;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import controllers.GoBackController;
 
@@ -21,6 +23,9 @@ public class SuggestionsWindow extends JFrame{
 	public SuggestionsWindow(String suggestions) {
 		super("Suggestions");
 		JPanel cont = new JPanel();
+		Border padding = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+
+		cont.setBorder(padding);
 		cont.setLayout(new BorderLayout());
 		
 		JPanel messagePanel = new JPanel(new FlowLayout());
@@ -31,7 +36,7 @@ public class SuggestionsWindow extends JFrame{
 		cont.add(message, BorderLayout.CENTER);
 		cont.add(new JLabel("Here are the suggestions made by an admin:"), BorderLayout.NORTH);
 		this.setContentPane(cont);
-		this.setSize(300, 200);
+		this.setSize(400, 300);
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
