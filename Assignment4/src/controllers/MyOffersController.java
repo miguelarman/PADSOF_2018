@@ -20,7 +20,8 @@ import application.dates.ModifiableDate;
 import application.offer.House;
 import application.offer.Offer;
 import application.offer.OfferType;
-import application.users.Host;
+import application.users.*;
+import application.users.RegisteredUser.Role;
 import exceptions.InvalidDateException;
 import exceptions.InvalidRolException;
 import exceptions.NoRowSelectedException;
@@ -64,6 +65,18 @@ public class MyOffersController implements ActionListener {
 			Object[] query = {
 					"Select the desired type of offer", typeOfOfferDropDown
 			};
+			
+			if (App.getLoggedUser().getRole().equals(Role.HOST)) {
+				if (((Host) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode).collect(Collectors.toList()).toArray(new String[0]).length < 1) {
+					JOptionPane.showMessageDialog(null, "You don't have any houses. Please create one before creating offers", "Warning", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			} else if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+				if (((MultiRoleUser) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode).collect(Collectors.toList()).toArray(new String[0]).length < 1) {
+					JOptionPane.showMessageDialog(null, "You don't have any houses. Please create one before creating offers", "Warning", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
 
 			int option = JOptionPane.showConfirmDialog(null, query, "Add a characteristic",
 					JOptionPane.OK_CANCEL_OPTION);
@@ -83,8 +96,15 @@ public class MyOffersController implements ActionListener {
 					JTextField holidayPriceField = new JTextField();
 					JTextField holidayDepositField = new JTextField();
 					JTextField holidayDescriptionField = new JTextField();
-					String[] zipCodes = ((Host) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode)
-							.collect(Collectors.toList()).toArray(new String[0]);
+					String[] zipCodes;
+					if (App.getLoggedUser().getRole().equals(Role.HOST)) {
+						zipCodes = ((Host) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode).collect(Collectors.toList()).toArray(new String[0]);
+					} else if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+						zipCodes = ((MultiRoleUser) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode).collect(Collectors.toList()).toArray(new String[0]);
+					} else {
+						zipCodes = new String[0];
+					}
+							
 					JComboBox<String> holidayHouseField = new JComboBox<String>(zipCodes);
 					JCalendar holidayFinishDateField = new JCalendar();
 					holidayFinishDateField.setTodayButtonVisible(true);holidayFinishDateField.setWeekOfYearVisible(false);holidayFinishDateField.setDate(Date.from(ModifiableDate.getModifiableDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
@@ -119,13 +139,25 @@ public class MyOffersController implements ActionListener {
 							Double price = Double.parseDouble(holidayPriceField.getText());
 							Double deposit = Double.parseDouble(holidayDepositField.getText());
 							String description = holidayDescriptionField.getText();
-							House offeredHouse = ((Host) (App.getLoggedUser())).getHouses().stream()
-									.filter(new Predicate<House>() {
-										@Override
-										public boolean test(House h) {
-											return h.getZipCode().equals(holidayHouseField.getSelectedItem());
-										}
-									}).findFirst().orElse(null);
+							House offeredHouse;
+							if (App.getLoggedUser().getRole().equals(Role.HOST)) {
+								offeredHouse = ((Host) (App.getLoggedUser())).getHouses().stream().filter(new Predicate<House>() {
+									@Override
+									public boolean test(House h) {
+										return h.getZipCode().equals(holidayHouseField.getSelectedItem());
+									}
+								}).findFirst().orElse(null);
+							} else if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+								offeredHouse = ((MultiRoleUser) (App.getLoggedUser())).getHouses().stream().filter(new Predicate<House>() {
+									@Override
+									public boolean test(House h) {
+										return h.getZipCode().equals(holidayHouseField.getSelectedItem());
+									}
+								}).findFirst().orElse(null);
+							} else {
+								offeredHouse = new House("", "", (Host)null);
+							}
+									
 							LocalDate finishDate = Instant.ofEpochMilli(holidayFinishDateField.getDate().getTime())
 									.atZone(ZoneId.systemDefault()).toLocalDate();
 

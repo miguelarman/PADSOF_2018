@@ -42,7 +42,7 @@ public class OfferWindowController implements ActionListener {
 			break;
 		case("View opinions"):
 			OfferOpinionsWindow w = new OfferOpinionsWindow(this.window.getOffer());
-			OfferOpinionsWindowController o = new OfferOpinionsWindowController(this.app, w, this.window.getOffer());
+			OfferOpinionsWindowController o = new OfferOpinionsWindowController(this.app, w, this.window.getOffer(), this.window);
 			w.setController(o);
 			w.setVisible(true);
 
@@ -63,7 +63,12 @@ public class OfferWindowController implements ActionListener {
 						try {
 							app.payReservation(r);
 							JOptionPane.showMessageDialog(null, "The offer has been paid successfully!");
+							this.window.refreshLabels();
 						} catch (InvalidCardNumberException e1) {
+							app.logout();
+							app.closeApp();
+							
+							app = App.openApp();
 							LoginWindow newWindow2 = new LoginWindow();
 							newWindow2.setController(new LoginController(this.app, newWindow2));
 							this.window.setVisible(false);
@@ -91,13 +96,22 @@ public class OfferWindowController implements ActionListener {
 			if (option == JOptionPane.OK_OPTION) {
 				try {
 					app.payOffer(selectedOffer);
+					JOptionPane.showMessageDialog(null, "The offer has been paid successfully!");
+					this.window.refreshLabels();
 				} catch (InvalidCardNumberException e1) {
+					app.logout();
+					app.closeApp();
+					
+					app = App.openApp();
+					LoginWindow newWindow2 = new LoginWindow();
+					newWindow2.setController(new LoginController(this.app, newWindow2));
+					this.window.setVisible(false);
+					newWindow2.setVisible(true);
 					JOptionPane.showMessageDialog(null, "Your credit card number was not valid. You are now banned from the system", "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (RestrictedUserException e) {
 					JOptionPane.showMessageDialog(null, "You cannot contract this offer", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
-				JOptionPane.showMessageDialog(null, "The offer has been paid successfully!");
 			} else {
 				JOptionPane.showMessageDialog(null, "Operation cancelled correctly");
 			}

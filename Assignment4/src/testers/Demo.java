@@ -735,6 +735,9 @@ public class Demo {
 			a.changeCreditCard("1111222233334444", a.getBannedUsers().get(0));
 		} catch (InvalidRolException e) {
 			System.out.println(e);
+		} catch (UserStillBannedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		//Check if the user lists have been updated
@@ -875,6 +878,9 @@ public class Demo {
 			a.changeCreditCard("1111222244445555", a.getBadCCard().get(0));
 		} catch (InvalidRolException e) {
 			System.out.println(e);
+		} catch (UserStillBannedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		a.logout();

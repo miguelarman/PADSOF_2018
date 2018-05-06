@@ -12,6 +12,7 @@ import application.opinion.Opinion;
 import exceptions.NoRowSelectedException;
 import exceptions.NoUserLoggedException;
 import windows.OfferOpinionsWindow;
+import windows.OfferWindow;
 import windows.RepliesWindow;
 
 public class OfferOpinionsWindowController implements ActionListener {
@@ -19,11 +20,13 @@ public class OfferOpinionsWindowController implements ActionListener {
 	private OfferOpinionsWindow window;
 	private App app;
 	private Offer offer;
+	private OfferWindow previousWindow;
 
-	public OfferOpinionsWindowController(App app, OfferOpinionsWindow w, Offer o) {
+	public OfferOpinionsWindowController(App app, OfferOpinionsWindow w, Offer o, OfferWindow ow) {
 		this.app = app;
 		this.window = w;
 		this.offer = o;
+		this.previousWindow = ow;
 	}
 
 	@Override
@@ -59,6 +62,8 @@ public class OfferOpinionsWindowController implements ActionListener {
 					this.offer.rateOffer(numericalRating);
 					JOptionPane.showMessageDialog(null, "Your rating has been successfully recorded");
 					this.window.addRating(numericalRating);
+					
+					this.previousWindow.refreshLabels();
 				} catch (NoUserLoggedException e) {
 					JOptionPane.showMessageDialog(null, "To rate offers you must be logged in the system. Please try again after logging in", "Error", JOptionPane.ERROR_MESSAGE);
 				}

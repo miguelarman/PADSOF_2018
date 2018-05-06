@@ -36,6 +36,8 @@ public class OfferWindow extends JFrame {
 	private JButton changesButton;
 	private JButton modifyOffer;
 	private JButton goBackButton;
+	private JLabel statusLabel;
+	private JLabel ratingLabel;
 
 	public OfferWindow(Offer offer, Role role) {
 		super("Offer");
@@ -64,8 +66,8 @@ public class OfferWindow extends JFrame {
 		offerPanel.add(new JLabel("Starting on:"));			offerPanel.add(new JLabel(offer.getDate().toString()));
 		offerPanel.add(new JLabel("Amount to be paid:"));	offerPanel.add(new JLabel(offer.getAmount().toString()));
 		offerPanel.add(new JLabel("Description:"));			offerPanel.add(new JLabel("<html>" + offer.getDescription() + "</html>")); // This way enables multiline text
-		offerPanel.add(new JLabel("This offer is:"));		offerPanel.add(new JLabel(offer.getStatus().toString()));
-		offerPanel.add(new JLabel("Average rating:"));		offerPanel.add(new JLabel(offer.getAvgRating() + " out of 5 stars"));
+		offerPanel.add(new JLabel("This offer is:"));		statusLabel = new JLabel(offer.getStatus().toString()); offerPanel.add(statusLabel);
+		offerPanel.add(new JLabel("Average rating:"));		ratingLabel = new JLabel(offer.getAvgRating() + " out of 5 stars"); offerPanel.add(ratingLabel);
 		cont.add(offerPanel, BorderLayout.CENTER);
 		
 		JPanel buttonsPanel = new JPanel();
@@ -73,22 +75,26 @@ public class OfferWindow extends JFrame {
 		viewHouseButton = new JButton("View house");
 		buttonsPanel.add(viewHouseButton);
 		viewOpinionsButton = new JButton("View opinions");
-		if (offer.getStatus() != OfferStatus.PENDING_FOR_APPROVAL && offer.getStatus() != OfferStatus.PENDING_FOR_CHANGES) {
+		if (offer.getStatus() != OfferStatus.PENDING_FOR_APPROVAL && offer.getStatus() != OfferStatus.PENDING_FOR_CHANGES && App.getLoggedUser() != null) {
 			buttonsPanel.add(viewOpinionsButton);
 			
 		}
 		bookOfferButton = new JButton("Book this offer");
 		purchaseOfferButton = new JButton("Purchase this offer");
-		if (role == Role.GUEST || role == Role.MULTIROLE) {
+		if ((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) {
 			buttonsPanel.add(bookOfferButton);
 			buttonsPanel.add(purchaseOfferButton);
 		}
 		
 		changesButton = new JButton("View suggestions");
 		modifyOffer = new JButton("Modify offer");
-		if (offer.getStatus() == OfferStatus.PENDING_FOR_CHANGES && App.getLoggedUser().getNIF().equals(offer.getHouse().getHost().getNIF())) {
-			buttonsPanel.add(modifyOffer);
-			buttonsPanel.add(changesButton);
+		try {
+			if (offer.getStatus() == OfferStatus.PENDING_FOR_CHANGES && App.getLoggedUser().getNIF().equals(offer.getHouse().getHost().getNIF())) {
+				buttonsPanel.add(modifyOffer);
+				buttonsPanel.add(changesButton);
+			}
+		} catch (NullPointerException e) {
+			
 		}
 		
 		this.goBackButton = new JButton("Go back");
@@ -119,6 +125,11 @@ public class OfferWindow extends JFrame {
 	
 	public Offer getOffer() {
 		return this.offer;
+	}
+
+	public void refreshLabels() {
+		this.statusLabel.setText(offer.getStatus().toString());
+		this.ratingLabel.setText(offer.getAvgRating() + " out of 5 stars");
 	}
 
 	public static void main(String...strings) throws Exception {

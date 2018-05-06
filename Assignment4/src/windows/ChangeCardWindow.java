@@ -113,4 +113,9 @@ public class ChangeCardWindow extends JFrame {
 		ChangeCardTableModel model = (ChangeCardTableModel) this.table.getModel();
 		model.delete(selectedUser);
 	}
+
+	public void updateCCard(RegisteredUser selectedUser, String newCreditCard) {
+		ChangeCardTableModel model = (ChangeCardTableModel) this.table.getModel();
+		model.updateCCard(selectedUser.getNIF(), newCreditCard);
+	}
 }

@@ -1,8 +1,10 @@
 package controllers;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
+
 import application.App;
 import application.offer.Offer;
 import exceptions.NoRowSelectedException;
@@ -30,8 +32,7 @@ public class SearchResultController implements ActionListener {
 			try {
 				newWindow = new OfferWindow(selectedOffer, App.getLoggedUser().getRole());
 			} catch (NullPointerException ex) {
-				JOptionPane.showMessageDialog(null, "You must be logged in te system before accessing this feature", "Please log in", JOptionPane.ERROR_MESSAGE);
-				return;
+				newWindow = new OfferWindow(selectedOffer, null);
 			}
 			OfferWindowController c = new OfferWindowController(app, newWindow);
 			GoBackController g = new GoBackController(this.window, newWindow);

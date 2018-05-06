@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import application.App;
 import application.offer.House;
 import application.users.Host;
+import application.users.MultiRoleUser;
+import application.users.RegisteredUser.Role;
 import exceptions.InvalidRolException;
 import exceptions.NoRowSelectedException;
 import exceptions.NoUserLoggedException;
@@ -60,7 +62,14 @@ public class MyHousesController implements ActionListener {
 				//TODO comprobar que no es vacio
 				
 				try {
-					House h = new House(zip.getText(), city.getText(), (Host)App.getLoggedUser());
+					House h;
+					if (App.getLoggedUser().getRole().equals(Role.HOST)) {
+						h = new House(zip.getText(), city.getText(), (Host)App.getLoggedUser());
+					} else if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+						h = new House(zip.getText(), city.getText(), (MultiRoleUser)App.getLoggedUser());
+					} else {
+						h = new House("", "", (Host)null);
+					}
 					this.app.addHouse(h);
 					this.window.addHouse(h);
 				} catch (InvalidRolException | NoUserLoggedException e) {

@@ -1,11 +1,21 @@
 package controllers;
 
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import application.App;
-import windows.*;
-
-import application.users.*;
+import application.offer.House;
+import application.users.Host;
+import application.users.MultiRoleUser;
+import application.users.RegisteredUser.Role;
+import windows.BookedOffersWindow;
+import windows.ChangeCardWindow;
+import windows.MyHousesWindow;
+import windows.MyOffersWindow;
+import windows.PendingOffersWindow;
+import windows.PersonalWindow;
+import windows.SearchWindow;
 
 public class PersonalWindowController implements ActionListener {
 
@@ -56,7 +66,14 @@ public class PersonalWindowController implements ActionListener {
 			break;
 		
 		case("My houses"):
-			MyHousesWindow mhw = new MyHousesWindow(((Host)App.getLoggedUser()).getHouses());
+			MyHousesWindow mhw;
+			if (App.getLoggedUser().getRole().equals(Role.HOST)) {
+				mhw = new MyHousesWindow(((Host)App.getLoggedUser()).getHouses());
+			} else if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+				mhw = new MyHousesWindow(((MultiRoleUser)App.getLoggedUser()).getHouses());
+			} else {
+				mhw = new MyHousesWindow(new ArrayList<House>());
+			}
 			MyHousesController h = new MyHousesController(this.app, mhw);
 			mhw.setController(h);
 			GoBackController gb3 = new GoBackController(this.window, mhw);

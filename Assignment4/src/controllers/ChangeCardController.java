@@ -10,6 +10,7 @@ import application.App;
 import application.users.RegisteredUser;
 import exceptions.InvalidRolException;
 import exceptions.NoRowSelectedException;
+import exceptions.UserStillBannedException;
 import windows.ChangeCardWindow;
 
 /**
@@ -51,6 +52,9 @@ public class ChangeCardController implements ActionListener {
 			} catch (InvalidRolException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			} catch (UserStillBannedException e1) {
+				JOptionPane.showMessageDialog(null, "You entered an incorrect credit card. The user has not been unbanned", "Warning", JOptionPane.WARNING_MESSAGE);
+				this.window.updateCCard(selectedUser, newCreditCard);
 			}
 			JOptionPane.showMessageDialog(null, "The credit card has been changed successfully");
 		} else {

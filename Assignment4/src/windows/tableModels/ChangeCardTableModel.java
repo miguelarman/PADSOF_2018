@@ -87,6 +87,18 @@ public class ChangeCardTableModel extends AbstractTableModel {
 		}
 		
 		this.contents = newContents;
+		
+		this.fireTableDataChanged();
+	}
+
+	public void updateCCard(String nif, String newCreditCard) {
+		for (int i = 0; i < this.contents.length; i++) {
+			if (contents[i][0].equals(nif)) {
+				contents[i][1] = newCreditCard;
+			}
+		}
+		
+		this.fireTableDataChanged();
 	}
 
 }

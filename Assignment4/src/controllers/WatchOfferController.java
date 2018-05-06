@@ -71,6 +71,7 @@ public class WatchOfferController implements ActionListener {
 					e1.printStackTrace();
 				}
 				
+				this.previousWindow.deleteOfferFromTable(this.window.getOffer());
 				JOptionPane.showMessageDialog(null, "Operation completed successfully!");
 				this.window.setVisible(false);
 				this.previousWindow.setVisible(true);

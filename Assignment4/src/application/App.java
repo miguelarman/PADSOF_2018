@@ -1044,14 +1044,17 @@ public class App implements Serializable {
 	 * @param creditCard new creditcard number
 	 * @param user The user whose creditcard number is going to be changed
 	 * @throws InvalidRolException When a non-admin user tries to change a card number
+	 * @throws UserStillBannedException 
 	 */
-	public void changeCreditCard(String creditCard, RegisteredUser user) throws InvalidRolException {
+	public void changeCreditCard(String creditCard, RegisteredUser user) throws InvalidRolException, UserStillBannedException {
 		
 		if(!loggedUser.getRole().equals(Role.ADMIN)) {
 			throw new InvalidRolException(loggedUser.getNIF(), loggedUser.getRole(), "changeCreditCard");
 		}
 		else if(creditCard.length() == 16 && (user.getRole().equals(Role.GUEST) || user.getRole().equals(Role.MULTIROLE))){
 			unbanUser(user);
+		} else {
+			throw new UserStillBannedException();
 		}
 		user.changeCreditCard(creditCard);
 	}
