@@ -299,6 +299,7 @@ public class OfferWindowController implements ActionListener {
 					this.window.refreshLabels();
 				}
 			}
+			this.window.hideModifyButton();
 			
 			break;
 		default:

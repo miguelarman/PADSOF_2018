@@ -180,4 +180,8 @@ public class OfferWindow extends JFrame {
 		this.purchaseOfferButton.setVisible(false);
 	}
 
+	public void hideModifyButton() {
+		this.modifyOffer.setVisible(false);
+	}
+
 }
