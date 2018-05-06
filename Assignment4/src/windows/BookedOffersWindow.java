@@ -124,4 +124,11 @@ public class BookedOffersWindow extends JFrame {
 		return this.dataModel.getRow(selectedRow);
 	}
 
+	public void removeReservation(Reservation r) {
+		ReservationTableModel model = (ReservationTableModel)table.getModel();
+		
+		model.removeReservation(r);
+		
+	}
+
 }

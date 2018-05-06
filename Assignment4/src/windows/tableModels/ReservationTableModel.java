@@ -92,5 +92,7 @@ public class ReservationTableModel extends AbstractTableModel {
 		
 		this.contents = newContents;
 		this.reservationsArray = newReservationsArray;
+		
+		this.fireTableDataChanged();
 	}
 }

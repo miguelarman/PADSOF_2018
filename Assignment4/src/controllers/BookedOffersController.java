@@ -64,6 +64,9 @@ public class BookedOffersController implements ActionListener {
 				if (option == JOptionPane.OK_OPTION) {
 					try {
 						app.payReservation(this.window.getSelection());
+						
+						this.window.removeReservation(this.window.getSelection());
+						JOptionPane.showMessageDialog(null, "The offer has been paid successfully!");
 					} catch (InvalidCardNumberException e1) {
 						JOptionPane.showMessageDialog(null, "Your credit card number was not valid. You are now banned from the system", "Error", JOptionPane.ERROR_MESSAGE);
 					} catch (NotTheReserverException e1) {
@@ -74,7 +77,6 @@ public class BookedOffersController implements ActionListener {
 						e1.printStackTrace();
 					}
 					
-					JOptionPane.showMessageDialog(null, "The offer has been paid successfully!");
 				} else {
 					JOptionPane.showMessageDialog(null, "Operation cancelled correctly");
 				}
