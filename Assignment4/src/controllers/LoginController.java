@@ -50,7 +50,7 @@ public class LoginController implements ActionListener {
 			}
 
 			JOptionPane.showMessageDialog(null,
-					"Welcome dear " + id + " with password " + password + "(" + arg0.getActionCommand() + ")");
+					"Welcome dear " + id);
 
 			newWindow = new PersonalWindow(App.getLoggedUser().getRole());
 
@@ -67,8 +67,3 @@ public class LoginController implements ActionListener {
 		this.window.setVisible(false);
 	}
 }
-//WindowXX ventana = new WindowXX();
-//MyController c = new MyCOntroller();
-//ventana.setControlador(c);
-//ventana.setVisible(true);
-//ventanaAnterior.setVisible(false);

@@ -75,6 +75,7 @@ public class ChangeCardWindow extends JFrame {
 		cont.add(this.goBackButton, BorderLayout.SOUTH);
 		
 		this.setSize(750, 500);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	

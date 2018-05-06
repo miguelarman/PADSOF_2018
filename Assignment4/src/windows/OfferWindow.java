@@ -138,6 +138,7 @@ public class OfferWindow extends JFrame {
 		cont.add(leftMargin, BorderLayout.WEST); cont.add(rightMargin, BorderLayout.EAST);
 		
 		this.setSize(600,  400);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 
@@ -166,44 +167,12 @@ public class OfferWindow extends JFrame {
 		this.ratingLabel.setText(offer.getAvgRating() + " out of 5 stars");
 	}
 
-	public static void main(String...strings) throws Exception {
-		House h = new House("28049", null, new Host("host", "host", "host", "host", "host"));
-		
-		App app = App.openApp();
-		app.login("host", "host");
-		app.createHolidayOffer(LocalDate.now(), 2.0, 2.0, "This offer is perfect for mature lovers who enjoy walking through forests... Spend a weekend here and you will come back", h, LocalDate.now().plusDays(5));
-		
-		app.logout();
-		app.login("admin", "admin");
-		app.suggestChanges(app.getOffers().get(0), "Eres tonto acho");
-		app.logout();
-		app.login("host", "host");
-		
-		OfferWindow w = new OfferWindow(app.getOffers().get(0), App.getLoggedUser().getRole());
-		w.setController(new OfferWindowController(app, w));
-		w.setGoBackController(new GoBackController(new LoginWindow(), w));
-		
-		w.setVisible(true);
-	}
-
 	public void hideBookButton() {
-//		((Component)this.bookOfferButton).setVisible(false);
-//		this.revalidate();
-		
-//		this.buttonsPanel.remove(this.bookOfferButton);
-//		this.buttonsPanel.revalidate();
-//		this.revalidate();
-		
-//		this.bookOfferButton.hide();
-		
-//		this.bookOfferButton.setVisible(false);
-		
-		Component comp = (Component)this.bookOfferButton;
-		comp.setVisible(false);
+		this.bookOfferButton.setVisible(false);
 	}
 
 	public void hidePayButton() {
-		((Component)this.purchaseOfferButton).setVisible(false);
-		this.revalidate();
+		this.purchaseOfferButton.setVisible(false);
 	}
+
 }

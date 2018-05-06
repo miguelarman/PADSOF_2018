@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import application.App;
-import windows.PersonalWindow;
+import windows.LoginWindow;
 
 public class LogoutController implements ActionListener {
 
@@ -20,11 +20,14 @@ public class LogoutController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.app.logout();
-		this.app.closeApp();
+		app.logout();
+		app.closeApp();
 		
-		this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		app = App.openApp();
+		LoginWindow newWindow2 = new LoginWindow();
+		newWindow2.setController(new LoginController(this.app, newWindow2));
 		this.window.setVisible(false);
+		newWindow2.setVisible(true);
 	}
 
 }

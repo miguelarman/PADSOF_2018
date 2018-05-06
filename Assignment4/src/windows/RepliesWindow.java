@@ -48,14 +48,7 @@ public class RepliesWindow extends JFrame {
 		table = new JTable(dataModel);
 		
 		table.getTableHeader().setReorderingAllowed(false);
-//		table.setAutoCreateRowSorter(true);
 		
-//		table.setPreferredSize(new Dimension(450/*table.getSize().width*/, 200));
-//		table.setPreferredScrollableViewportSize(table.getPreferredSize());
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		table.setFillsViewportHeight(true);
-		
-
 		JScrollPane scrollBar = new JScrollPane(table);
 
 		JPanel tablePanel = new JPanel();
@@ -82,6 +75,7 @@ public class RepliesWindow extends JFrame {
 		
 		
 		this.setSize(750, 500);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 
@@ -89,11 +83,6 @@ public class RepliesWindow extends JFrame {
 		this.addRating.addActionListener(r);
 		this.addReply.addActionListener(r);
 		this.viewReplies.addActionListener(r);
-	}
-
-	public void setGoBackController(GoBackController g) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public Opinion getSelection() throws NoRowSelectedException {
@@ -104,23 +93,6 @@ public class RepliesWindow extends JFrame {
 
 	public Comment getComment() {
 		return this.opinion;
-	}
-	
-	public static void main(String...strings) throws Exception {
-		App app = App.openApp();
-		app.login("multirole", "multirole");
-		
-		Comment c = new Comment("My comment");
-		c.addReply("I agree with you");
-		((Comment)c.getComments().get(0)).addReply("You are totally correct");
-		c.rateComment(5.0);
-		
-		RepliesWindow w = new RepliesWindow(c);
-		RepliesWindowController controller = new RepliesWindowController(app, w);
-		w.setController(controller);
-		
-		
-		w.setVisible(true);
 	}
 
 	public String getWrittenComment() {

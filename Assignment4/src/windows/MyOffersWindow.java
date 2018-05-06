@@ -3,7 +3,6 @@ package windows;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -13,19 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import application.App;
-import application.offer.House;
-import application.offer.LivingOffer;
 import application.offer.Offer;
-import application.users.Host;
 import controllers.GoBackController;
 import controllers.MyOffersController;
-import exceptions.AUserIsAlreadyLoggedException;
-import exceptions.IncorrectPasswordException;
 import exceptions.NoRowSelectedException;
-import exceptions.UnexistentUserException;
-import exceptions.UserIsBannedException;
-import windows.tableModels.MyHousesTableModel;
+import windows.tableModels.MyOffersTableModel;
 import windows.tableModels.SearchResultTableModel;
 
 /**
@@ -42,7 +33,7 @@ public class MyOffersWindow extends JFrame {
 	/**
 	 * Model to show the offers of the logged user
 	 */
-	private SearchResultTableModel dataModel;
+	private MyOffersTableModel dataModel;
 	
 	/**
 	 * Structure to deploy the offers of the logged user
@@ -78,7 +69,7 @@ public class MyOffersWindow extends JFrame {
 		JLabel label = new JLabel("Here are the offers you have created:");
 		cont.add(label, BorderLayout.NORTH);
 		
-		dataModel = new SearchResultTableModel(offers);
+		dataModel = new MyOffersTableModel(offers);
 
 		this.table = new JTable(dataModel);
 		
@@ -103,6 +94,7 @@ public class MyOffersWindow extends JFrame {
 		cont.add(this.goBackButton, BorderLayout.SOUTH);
 				
 		this.setSize(620, 525);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	

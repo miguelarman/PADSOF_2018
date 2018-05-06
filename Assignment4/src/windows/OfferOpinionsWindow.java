@@ -105,7 +105,8 @@ public class OfferOpinionsWindow extends JFrame {
 		cont.add(replyPanel, BorderLayout.SOUTH);
 
 		
-		this.setSize(400,  400);
+		this.setSize(700, 400);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 

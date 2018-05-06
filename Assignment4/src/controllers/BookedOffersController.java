@@ -31,7 +31,6 @@ public class BookedOffersController implements ActionListener {
 		Offer selectedOffer;
 		switch(e.getActionCommand()) {
 		case("View offer"):
-
 			try {
 				selectedOffer = this.window.getSelection().getBookedOffer();
 				

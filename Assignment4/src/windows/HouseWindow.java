@@ -94,6 +94,7 @@ public class HouseWindow extends JFrame {
 		cont.add(houseData, BorderLayout.CENTER);
 		
 		this.setSize(400, 412);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	
