@@ -58,7 +58,6 @@ public class SearchController implements ActionListener {
 			} catch (NoUserLoggedException e) {
 				e.printStackTrace();
 			}
-			//TODO esta excepcion sobra
 			break;
 		
 		case("Paid offers"):
@@ -68,6 +67,7 @@ public class SearchController implements ActionListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			break;
 		case("Average rating"):
 			String rating = window.getAvgRatingField().getText();
 		

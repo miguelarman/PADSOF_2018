@@ -9,7 +9,7 @@ import application.App;
 import application.offer.Offer;
 import application.offer.Reservation;
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import exceptions.NoRowSelectedException;
+import exceptions.InvalidRolException;
 import exceptions.NotTheReserverException;
 import exceptions.RestrictedUserException;
 import exceptions.TimeIsUpException;
@@ -50,6 +50,17 @@ public class OfferWindowController implements ActionListener {
 			break;
 		case("Book this offer"):
 			// TODO
+			Offer selectedOffer2 = this.window.getOffer();
+			try {
+				this.app.addReservation(selectedOffer2);
+				JOptionPane.showMessageDialog(null, "The offer has been booked successfully!");
+				this.window.refreshLabels();
+			} catch (InvalidRolException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (RestrictedUserException e2) {
+				JOptionPane.showMessageDialog(null, "You cannot book this offer", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 			break;
 		case("Purchase this offer"):
 			for(Reservation r: App.getLoggedUser().getReservedOffers()) {
