@@ -4,7 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import application.offer.HolidayOffer;
 import application.offer.House;
+import application.offer.LivingOffer;
+import application.offer.Offer;
+import application.offer.OfferType;
 import application.offer.Reservation;
 
 /**
@@ -186,5 +190,32 @@ public abstract class RegisteredUser implements Serializable {
 			}
 		}
 		return string;
+	}
+
+	public boolean hasBooked(Offer offer) {
+		
+		for (Reservation r : this.reservedOffers) {
+			Offer o = r.getBookedOffer();
+			
+
+			if (offer.getAmount().equals(o.getAmount()) && offer.getDate().equals(o.getDate())
+					&& offer.getDescription().equals(o.getDescription())
+					&& offer.getHouse().getZipCode().equals(o.getHouse().getZipCode())) {
+				if (offer.getType().equals(o.getType())) {
+					if (offer.getType().equals(OfferType.HOLIDAY)) {
+						if (((HolidayOffer) offer).getFinishLocalDate()
+								.equals(((HolidayOffer) o).getFinishLocalDate())) {
+							return true;
+						}
+					} else if (offer.getType().equals(OfferType.LIVING)) {
+						if (((LivingOffer) offer).getNumberOfMonths() == ((LivingOffer) o).getNumberOfMonths()) {
+							return true;
+						}
+					} 
+				}
+			}
+		}
+
+		return false;
 	}
 }

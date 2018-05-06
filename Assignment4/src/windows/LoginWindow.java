@@ -52,6 +52,7 @@ public class LoginWindow extends JFrame {
 		// Adding a label
 		
 		JLabel label  = new JLabel("Welcome. Please log in");
+		label.setFont(new Font(label.getFont().getName(), Font.BOLD, 20));
 		JPanel labelPanel = new JPanel(new FlowLayout());
 		labelPanel.add(label);
 		cont.add(labelPanel);

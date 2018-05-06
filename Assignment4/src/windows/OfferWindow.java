@@ -58,7 +58,6 @@ public class OfferWindow extends JFrame {
 		cont.setLayout(new BorderLayout());
 		
 		JLabel titleLabel = new JLabel("Check out this offer:");
-		// TODO descomentar los siguiente
 		titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.BOLD, 20));
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new FlowLayout());
@@ -66,8 +65,6 @@ public class OfferWindow extends JFrame {
 		cont.add(titlePanel, BorderLayout.NORTH);
 		
 		JPanel offerPanel = new JPanel();
-		
-//		offerPanel.setLayout(new GridLayout(5, 2));
 		
 		GridLayout l = new GridLayout(6, 2);
 		l.setVgap(1);
@@ -114,6 +111,14 @@ public class OfferWindow extends JFrame {
 		purchaseOfferButton = new JButton("Purchase this offer");
 		if ((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) {
 			buttonsPanel.add(bookOfferButton);
+		}
+		
+		
+		System.out.println(App.getLoggedUser().hasBooked(offer));
+		
+		
+		
+		if (((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) || (offer.getStatus().equals(OfferStatus.BOOKED) && App.getLoggedUser().hasBooked(offer))) {
 			buttonsPanel.add(purchaseOfferButton);
 		}
 		

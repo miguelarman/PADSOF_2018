@@ -21,11 +21,11 @@ public class MyOffersTableModel extends AbstractTableModel {
 
 	public MyOffersTableModel(List<Offer> offers) {
 		// Create an array of column titles
-		Object[] titles = {"ZIP code", "Starting date", "Price", "Average rating", "Status"};
+		Object[] titles = {"ZIP code", "Starting on", "Price", "Rating", "Offer type", "Status"};
 		this.titles = titles;
 
 		// Create a matrix of table contents
-		Object[][] contents = new Object[offers.size()][5];
+		Object[][] contents = new Object[offers.size()][this.titles.length];
 		offersArray = new Offer[offers.size()];
 		
 		int i = 0;
@@ -40,7 +40,7 @@ public class MyOffersTableModel extends AbstractTableModel {
 			} else {
 				strStatus = o.getStatus().toString(); 
 			}
-			Object[] offer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating(), strStatus};
+			Object[] offer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating(), o.getType(), strStatus};
 
 			contents[i] = offer;
 			offersArray[i] = o;
@@ -129,7 +129,7 @@ public class MyOffersTableModel extends AbstractTableModel {
 		} else {
 			strStatus = o.getStatus().toString(); 
 		}
-		Object[] newOffer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating(), strStatus};
+		Object[] newOffer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating(), o.getType(), strStatus};
 		newContents[this.contents.length] = newOffer;
 		newOffersArray[this.offersArray.length] = o;
 		
