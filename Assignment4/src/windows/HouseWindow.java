@@ -36,7 +36,7 @@ public class HouseWindow extends JFrame {
 	private static final long serialVersionUID = 4361594776654443001L;
 	
 	/**
-	 * Button to go back to the previous window
+	 * Button to go to the previous window
 	 */
 	private JButton goBackButton;
 	
@@ -122,24 +122,4 @@ public class HouseWindow extends JFrame {
 		HouseCharacteristicsTableModel model = (HouseCharacteristicsTableModel) this.table.getModel();
 		model.addCharacteristic(ch, de);
 	}
-	
-	public static void main(String...strings) throws DuplicateCharacteristicException, UserIsBannedException, IncorrectPasswordException, UnexistentUserException, AUserIsAlreadyLoggedException {
-		House h = new House("28080", "Madrid", new Host("Nombre", "Apellidos", null, null, null));
-		h.addCharacteristic("Pool", "covered");
-		h.addCharacteristic("Bathrooms", "four");
-//		h.addCharacteristic("Bedrooms", "three");
-//		h.addCharacteristic("Other", "three");
-//		h.addCharacteristic("Another", "three");
-//		h.addCharacteristic("Other one", "three");
-		
-		App app = App.openApp();
-		app.login("host", "host");
-		
-		HouseWindow w = new HouseWindow(h);
-		w.setController(new HouseWindowController(null, w, h));
-		w.setGoBackController(new GoBackController(new LoginWindow(), w));
-		w.setVisible(true);
-		
-	}
-
 }

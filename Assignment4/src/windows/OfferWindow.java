@@ -18,20 +18,9 @@ import application.offer.House;
 import application.offer.Offer;
 import application.offer.OfferStatus;
 import application.users.Host;
-import application.users.MultiRoleUser;
 import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
 import controllers.OfferWindowController;
-import exceptions.AUserIsAlreadyLoggedException;
-import exceptions.IncorrectPasswordException;
-import exceptions.InvalidDateException;
-import exceptions.InvalidRolException;
-import exceptions.NoUserLoggedException;
-import exceptions.NotTheOwnerException;
-import exceptions.OfferAlreadyCreatedException;
-import exceptions.OfferIsPendingForChangesExceptions;
-import exceptions.UnexistentUserException;
-import exceptions.UserIsBannedException;
 
 public class OfferWindow extends JFrame {
 
@@ -85,7 +74,7 @@ public class OfferWindow extends JFrame {
 		buttonsPanel.add(viewHouseButton);
 		viewOpinionsButton = new JButton("View opinions");
 		if (offer.getStatus() != OfferStatus.PENDING_FOR_APPROVAL && offer.getStatus() != OfferStatus.PENDING_FOR_CHANGES) {
-			viewOpinionsButton = new JButton("View opinions");
+			buttonsPanel.add(viewOpinionsButton);
 			
 		}
 		bookOfferButton = new JButton("Book this offer");

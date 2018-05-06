@@ -30,7 +30,7 @@ public class WatchOfferController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String pressedButton = e.getActionCommand();
 		switch(pressedButton) {
-		case("Accept"):
+		case("Approve"):
 			try {
 				this.app.approveOffer(this.window.getOffer());
 				this.previousWindow.deleteOfferFromTable(this.window.getOffer());
@@ -38,6 +38,7 @@ public class WatchOfferController implements ActionListener {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
+			JOptionPane.showMessageDialog(null, "Operation completed successfully!");
 			this.previousWindow.setVisible(true);
 			this.window.setVisible(false);
 			break;
@@ -49,6 +50,7 @@ public class WatchOfferController implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			JOptionPane.showMessageDialog(null, "Operation completed successfully!");
 			this.previousWindow.setVisible(true);
 			this.window.setVisible(false);
 			break;

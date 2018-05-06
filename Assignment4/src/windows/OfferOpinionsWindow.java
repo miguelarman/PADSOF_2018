@@ -39,46 +39,52 @@ public class OfferOpinionsWindow extends JFrame {
 	private JTextField rating;
 	
 	/**
-	 * Button to add a reply to the comment
+	 * Button to add a reply to the selected comment
 	 */
-	private JButton addReply;
+	private JButton addReplyButton;
 	
 	/**
 	 * Button to add a rating
 	 */
-	private JButton addRating;
+	private JButton addRatingButton;
+	
+	/**
+	 * Structure to deploy the replies of an offer
+	 */
 	private JTable table;
-	private JButton viewReplies;
+	
+	/**
+	 * Button to watch the replies of a comment
+	 */
+	private JButton viewRepliesButton;
+	
+	/**
+	 * Model to show the comments
+	 */
 	private OfferOpinionsTableModel dataModel;
 
+	/**
+	 * Constructor to the class OfferOpini
+	 * @param offer
+	 */
 	public OfferOpinionsWindow(Offer offer) {
 		super("Opinions of the offer");
 		
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
 		
-		// TODO poner algo de la oferta encima? el zip?
-		
-		
 		dataModel = new OfferOpinionsTableModel(offer.getOpinions());
 		this.table = new JTable(dataModel);
 		
 		table.getTableHeader().setReorderingAllowed(false);
-//		table.setAutoCreateRowSorter(true);
 		
-//		table.setPreferredSize(new Dimension(450/*table.getSize().width*/, 200));
-//		table.setPreferredScrollableViewportSize(table.getPreferredSize());
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		table.setFillsViewportHeight(true);
-		
-
 		JScrollPane scrollBar = new JScrollPane(table);
 
 		JPanel tablePanel = new JPanel();
 		tablePanel.add(scrollBar, BorderLayout.CENTER);
 		
-		this.viewReplies = new JButton("View replies");
-		tablePanel.add(viewReplies, BorderLayout.EAST);
+		this.viewRepliesButton = new JButton("View replies");
+		tablePanel.add(viewRepliesButton, BorderLayout.EAST);
 
 		cont.add(tablePanel, BorderLayout.CENTER);
 		
@@ -87,12 +93,12 @@ public class OfferOpinionsWindow extends JFrame {
 		replyPanel.setLayout(new GridLayout(2, 2));
 		this.comment = new JTextField(30);	this.comment.setText("Your opinion about this offer");
 		this.rating = new JTextField(4);	this.rating.setText("Your rating");
-		this.addRating = new JButton("Rate this offer");
-		this.addReply = new JButton("Comment on this offer");
+		this.addRatingButton = new JButton("Rate this offer");
+		this.addReplyButton = new JButton("Comment on this offer");
 		replyPanel.add(this.comment);
-		replyPanel.add(this.addReply);
+		replyPanel.add(this.addReplyButton);
 		replyPanel.add(this.rating);
-		replyPanel.add(this.addRating);
+		replyPanel.add(this.addRatingButton);
 				
 		cont.add(replyPanel, BorderLayout.SOUTH);
 
@@ -102,9 +108,9 @@ public class OfferOpinionsWindow extends JFrame {
 	}
 
 	public void setController(OfferOpinionsWindowController c) {
-		this.addReply.addActionListener(c);
-		this.addRating.addActionListener(c);
-		this.viewReplies.addActionListener(c);
+		this.addReplyButton.addActionListener(c);
+		this.addRatingButton.addActionListener(c);
+		this.viewRepliesButton.addActionListener(c);
 	}
 
 	public String getWrittenComment() {

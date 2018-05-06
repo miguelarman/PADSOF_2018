@@ -21,7 +21,7 @@ public class WatchOfferWindow extends JFrame{
 	
 	private Offer offer;
 	private JButton viewHouseButton;
-	private JButton acceptButton;
+	private JButton approveButton;
 	private JButton denyButton;
 	private JButton suggestChangesButton;
 	private JButton goBackButton;
@@ -61,8 +61,8 @@ public class WatchOfferWindow extends JFrame{
 		buttonsPanel.setLayout(new FlowLayout());
 		viewHouseButton = new JButton("View house"); 		
 		buttonsPanel.add(viewHouseButton);
-		acceptButton = new JButton("Accept");
-		buttonsPanel.add(acceptButton);
+		approveButton = new JButton("Approve");
+		buttonsPanel.add(approveButton);
 		denyButton = new JButton("Deny");
 		buttonsPanel.add(denyButton);
 		suggestChangesButton = new JButton("Suggest changes");
@@ -85,9 +85,10 @@ public class WatchOfferWindow extends JFrame{
 	}
 
 	public void setController(WatchOfferController c) {
-		acceptButton.addActionListener(c);
+		approveButton.addActionListener(c);
 		denyButton.addActionListener(c);
 		suggestChangesButton.addActionListener(c);
+		viewHouseButton.addActionListener(c);
 		
 	}
 

@@ -64,11 +64,11 @@ public class OfferWindowController implements ActionListener {
 							app.payReservation(r);
 							JOptionPane.showMessageDialog(null, "The offer has been paid successfully!");
 						} catch (InvalidCardNumberException e1) {
-							JOptionPane.showMessageDialog(null, "Your credit card number was not valid. You are now banned from the system", "Error", JOptionPane.ERROR_MESSAGE);
 							LoginWindow newWindow2 = new LoginWindow();
 							newWindow2.setController(new LoginController(this.app, newWindow2));
 							this.window.setVisible(false);
 							newWindow2.setVisible(true);
+							JOptionPane.showMessageDialog(null, "Your credit card number was not valid. You are now banned from the system", "Error", JOptionPane.ERROR_MESSAGE);
 						} catch (NotTheReserverException e1) {
 							// TODO A ver que se ve al saltar estas excepciones
 							e1.printStackTrace();

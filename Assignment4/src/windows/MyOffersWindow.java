@@ -57,8 +57,12 @@ public class MyOffersWindow extends JFrame {
 	/**
 	 * Button to see the information of the selected offer
 	 */
-	private JButton viewOffer;
-	private JButton createOffer;
+	private JButton viewOfferButton;
+	
+	/**
+	 * Button to create a new offer
+	 */
+	private JButton createOfferButton;
 
 	/**
 	 * Constructor of the class MyOffersWindow
@@ -87,10 +91,10 @@ public class MyOffersWindow extends JFrame {
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new GridLayout(0,1));
-		this.createOffer = new JButton("Create an offer");
-		this.viewOffer = new JButton("View offer");
-		buttonsPanel.add(createOffer);
-		buttonsPanel.add(viewOffer);
+		this.createOfferButton = new JButton("Create an offer");
+		this.viewOfferButton = new JButton("View offer");
+		buttonsPanel.add(createOfferButton);
+		buttonsPanel.add(viewOfferButton);
 		cont.add(buttonsPanel, BorderLayout.EAST);
 
 		cont.add(tablePanel, BorderLayout.CENTER);
@@ -104,11 +108,11 @@ public class MyOffersWindow extends JFrame {
 	
 	/**
 	 * Method that assigns the viewOffer with the MyOffersController 
-	 * @param c Controller that allows you to do the needed functionality
+	 * @param o Controller that allows you to do the needed functionality
 	 */
 	public void setController(MyOffersController o) {
-		this.createOffer.addActionListener(o);
-		this.viewOffer.addActionListener(o);
+		this.createOfferButton.addActionListener(o);
+		this.viewOfferButton.addActionListener(o);
 	}
 	
 	/**
@@ -118,24 +122,22 @@ public class MyOffersWindow extends JFrame {
 	public void setGoBackController(GoBackController gb) {
 		this.goBackButton.addActionListener(gb);
 	}
-
+	
+	/**
+	 * Method that gives you the selected row of the table
+	 * @return The selected offer in the table
+	 * @throws NoRowSelectedException When no row has been selected
+	 */
 	public Offer getSelection() throws NoRowSelectedException {
 		int selectedRow = this.table.getSelectedRow();
 
 		return this.dataModel.getRow(selectedRow);
 	}
 	
-	public static void main(String...strings) throws Exception {
-		List<Offer> list = new ArrayList<Offer>();
-		House house = new House("zip", "city", new Host("host", "host", "host", "host", "host"));
-		list.add(new LivingOffer(null, 0.0, 0.0, "description", house, 2));
-		MyOffersWindow w = new MyOffersWindow(list);
-		App app = App.openApp();
-		app.login("host", "host");
-		w.setController(new MyOffersController(app, w));
-		w.setVisible(true);
-	}
-
+	/**
+	 * Method that adds a offer to the table
+	 * @param createdOffer Offer to be added
+	 */
 	public void addOfferToTable(Offer createdOffer) {
 		SearchResultTableModel model = (SearchResultTableModel) this.table.getModel();
 		model.addOfferToTable(createdOffer);
