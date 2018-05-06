@@ -6,7 +6,6 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.function.Predicate;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -16,37 +15,47 @@ import com.toedter.calendar.JCalendar;
 import application.App;
 import application.dates.ModifiableDate;
 import application.offer.HolidayOffer;
-import application.offer.House;
 import application.offer.LivingOffer;
 import application.offer.Offer;
 import application.offer.OfferStatus;
 import application.offer.OfferType;
 import application.offer.Reservation;
-import application.users.Host;
 import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import exceptions.InvalidDateException;
 import exceptions.InvalidOfferStatusException;
 import exceptions.InvalidRolException;
-import exceptions.NoUserLoggedException;
 import exceptions.NotTheOwnerException;
 import exceptions.NotTheReserverException;
-import exceptions.OfferAlreadyCreatedException;
 import exceptions.RestrictedUserException;
 import exceptions.TimeIsUpException;
 import windows.HouseWindow;
 import windows.LoginWindow;
+import windows.MyOffersWindow;
 import windows.OfferOpinionsWindow;
 import windows.OfferWindow;
+import windows.SearchResultWindow;
 import windows.SuggestionsWindow;
 
 public class OfferWindowController implements ActionListener {
 
 	private OfferWindow window;
 	private App app;
-
-	public OfferWindowController(App app, OfferWindow window) {
+	private MyOffersWindow previousMyOffersWindow;
+	private SearchResultWindow previousSearchWindow;
+	
+	public OfferWindowController(App app, OfferWindow window, MyOffersWindow mow) {
 		this.app = app;
 		this.window = window;
+		this.previousMyOffersWindow = mow;
+	}
+	
+	public OfferWindowController(App app, OfferWindow window, SearchResultWindow srw) {
+		this.app = app;
+		this.window = window;
+		this.previousSearchWindow = srw;
+	}
+	
+	public OfferWindowController(App app, OfferWindow window) {
+		this(app, window, (SearchResultWindow)null);
 	}
 
 	@Override
@@ -64,20 +73,22 @@ public class OfferWindowController implements ActionListener {
 			OfferOpinionsWindowController o = new OfferOpinionsWindowController(this.app, w, this.window.getOffer(), this.window);
 			w.setController(o);
 			w.setVisible(true);
-
-			// w.setLocation(this.window.location().x + 20, this.window.location().y + 20);
 			break;
 		case("Book this offer"):
-			// TODO
 			Offer selectedOffer2 = this.window.getOffer();
 			try {
 				this.app.addReservation(selectedOffer2);
 				JOptionPane.showMessageDialog(null, "The offer has been booked successfully!");
 				this.window.refreshLabels();
 				this.window.hideBookButton();
+				if (this.previousSearchWindow != null) {
+					this.previousSearchWindow.removeOffer(selectedOffer2);
+				}
+				if (this.previousMyOffersWindow != null) {
+					this.previousMyOffersWindow.refreshStatus();
+				}
 			} catch (InvalidRolException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Invalid role detected on our system. Please reboot", "Warning", JOptionPane.WARNING_MESSAGE);
 			} catch (RestrictedUserException e2) {
 				JOptionPane.showMessageDialog(null, "You cannot book this offer", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -87,7 +98,7 @@ public class OfferWindowController implements ActionListener {
 				if(r.getBookedOffer().equals(this.window.getOffer())) {
 					Offer selectedOffer = this.window.getOffer();
 
-					Object[] content = { "This operation will cost" + selectedOffer.getAmount() + "\n" + "The operation will be executed with de creditcard " + App.getLoggedUser().getCreditCard() + "\n" + "Do you want to buy the offer?"};
+					Object[] content = { "This operation will cost " + selectedOffer.getAmount() + "\nThe operation will be executed with the credit card " + App.getLoggedUser().getCreditCard() + "\n" + "Do you want to buy the offer?"};
 					
 					int option = JOptionPane.showConfirmDialog(null, content, "Payment", JOptionPane.OK_CANCEL_OPTION);
 					if (option == JOptionPane.OK_OPTION) {
@@ -97,6 +108,12 @@ public class OfferWindowController implements ActionListener {
 							this.window.refreshLabels();
 							this.window.hideBookButton();
 							this.window.hidePayButton();
+							if (this.previousSearchWindow != null) {
+								this.previousSearchWindow.removeOffer(r.getBookedOffer());
+							}
+							if (this.previousMyOffersWindow != null) {
+								this.previousMyOffersWindow.refreshStatus();
+							}
 						} catch (InvalidCardNumberException e1) {
 							app.logout();
 							app.closeApp();
@@ -108,8 +125,7 @@ public class OfferWindowController implements ActionListener {
 							newWindow2.setVisible(true);
 							JOptionPane.showMessageDialog(null, "Your credit card number was not valid. You are now banned from the system", "Error", JOptionPane.ERROR_MESSAGE);
 						} catch (NotTheReserverException e1) {
-							// TODO A ver que se ve al saltar estas excepciones
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null, "Error detected", "Error", JOptionPane.ERROR_MESSAGE);
 						} catch (TimeIsUpException e1) {
 							JOptionPane.showMessageDialog(null, "The 5-day period to pay this offer has finished.\nYou cannot book or pay this offer again", "Error", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
@@ -134,6 +150,12 @@ public class OfferWindowController implements ActionListener {
 					this.window.refreshLabels();
 					this.window.hideBookButton();
 					this.window.hidePayButton();
+					if (this.previousSearchWindow != null) {
+						this.previousSearchWindow.removeOffer(selectedOffer);
+					}
+					if (this.previousMyOffersWindow != null) {
+						this.previousMyOffersWindow.refreshStatus();
+					}
 				} catch (InvalidCardNumberException e1) {
 					app.logout();
 					app.closeApp();
@@ -167,21 +189,27 @@ public class OfferWindowController implements ActionListener {
 				JCalendar holidayStartingDateField = new JCalendar();
 				holidayStartingDateField.setTodayButtonVisible(true);
 				holidayStartingDateField.setWeekOfYearVisible(false);
-				holidayStartingDateField.setDate(Date.from(
-						ModifiableDate.getModifiableDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
 				JTextField holidayPriceField = new JTextField();
 				JTextField holidayDepositField = new JTextField();
 				JTextField holidayDescriptionField = new JTextField();
 				JCalendar holidayFinishDateField = new JCalendar();
 				holidayFinishDateField.setTodayButtonVisible(true);
 				holidayFinishDateField.setWeekOfYearVisible(false);
+				
+				// Setting all the fields
+				holidayStartingDateField.setDate(Date.from(ho.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				holidayPriceField.setText("" + (ho.getAmount() - ho.getDeposit()));
+				holidayDepositField.setText("" + ho.getDeposit());
+				holidayDescriptionField.setText(ho.getDescription());
 				holidayFinishDateField.setDate(Date.from(
-						ModifiableDate.getModifiableDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+						ho.getFinishLocalDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				
 				Object[] holidayQuery = { "Starting date:", holidayStartingDateField, "Price:", holidayPriceField,
 						"Desposit:", holidayDepositField, "Description:", holidayDescriptionField, "Finish date:", holidayFinishDateField };
 
 				int holidayOption = JOptionPane.showConfirmDialog(null, holidayQuery, "Modify a holiday offer",
 						JOptionPane.OK_CANCEL_OPTION);
+				
 				if (holidayOption == JOptionPane.CANCEL_OPTION) {
 					JOptionPane.showMessageDialog(null, "Operation cancelled succesfully");
 				} else if (holidayOption == JOptionPane.OK_OPTION) {
@@ -192,16 +220,6 @@ public class OfferWindowController implements ActionListener {
 						this.actionPerformed(arg0);
 						return;
 					}
-					
-					// Setting all the fields
-					holidayStartingDateField.setDate(Date.from(ho.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-					holidayPriceField.setText("" + (ho.getAmount() - ho.getDeposit()));
-					holidayDepositField.setText("" + ho.getDeposit());
-					holidayDescriptionField.setText(ho.getDescription());
-					holidayFinishDateField.setDate(Date.from(
-							ho.getFinishLocalDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
-
-					Offer modifiedOffer;
 
 					try {
 						LocalDate startingDate = Instant.ofEpochMilli(holidayStartingDateField.getDate().getTime())
@@ -217,6 +235,12 @@ public class OfferWindowController implements ActionListener {
 						ho.modifyOffer(description);
 						ho.modifyOffer(price, deposit);
 						ho.modifyOffer(OfferStatus.PENDING_FOR_APPROVAL);
+						
+						this.window.refreshLabels();
+						
+						if (previousMyOffersWindow != null) {
+							this.previousMyOffersWindow.refreshStatus();
+						}
 
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(null,
@@ -237,6 +261,7 @@ public class OfferWindowController implements ActionListener {
 
 					JOptionPane.showMessageDialog(null, "Offer modified successfully");
 					this.window.refreshLabels();
+					this.window.hideModifyButton();
 				}
 			} if (o1.getType().equals(OfferType.LIVING)) {
 				
@@ -251,11 +276,20 @@ public class OfferWindowController implements ActionListener {
 				JTextField livingDepositField = new JTextField();
 				JTextField livingDescriptionField = new JTextField();
 				JTextField livingDuration = new JTextField();
+				
+				// Setting all the fields
+				livingStartingDateField.setDate(Date.from(lo.getDate().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()));
+				livingPriceField.setText("" + (lo.getAmount() - lo.getDeposit()));
+				livingDepositField.setText("" + lo.getDeposit());
+				livingDescriptionField.setText(lo.getDescription());
+				livingDuration.setText("" + lo.getNumberOfMonths());
+				
 				Object[] livingQuery = { "Starting date:", livingStartingDateField, "Price:", livingPriceField,
 						"Desposit:", livingDepositField, "Description:", livingDescriptionField, "Duration:", livingDuration };
 
 				int livingOption = JOptionPane.showConfirmDialog(null, livingQuery, "Modify a living offer",
 						JOptionPane.OK_CANCEL_OPTION);
+				
 				if (livingOption == JOptionPane.CANCEL_OPTION) {
 					JOptionPane.showMessageDialog(null, "Operation cancelled succesfully");
 				} else if (livingOption == JOptionPane.OK_OPTION) {
@@ -281,6 +315,12 @@ public class OfferWindowController implements ActionListener {
 						lo.modifyOffer(price, deposit);
 						lo.modifyOffer(duration);
 						lo.modifyOffer(OfferStatus.PENDING_FOR_APPROVAL);
+						
+						this.window.refreshLabels();
+						if (previousMyOffersWindow != null) {
+							this.previousMyOffersWindow.refreshStatus();
+						}
+						this.window.hideModifyButton();
 						
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(null, "Please enter price, deposit and duration in a suitable format, i.e. 0.25 or 34.21", "Error", JOptionPane.ERROR_MESSAGE);

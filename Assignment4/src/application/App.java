@@ -137,8 +137,8 @@ public class App implements Serializable {
 	public String getRequests(Offer o) {
 		String string = "";
 		for(String s: o.getSuggestedChanges()) {
-			string+=s;
-			string+="\n";
+			string += s;
+			string += "\n";
 			
 		}
 		return string;
@@ -1005,7 +1005,6 @@ public class App implements Serializable {
 				} catch (HouseAlreadyCreatedException e) {
 					System.out.println(e);
 				}
-				System.out.println(user.getHouses());
 			} else {
 				throw new NotTheOwnerException(App.loggedUser);
 			}

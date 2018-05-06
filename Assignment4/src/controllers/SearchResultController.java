@@ -34,7 +34,7 @@ public class SearchResultController implements ActionListener {
 			} catch (NullPointerException ex) {
 				newWindow = new OfferWindow(selectedOffer, null);
 			}
-			OfferWindowController c = new OfferWindowController(app, newWindow);
+			OfferWindowController c = new OfferWindowController(app, newWindow, this.window);
 			GoBackController g = new GoBackController(this.window, newWindow);
 			newWindow.setController(c);
 			newWindow.setGoBackController(g);

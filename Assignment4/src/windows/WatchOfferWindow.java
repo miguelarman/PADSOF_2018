@@ -35,7 +35,6 @@ public class WatchOfferWindow extends JFrame{
 		cont.setLayout(new BorderLayout());
 		
 		JLabel titleLabel = new JLabel("Revise this offer:");
-		// TODO descomentar los siguiente
 		titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.BOLD, 20));
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new FlowLayout());

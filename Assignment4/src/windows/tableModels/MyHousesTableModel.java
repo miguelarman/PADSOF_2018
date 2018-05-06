@@ -67,7 +67,6 @@ public class MyHousesTableModel extends AbstractTableModel {
 
 	public House getRow(int selectedRow) throws NoRowSelectedException {
 		if (selectedRow >= this.housesArray.length || selectedRow < 0) {
-			System.out.println(selectedRow + " " + this.contents.length + " " + this.housesArray.length);
 			throw new NoRowSelectedException();
 		} else {
 			return housesArray[selectedRow];

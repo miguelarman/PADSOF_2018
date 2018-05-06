@@ -1,13 +1,11 @@
 package windows;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,12 +14,11 @@ import javax.swing.JPanel;
 
 import application.App;
 import application.offer.HolidayOffer;
-import application.offer.House;
 import application.offer.LivingOffer;
 import application.offer.Offer;
 import application.offer.OfferStatus;
 import application.offer.OfferType;
-import application.users.Host;
+import application.users.MultiRoleUser;
 import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
 import controllers.OfferWindowController;
@@ -58,7 +55,6 @@ public class OfferWindow extends JFrame {
 		cont.setLayout(new BorderLayout());
 		
 		JLabel titleLabel = new JLabel("Check out this offer:");
-		// TODO descomentar los siguiente
 		titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.BOLD, 20));
 		JPanel titlePanel = new JPanel();
 		titlePanel.setLayout(new FlowLayout());
@@ -66,8 +62,6 @@ public class OfferWindow extends JFrame {
 		cont.add(titlePanel, BorderLayout.NORTH);
 		
 		JPanel offerPanel = new JPanel();
-		
-//		offerPanel.setLayout(new GridLayout(5, 2));
 		
 		GridLayout l = new GridLayout(6, 2);
 		l.setVgap(1);
@@ -114,7 +108,16 @@ public class OfferWindow extends JFrame {
 		purchaseOfferButton = new JButton("Purchase this offer");
 		if ((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) {
 			buttonsPanel.add(bookOfferButton);
-			buttonsPanel.add(purchaseOfferButton);
+		}
+		
+		if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+			if (((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) || (offer.getStatus().equals(OfferStatus.BOOKED) && ((MultiRoleUser)App.getLoggedUser()).hasBooked(offer))) {
+				buttonsPanel.add(purchaseOfferButton);
+			}
+		} else {
+			if (((role == Role.GUEST || role == Role.MULTIROLE) && offer.getStatus().equals(OfferStatus.APPROVED)) || (offer.getStatus().equals(OfferStatus.BOOKED) && App.getLoggedUser().hasBooked(offer))) {
+				buttonsPanel.add(purchaseOfferButton);
+			}
 		}
 		
 		changesButton = new JButton("View suggestions");
@@ -173,6 +176,10 @@ public class OfferWindow extends JFrame {
 
 	public void hidePayButton() {
 		this.purchaseOfferButton.setVisible(false);
+	}
+
+	public void hideModifyButton() {
+		this.modifyOffer.setVisible(false);
 	}
 
 }
