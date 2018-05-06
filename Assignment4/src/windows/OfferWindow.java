@@ -1,6 +1,7 @@
 package windows;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,9 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import application.App;
+import application.offer.HolidayOffer;
 import application.offer.House;
+import application.offer.LivingOffer;
 import application.offer.Offer;
 import application.offer.OfferStatus;
+import application.offer.OfferType;
 import application.users.Host;
 import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
@@ -38,6 +42,12 @@ public class OfferWindow extends JFrame {
 	private JButton goBackButton;
 	private JLabel statusLabel;
 	private JLabel ratingLabel;
+	private JLabel startingDateLabel;
+	private JLabel amountLabel;
+	private JLabel descriptionLabel;
+	private JLabel durationLabel;
+	private JLabel finishingDateLabel;
+	private JPanel buttonsPanel;
 
 	public OfferWindow(Offer offer, Role role) {
 		super("Offer");
@@ -59,18 +69,39 @@ public class OfferWindow extends JFrame {
 		
 //		offerPanel.setLayout(new GridLayout(5, 2));
 		
-		GridLayout l = new GridLayout(5, 2);
+		GridLayout l = new GridLayout(6, 2);
 		l.setVgap(1);
 		offerPanel.setLayout(l);
 		
-		offerPanel.add(new JLabel("Starting on:"));			offerPanel.add(new JLabel(offer.getDate().toString()));
-		offerPanel.add(new JLabel("Amount to be paid:"));	offerPanel.add(new JLabel(offer.getAmount().toString()));
-		offerPanel.add(new JLabel("Description:"));			offerPanel.add(new JLabel("<html>" + offer.getDescription() + "</html>")); // This way enables multiline text
-		offerPanel.add(new JLabel("This offer is:"));		statusLabel = new JLabel(offer.getStatus().toString()); offerPanel.add(statusLabel);
-		offerPanel.add(new JLabel("Average rating:"));		ratingLabel = new JLabel(offer.getAvgRating() + " out of 5 stars"); offerPanel.add(ratingLabel);
+		offerPanel.add(new JLabel("Starting on:"));
+		startingDateLabel = new JLabel(offer.getDate().toString());
+		offerPanel.add(startingDateLabel);
+		offerPanel.add(new JLabel("Amount to be paid:"));
+		amountLabel = new JLabel("" + offer.getAmount() + " (" + offer.getDeposit() + " for deposit)");
+		offerPanel.add(amountLabel);
+		offerPanel.add(new JLabel("Description:"));
+		descriptionLabel = new JLabel("<html>" + offer.getDescription() + "</html>");
+		offerPanel.add(descriptionLabel); // This way enables multiline text
+		
+		if (offer.getType().equals(OfferType.HOLIDAY)) {
+			offerPanel.add(new JLabel("Ending on:"));
+			finishingDateLabel = new JLabel(((HolidayOffer)offer).getFinishLocalDate().toString());
+			offerPanel.add(finishingDateLabel);
+		} else if (offer.getType().equals(OfferType.LIVING)) {
+			offerPanel.add(new JLabel("Duration:"));
+			durationLabel = new JLabel("" + ((LivingOffer)offer).getNumberOfMonths() + " months");
+			offerPanel.add(durationLabel);
+		}
+		
+		offerPanel.add(new JLabel("This offer is:"));
+		statusLabel = new JLabel(offer.getStatus().toString());
+		offerPanel.add(statusLabel);
+		offerPanel.add(new JLabel("Average rating:"));
+		ratingLabel = new JLabel(offer.getAvgRating() + " out of 5 stars");
+		offerPanel.add(ratingLabel);
 		cont.add(offerPanel, BorderLayout.CENTER);
 		
-		JPanel buttonsPanel = new JPanel();
+		buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(new FlowLayout());
 		viewHouseButton = new JButton("View house");
 		buttonsPanel.add(viewHouseButton);
@@ -129,7 +160,19 @@ public class OfferWindow extends JFrame {
 	}
 
 	public void refreshLabels() {
+		this.startingDateLabel.setText(offer.getDate().toString());
+		this.amountLabel.setText("" + offer.getAmount() + " (" + offer.getDeposit() + " for deposit)");
+		this.descriptionLabel.setText(offer.getDescription());
 		this.statusLabel.setText(offer.getStatus().toString());
 		this.ratingLabel.setText(offer.getAvgRating() + " out of 5 stars");
 	}
+
+	public void hideBookButton() {
+		this.bookOfferButton.setVisible(false);
+	}
+
+	public void hidePayButton() {
+		this.purchaseOfferButton.setVisible(false);
+	}
+
 }

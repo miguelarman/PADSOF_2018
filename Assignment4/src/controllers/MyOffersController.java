@@ -201,8 +201,15 @@ public class MyOffersController implements ActionListener {
 					JTextField livingPriceField = new JTextField();
 					JTextField livingDepositField = new JTextField();
 					JTextField livingDescriptionField = new JTextField();
-					String[] livingZipCodes = ((Host) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode)
-							.collect(Collectors.toList()).toArray(new String[0]);
+					String[] livingZipCodes;
+					if (App.getLoggedUser().getRole().equals(Role.HOST)) {
+						livingZipCodes = ((Host) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode).collect(Collectors.toList()).toArray(new String[0]);
+					} else if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+						livingZipCodes = ((MultiRoleUser) (App.getLoggedUser())).getHouses().stream().map(House::getZipCode).collect(Collectors.toList()).toArray(new String[0]);
+					} else {
+						livingZipCodes = new String[0];
+					}
+							
 					JComboBox<String> livingHouseField = new JComboBox<String>(livingZipCodes);
 					JTextField livingDuration = new JTextField();
 					Object[] livingQuery = { "Starting date:", livingStartingDateField, "Price:", livingPriceField,
@@ -230,12 +237,25 @@ public class MyOffersController implements ActionListener {
 							Double price = Double.parseDouble(livingPriceField.getText());
 							Double deposit = Double.parseDouble(livingDepositField.getText());
 							String description = livingDescriptionField.getText();
-							House offeredHouse = ((Host)(App.getLoggedUser())).getHouses().stream().filter(new Predicate<House>() {
-								@Override
-								public boolean test(House h) {
-									return h.getZipCode().equals(livingHouseField.getSelectedItem());
-								}
-							}).findFirst().orElse(null);
+							House offeredHouse;
+							if (App.getLoggedUser().getRole().equals(Role.HOST)) {
+								offeredHouse = ((Host)(App.getLoggedUser())).getHouses().stream().filter(new Predicate<House>() {
+									@Override
+									public boolean test(House h) {
+										return h.getZipCode().equals(livingHouseField.getSelectedItem());
+									}
+								}).findFirst().orElse(null);
+							} else if (App.getLoggedUser().getRole().equals(Role.MULTIROLE)) {
+								offeredHouse = ((MultiRoleUser)(App.getLoggedUser())).getHouses().stream().filter(new Predicate<House>() {
+									@Override
+									public boolean test(House h) {
+										return h.getZipCode().equals(livingHouseField.getSelectedItem());
+									}
+								}).findFirst().orElse(null);
+							} else {
+								offeredHouse = new House("", "", (Host)null);
+							}
+								
 							Integer duration = Integer.parseInt(livingDuration.getText());
 							
 							
