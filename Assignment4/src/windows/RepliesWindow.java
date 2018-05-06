@@ -12,16 +12,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import application.App;
 import application.opinion.Comment;
 import application.opinion.Opinion;
-import controllers.GoBackController;
 import controllers.RepliesWindowController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.OfferOpinionsTableModel;
 
 public class RepliesWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8771376063056966740L;
 	private JTextField comment;
 	private JTextField rating;
 	private JButton addRating;
