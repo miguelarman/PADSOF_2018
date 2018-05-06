@@ -20,7 +20,6 @@ public class SearchResultTableModel extends AbstractTableModel {
 
 	public SearchResultTableModel(List<Offer> offers) {
 		// Create an array of column titles
-		// TODO
 		Object[] titles = {"ZIP code", "Starting date", "Price", "Average rating"};
 		this.titles = titles;
 
@@ -30,7 +29,7 @@ public class SearchResultTableModel extends AbstractTableModel {
 		
 		int i = 0;
 		
-		for (Offer o : offers) { // TODO
+		for (Offer o : offers) {
 			Object[] offer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating()};
 
 			contents[i] = offer;

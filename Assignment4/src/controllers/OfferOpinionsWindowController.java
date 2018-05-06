@@ -35,6 +35,7 @@ public class OfferOpinionsWindowController implements ActionListener {
 			try {
 				this.offer.rateOffer(comment);
 				JOptionPane.showMessageDialog(null, "Your comment has been successfully recorded");
+				this.window.addComment(comment);
 			} catch (NoUserLoggedException e) {
 				JOptionPane.showMessageDialog(null, "To rate offers you must be logged in the system. Please try again after logging in", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -57,6 +58,7 @@ public class OfferOpinionsWindowController implements ActionListener {
 				try {
 					this.offer.rateOffer(numericalRating);
 					JOptionPane.showMessageDialog(null, "Your rating has been successfully recorded");
+					this.window.addRating(numericalRating);
 				} catch (NoUserLoggedException e) {
 					JOptionPane.showMessageDialog(null, "To rate offers you must be logged in the system. Please try again after logging in", "Error", JOptionPane.ERROR_MESSAGE);
 				}

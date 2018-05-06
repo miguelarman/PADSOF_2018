@@ -78,4 +78,37 @@ public class OfferOpinionsTableModel extends AbstractTableModel {
 			return opinionsArray[selectedRow];
 		}
 	}
+
+	public void addOpinion(Opinion o) {
+
+		Object[][] newContents = new Object[this.contents.length + 1][this.titles.length];
+		Opinion[] newOpinionsArray = new Opinion[this.contents.length + 1];
+		
+		// We copy the existing contents
+		for (int i = 0; i < this.contents.length; i++) {
+			for (int j = 0; j < this.titles.length; j++) {
+				newContents[i][j] = this.contents[i][j];
+			}
+			
+			newOpinionsArray[i] = this.opinionsArray[i];
+		}
+		
+		if (o.getClass() == Comment.class) {
+			Comment c = (Comment)o;
+			Object[] opinion = { c.getText(), null, o.getCommenter().getName() };
+			newContents[this.contents.length] = opinion;
+			newOpinionsArray[this.opinionsArray.length] = o;
+		} else if (o.getClass() == Rating.class) {
+			Rating r = (Rating)o;
+			Object[] opinion = { null, r.getRating(), o.getCommenter().getName() };
+			newContents[this.contents.length] = opinion;
+			newOpinionsArray[this.opinionsArray.length] = o;
+		}
+		
+		
+		this.contents = newContents;
+		this.opinionsArray = newOpinionsArray;
+		
+		this.fireTableDataChanged();
+	}
 }

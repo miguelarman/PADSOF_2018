@@ -2,8 +2,17 @@ package windows;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-import javax.swing.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import application.users.RegisteredUser.Role;
 
@@ -49,11 +58,13 @@ public class PersonalWindow extends JFrame {
 		
 		personalPanel = new JPanel();
 
-		// TODO Adding content to personalPanel
+		// Adding content to personalPanel
 		searchLabel = new JLabel("Search offers in our database!");
 		searchButton = new JButton("Search");
 		
 		personalPanel.add(searchLabel); personalPanel.add(searchButton);
+		
+		// TODO JLabel personalIcon = new JLabel(); personalIcon.setIcon(new ImageIcon("icons/personalZoneIcon.png")); personalPanel.add(personalIcon, BorderLayout.EAST);
 		
 		pestanias.addTab("Personal zone", null, personalPanel);
 		
@@ -61,35 +72,44 @@ public class PersonalWindow extends JFrame {
 		if (role == Role.GUEST || role == Role.MULTIROLE) {
 			guestPanel = new JPanel();
 			
-			// TODO Adding content to guestPanel
+			// Adding content to guestPanel
 			bookedOffersLabel = new JLabel("Check out your booked offers:");
 			bookedOffersButton = new JButton("Booked offers");
 			
 			guestPanel.add(bookedOffersLabel); guestPanel.add(bookedOffersButton);
 			
+			// TODO JLabel icon = new JLabel(); icon.setIcon(new ImageIcon("icons/guestPersonalZoneIcon.png")); guestPanel.add(icon, BorderLayout.EAST);
 			
 			pestanias.addTab("Guest zone", null, guestPanel);
 		}
 		
 		if (role == Role.HOST || role == Role.MULTIROLE) {
 			hostPanel = new JPanel();
+			hostPanel.setLayout(new GridLayout(10, 1)); // This 10 is just to make it look nice
 			
-			// TODO Adding content to hostPanel
+			// Adding content to hostPanel
 			offersLabel = new JLabel("Check out your offers:");
 			offersButton = new JButton("My offers");
 			housesLabel = new JLabel("Check out your houses:");
 			housesButton = new JButton("My houses");
 			
-			hostPanel.add(offersLabel); hostPanel.add(offersButton);
-			hostPanel.add(housesLabel); hostPanel.add(housesButton);
+			JPanel topPanel = new JPanel(); topPanel.setLayout(new FlowLayout());
+			JPanel bottomPanel = new JPanel(); topPanel.setLayout(new FlowLayout());
+			
+			topPanel.add(offersLabel); topPanel.add(offersButton);
+			bottomPanel.add(housesLabel); bottomPanel.add(housesButton);
+			
+			hostPanel.add(topPanel); hostPanel.add(bottomPanel);
+			
+			// TODO JLabel icon = new JLabel(); icon.setIcon(new ImageIcon("icons/hostPersonalZoneIcon.png")); hostPanel.add(icon, BorderLayout.EAST);
 			
 			pestanias.addTab("Host zone", null, hostPanel);
 		}
 		
 		if (role == Role.ADMIN) {
-			adminPanel = new JPanel();
+			adminPanel = new JPanel(); 
 			
-			// TODO Adding content to adminPanel
+			// Adding content to adminPanel
 			pendingLabel = new JLabel("See all the offers pending for approval:");
 			pendingButton = new JButton("Pending offers");
 			creditCardLabel = new JLabel("Modify credit card number of any user:");
@@ -97,6 +117,8 @@ public class PersonalWindow extends JFrame {
 			
 			adminPanel.add(pendingLabel); adminPanel.add(pendingButton);
 			adminPanel.add(creditCardLabel); adminPanel.add(creditCardButton);
+			
+			// TODO JLabel icon = new JLabel(); icon.setIcon(new ImageIcon("icons/adminPersonalZoneIcon.png")); adminPanel.add(icon, BorderLayout.EAST);
 			
 			pestanias.addTab("Admin zone", null, adminPanel);
 		}
