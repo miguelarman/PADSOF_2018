@@ -9,6 +9,7 @@ import application.App;
 import application.offer.Offer;
 import application.opinion.Comment;
 import application.opinion.Opinion;
+import application.opinion.Rating;
 import exceptions.NoRowSelectedException;
 import exceptions.NoUserLoggedException;
 import windows.OfferOpinionsWindow;
@@ -46,6 +47,17 @@ public class OfferOpinionsWindowController implements ActionListener {
 			String rating = this.window.getWrittenRating();
 			Double numericalRating;
 			
+			for(Opinion r: offer.getOpinions()) {
+				System.out.println("1");
+				if(r.getClass() == Rating.class) {
+					System.out.println("2");
+					if(App.getLoggedUser().getNIF().equals(r.getCommenter().getNIF())) {
+						JOptionPane.showMessageDialog(null, "You can only rate an offer once",
+								"Warning", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
+			}
 			try {
 				numericalRating = Double.parseDouble(rating);
 			} catch (NumberFormatException e) {
@@ -83,7 +95,6 @@ public class OfferOpinionsWindowController implements ActionListener {
 				RepliesWindowController r = new RepliesWindowController(app, newWindow);
 				GoBackController g = new GoBackController(this.window, newWindow);
 				newWindow.setController(r);
-				newWindow.setGoBackController(g);
 				newWindow.setVisible(true);
 				this.window.setVisible(false);
 			} catch (NoRowSelectedException e) {

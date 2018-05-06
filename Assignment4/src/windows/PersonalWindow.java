@@ -127,6 +127,7 @@ public class PersonalWindow extends JFrame {
 		cont.add(logoutButton, BorderLayout.SOUTH);
 		
 		this.setSize(400, 500);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 

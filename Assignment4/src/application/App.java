@@ -195,7 +195,7 @@ public class App implements Serializable {
 		}
 		
 		for (Offer o : this.offers) { //Go over all the offers
-			if (o.getDate().isAfter(date1) && o.getDate().isBefore(date2)) { //Check if its starting date is in the interval
+			if ((o.getDate().isAfter(date1) && o.getDate().isBefore(date2)) || o.getDate().isEqual(date1) || o.getDate().isEqual(date2)) { //Check if its starting date is in the interval
 				if (o.getStatus() == OfferStatus.APPROVED) { //Check if the offer is approved
 					searchResult.add(o);
 				}

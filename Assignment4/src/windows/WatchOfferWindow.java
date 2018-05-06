@@ -42,9 +42,7 @@ public class WatchOfferWindow extends JFrame{
 		titlePanel.add(titleLabel);
 		cont.add(titlePanel, BorderLayout.NORTH);
 		
-		JPanel offerPanel = new JPanel();
-		
-	//	offerPanel.setLayout(new GridLayout(5, 2));
+		JPanel offerPanel = new JPanel();;
 		
 		GridLayout l = new GridLayout(5, 2);
 		l.setVgap(1);
@@ -81,6 +79,7 @@ public class WatchOfferWindow extends JFrame{
 		
 		
 		this.setSize(600,  400);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 

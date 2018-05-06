@@ -96,6 +96,7 @@ public class SearchWindow extends JFrame {
 		cont.add(buttons, BorderLayout.SOUTH);
 		this.setContentPane(cont);
 		this.setSize(400, 500);
+		this.setLocationRelativeTo(null);
 		
 		zipCodeField.setVisible(false);
 		iniDate.setVisible(false);

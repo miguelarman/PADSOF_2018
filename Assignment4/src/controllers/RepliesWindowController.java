@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import application.App;
 import application.opinion.Comment;
 import application.opinion.Opinion;
+import application.opinion.Rating;
 import exceptions.NoRowSelectedException;
 import exceptions.NoUserLoggedException;
 import windows.RepliesWindow;
@@ -27,6 +28,15 @@ public class RepliesWindowController implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("Rate this comment")) {
 			
+			for(Opinion r: this.window.getComment().getComments()) {
+				if(r.getClass() == Rating.class) {
+					if(App.getLoggedUser().getNIF().equals(r.getCommenter().getNIF())) {
+						JOptionPane.showMessageDialog(null, "You can only rate a comment once",
+								"Warning", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
+			}
 			Double rating;
 			try {
 				rating = Double.parseDouble(this.window.getWrittenRating());
@@ -76,11 +86,8 @@ public class RepliesWindowController implements ActionListener {
 				RepliesWindowController r = new RepliesWindowController(app, newWindow);
 				GoBackController g = new GoBackController(this.window, newWindow);
 				newWindow.setController(r);
-				newWindow.setGoBackController(g);
 				newWindow.setVisible(true);
-//				this.window.setVisible(false);
-				
-//				newWindow.setLocation(this.window.location().x + 20, this.window.location().y + 20);
+
 			} catch (NoRowSelectedException e) {
 				JOptionPane.showMessageDialog(null, "You must select an offer before clicking this button", "Warning",
 						JOptionPane.WARNING_MESSAGE);

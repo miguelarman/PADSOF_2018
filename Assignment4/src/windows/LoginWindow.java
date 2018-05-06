@@ -90,6 +90,7 @@ public class LoginWindow extends JFrame {
 		cont.add(noUserPanel);
 		this.setContentPane(cont);
 		this.setSize(400, 500);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	

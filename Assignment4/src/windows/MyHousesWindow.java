@@ -86,6 +86,7 @@ public class MyHousesWindow extends JFrame {
 		
 		
 		this.setSize(400, 400);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 

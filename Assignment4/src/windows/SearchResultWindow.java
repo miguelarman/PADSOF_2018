@@ -39,14 +39,7 @@ public class SearchResultWindow extends JFrame {
 		this.table = new JTable(dataModel);
 		
 		table.getTableHeader().setReorderingAllowed(false);
-//		table.setAutoCreateRowSorter(true);
 		
-//		table.setPreferredSize(new Dimension(450/*table.getSize().width*/, 200));
-//		table.setPreferredScrollableViewportSize(table.getPreferredSize());
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		table.setFillsViewportHeight(true);
-		
-
 		JScrollPane scrollBar = new JScrollPane(table);
 
 		JPanel tablePanel = new JPanel();
@@ -61,6 +54,7 @@ public class SearchResultWindow extends JFrame {
 		cont.add(this.goBackButton, BorderLayout.SOUTH);
 		
 		this.setSize(750, 500);
+		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
 	
