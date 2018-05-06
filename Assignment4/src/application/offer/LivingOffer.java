@@ -101,4 +101,8 @@ public class LivingOffer extends Offer {
 		
 		return string;
 	}
+
+	public void modifyOffer(Integer duration) {
+		this.numberOfMonths = duration;
+	}
 }

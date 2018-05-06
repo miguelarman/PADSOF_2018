@@ -20,17 +20,17 @@ public class SearchResultTableModel extends AbstractTableModel {
 
 	public SearchResultTableModel(List<Offer> offers) {
 		// Create an array of column titles
-		Object[] titles = {"ZIP code", "Starting date", "Price", "Average rating"};
+		Object[] titles = {"ZIP code", "Starting date", "Price", "Average rating", "Type of offer"};
 		this.titles = titles;
 
 		// Create a matrix of table contents
-		Object[][] contents = new Object[offers.size()][4];
+		Object[][] contents = new Object[offers.size()][this.titles.length];
 		offersArray = new Offer[offers.size()];
 		
 		int i = 0;
 		
 		for (Offer o : offers) {
-			Object[] offer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating()};
+			Object[] offer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating(), o.getType()};
 
 			contents[i] = offer;
 			offersArray[i] = o;
@@ -109,7 +109,7 @@ public class SearchResultTableModel extends AbstractTableModel {
 			
 			newOffersArray[i] = this.offersArray[i];
 		}
-		Object[] newOffer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating()};
+		Object[] newOffer = {o.getHouse().getZipCode(), o.getDate(), o.getAmount(), o.getAvgRating(), o.getType()};
 		newContents[this.contents.length] = newOffer;
 		newOffersArray[this.offersArray.length] = o;
 		

@@ -107,6 +107,10 @@ public abstract class Offer implements Serializable{
 		return this.status;
 	}
 	
+	public Double getDeposit() {
+		return this.deposit;
+	}
+	
 	/**
 	 * Getter method for the startingDate attribute
 	 * 

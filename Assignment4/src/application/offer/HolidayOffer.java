@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import es.uam.eps.padsof.telecard.*;
 
 import exceptions.CouldNotPayHostException;
+import exceptions.InvalidOfferStatusException;
+import exceptions.NotTheOwnerException;
 
 /**
  * Class that stores the data of a holiday offer. It is created from the class Offer
@@ -100,5 +102,10 @@ public class HolidayOffer extends Offer {
 		string += "\nFinish date: " + this.finishDate;
 		
 		return string;
+	}
+
+	public void modifyOffer(LocalDate startingDate, LocalDate finishDate) throws InvalidOfferStatusException, NotTheOwnerException {
+		this.modifyOffer(startingDate);
+		this.finishDate = finishDate;
 	}
 }
