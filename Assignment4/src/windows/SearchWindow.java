@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
 
 import application.dates.ModifiableDate;
 import application.users.RegisteredUser;
