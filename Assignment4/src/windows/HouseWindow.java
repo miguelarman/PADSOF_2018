@@ -11,17 +11,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
 import application.App;
 import application.offer.House;
-import application.users.Host;
 import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
 import controllers.HouseWindowController;
-import exceptions.AUserIsAlreadyLoggedException;
-import exceptions.DuplicateCharacteristicException;
-import exceptions.IncorrectPasswordException;
-import exceptions.UnexistentUserException;
-import exceptions.UserIsBannedException;
 import windows.tableModels.HouseCharacteristicsTableModel;
 
 /**

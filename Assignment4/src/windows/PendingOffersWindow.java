@@ -15,20 +15,43 @@ import application.offer.Offer;
 import controllers.GoBackController;
 import controllers.PendingOffersController;
 import exceptions.NoRowSelectedException;
-import windows.tableModels.MyHousesTableModel;
 import windows.tableModels.SearchResultTableModel;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class PendingOffersWindow extends JFrame {
 
 	/**
-	 * 
-	 */
-	private JButton viewOfferButton;
-	private JButton goBackButton;
-	private SearchResultTableModel dataModel;
-	private JTable table;
+	* ID needed for the class to be Serializable
+	*/
 	private static final long serialVersionUID = 8434334879116180704L;
 	
+	/**
+	 * Button to view the selected offer
+	 */
+	private JButton viewOfferButton;
+	
+	/**
+	 * Button to go to the previous window
+	 */
+	private JButton goBackButton;
+	
+	/**
+	 * Model to show the offers pending for approval
+	 */
+	private SearchResultTableModel dataModel;
+	
+	/**
+	 * Structure to display the offers pending for approval
+	 */
+	private JTable table;
+
+	/**
+	 * Constructor of the class PendingOfferWindow
+	 * @param list List of offers pending for approval
+	 */
 	public PendingOffersWindow(List<Offer> list) {
 		super("Pending for approval");
 		
@@ -62,22 +85,39 @@ public class PendingOffersWindow extends JFrame {
 		this.setVisible(false);
 	}
 
+	/**
+	 * Method that assigns the goBackButton with the goBackController
+	 * @param gb Controller that allows you to go to the previous window
+	 */
 	public void setGoBackController(GoBackController gb) {
 		this.goBackButton.addActionListener(gb);
 		
 	}
-
+	
+	/**
+	 * Method that assigns the viewOfferButton with the PendingOffersController
+	 * @param p Controller that allows you to do the needed functionality
+	 */
 	public void setController(PendingOffersController p) {
 		this.viewOfferButton.addActionListener(p);
 		
 	}
 	
+	/**
+	 * Method that gives you the selected row of the table
+	 * @return The selected offer in the table
+	 * @throws NoRowSelectedException When no row has been selected
+	 */
 	public Offer getSelection() throws NoRowSelectedException {
 		int selectedRow = this.table.getSelectedRow();
 		
 		return this.dataModel.getRow(selectedRow);
 	}
 
+	/**
+	 * Method to delete an offer from the table
+	 * @param offer Offer to be deleted
+	 */
 	public void deleteOfferFromTable(Offer offer) {
 		SearchResultTableModel model = (SearchResultTableModel) this.table.getModel();
 		model.removeOffer(offer);

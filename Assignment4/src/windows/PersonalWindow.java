@@ -4,9 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -15,36 +13,119 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import application.users.RegisteredUser.Role;
+import controllers.LogoutController;
+import controllers.PersonalWindowController;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class PersonalWindow extends JFrame {
 
+	/**
+	* ID needed for the class to be Serializable
+	*/
 	private static final long serialVersionUID = -3900066860728430861L;
 
+	/**
+	 * Tabs to display the information needed depending on the type of user
+	 */
 	private JTabbedPane pestanias;
 	
+	/**
+	 * Component that contains the buttons that all users can use
+	 */
 	private JComponent personalPanel;
+	
+	/**
+	 * Button that logs you out of the system
+	 */
 	private JButton logoutButton;
+	
+	/**
+	 * Label that indicates the searchButton
+	 */
 	private JLabel searchLabel;
+	
+	/**
+	 * Button to search in the system
+	 */
 	private JButton searchButton;
 	
+	/**
+	 * Component that contains the buttons that only guests can use
+	 */
 	private JComponent guestPanel;
+	
+	/**
+	 * Label that indicates the bookedOffersButton
+	 */
 	private JLabel bookedOffersLabel;
+	
+	/**
+	 * Button to see the offers booked by a user
+	 */
 	private JButton bookedOffersButton;
 	
+	/**
+	 * Component that contains the buttons that only hosts can use
+	 */
 	private JComponent hostPanel;
+	
+	/**
+	 * Label that indicates the offerButton
+	 */
 	private JLabel offersLabel;
+	
+	/**
+	 * Button to see the offers created by the logged user
+	 */
 	private JButton offersButton;
+	
+	/**
+	 * Label that indicates the housesButton
+	 */
 	private JLabel housesLabel;
+	
+	/**
+	 * Button to see the houses created by the logged user
+	 */
 	private JButton housesButton;
 	
+	/**
+	 * Component that contains the buttons that only admins can use
+	 */
 	private JComponent adminPanel;
+	
+	/**
+	 * Label that indicates the pendingButton
+	 */
 	private JLabel pendingLabel;
+	
+	/**
+	 * Button to see the offers pending for approval
+	 */
 	private JButton pendingButton;
+	
+	/**
+	 * Label that indicates the creditCardButton
+	 */
 	private JLabel creditCardLabel;
+	
+	/**
+	 * Button to see the banned users with an incorrect credit card number
+	 */
 	private JButton creditCardButton;
 
+	/**
+	 * Role of the logged user
+	 */
 	private Role role;
 	
+	/**
+	 * Constructor of the class PersonalWindow
+	 * @param role Role of the logged user
+	 */
 	public PersonalWindow(Role role) {
 		super("Pestañas");
 		
@@ -131,11 +212,19 @@ public class PersonalWindow extends JFrame {
 		this.setVisible(false);
 	}
 
-	public void setLogoutController(ActionListener c) {
+	/**
+	 * Method that assigns the logoutButton with the logout controller
+	 * @param c Controller to logout of the system
+	 */
+	public void setLogoutController(LogoutController c) {
 		logoutButton.addActionListener(c);
 	}
 	
-	public void setController(ActionListener c) {
+	/**
+	 * Method that assigns all the buttons to the PersonalWindowController
+	 * @param c
+	 */
+	public void setController(PersonalWindowController c) {
 		this.searchButton.addActionListener(c);
 		
 		if (this.role == Role.GUEST || this.role == Role.MULTIROLE) {

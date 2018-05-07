@@ -12,13 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import application.offer.HolidayOffer;
 import application.offer.Offer;
 import controllers.GoBackController;
 import controllers.MyOffersController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.MyOffersTableModel;
-import windows.tableModels.SearchResultTableModel;
 
 /**
  * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto

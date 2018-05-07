@@ -23,29 +23,102 @@ import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
 import controllers.OfferWindowController;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class OfferWindow extends JFrame {
 
 	/**
-	 * 
-	 */
+	* ID needed for the class to be Serializable
+	*/
 	private static final long serialVersionUID = -2920513769048554961L;
+	
+	/**
+	 * Offer displayed on screen
+	 */
 	private Offer offer;
+	
+	/**
+	 * Button to view the house of the offer
+	 */
 	private JButton viewHouseButton;
+	
+	/**
+	 * Button to view the opinions of the offer
+	 */
 	private JButton viewOpinionsButton;
+	
+	/**
+	 * Button to book the offer
+	 */
 	private JButton bookOfferButton;
+	
+	/**
+	 * Button to purchase the offer
+	 */
 	private JButton purchaseOfferButton;
+	
+	/**
+	 * Button to see the suggested changes by an admin
+	 */
 	private JButton changesButton;
+	
+	/**
+	 * Button to modify the offer
+	 */
 	private JButton modifyOffer;
+	
+	/**
+	 * Button to go to the previous window
+	 */
 	private JButton goBackButton;
+	
+	/**
+	 * Label that tells the status of the offer
+	 */
 	private JLabel statusLabel;
+	
+	/**
+	 * Label that tells the average rating of the offer
+	 */
 	private JLabel ratingLabel;
+	
+	/**
+	 * Label that tells the starting date of the offer
+	 */
 	private JLabel startingDateLabel;
+	
+	/**
+	 * Label that tells the price of the offer
+	 */
 	private JLabel amountLabel;
+	
+	/**
+	 * Label that tells the description of the offer
+	 */
 	private JLabel descriptionLabel;
+	
+	/**
+	 * Label that tells the duration of the offer
+	 */
 	private JLabel durationLabel;
+	
+	/**
+	 * Label that tells the finishing date of the offer
+	 */
 	private JLabel finishingDateLabel;
+	
+	/**
+	 * Panel that contains all the buttons 
+	 */
 	private JPanel buttonsPanel;
 
+	/**
+	 * Constructor of the class OfferWindow
+	 * @param offer Offer to be displayed on screen
+	 * @param role Role of the logged user
+	 */
 	public OfferWindow(Offer offer, Role role) {
 		super("Offer");
 		
@@ -144,7 +217,12 @@ public class OfferWindow extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
-
+	
+	/**
+	 * Method that assigns the viewHouseButton, the viewOpinionsButton, the bookOfferButton,
+	 * the purchaseOfferButton, the changesButton and the modifyOfferButton with OfferWindowController
+	 * @param c Controller that allows you to do the needed functionality
+	 */
 	public void setController(OfferWindowController c) {
 		this.viewHouseButton.addActionListener(c);
 		this.viewOpinionsButton.addActionListener(c);
@@ -153,15 +231,26 @@ public class OfferWindow extends JFrame {
 		this.changesButton.addActionListener(c);
 		this.modifyOffer.addActionListener(c);
 	}
-
+	
+	/**
+	 * Method that assigns the goBackButton with the goBackController
+	 * @param g Controller that allows you to go to the previous window
+	 */
 	public void setGoBackController(GoBackController g) {
 		this.goBackButton.addActionListener(g);
 	}
 	
+	/**
+	 * Getter method for the offer
+	 * @return The offer displayed on screen
+	 */
 	public Offer getOffer() {
 		return this.offer;
 	}
 
+	/**
+	 * Method that updates all the labels in case some of them have changed
+	 */
 	public void refreshLabels() {
 		this.startingDateLabel.setText(offer.getDate().toString());
 		this.amountLabel.setText("" + offer.getAmount() + " (" + offer.getDeposit() + " for deposit)");
@@ -170,14 +259,23 @@ public class OfferWindow extends JFrame {
 		this.ratingLabel.setText(offer.getAvgRating() + " out of 5 stars");
 	}
 
+	/**
+	 * Method that hides the bookButton
+	 */
 	public void hideBookButton() {
 		this.bookOfferButton.setVisible(false);
 	}
 
+	/**
+	 * Method that hides the payButton
+	 */
 	public void hidePayButton() {
 		this.purchaseOfferButton.setVisible(false);
 	}
 
+	/**
+	 * Method that hides the modifyOfferButton
+	 */
 	public void hideModifyButton() {
 		this.modifyOffer.setVisible(false);
 	}

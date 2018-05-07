@@ -66,8 +66,8 @@ public class OfferOpinionsWindow extends JFrame {
 	private OfferOpinionsTableModel dataModel;
 
 	/**
-	 * Constructor to the class OfferOpini
-	 * @param offer
+	 * Constructor to the class OfferOpinionsWindow
+	 * @param offer Offer to show its opinions
 	 */
 	public OfferOpinionsWindow(Offer offer) {
 		super("Opinions of the offer");
@@ -109,32 +109,57 @@ public class OfferOpinionsWindow extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setVisible(false);
 	}
-
+	
+	/**
+	 * Method that assigns the addReplyButton, the addRatingButton and the viewRepliesButton with OfferOpinionsWindowController
+	 * @param c Controller that allows you to do the needed functionality
+	 */
 	public void setController(OfferOpinionsWindowController c) {
 		this.addReplyButton.addActionListener(c);
 		this.addRatingButton.addActionListener(c);
 		this.viewRepliesButton.addActionListener(c);
 	}
-
+	
+	/**
+	 * Getter method for the text in the comment field
+	 * @return The comment to the offer
+	 */
 	public String getWrittenComment() {
 		return this.comment.getText();
 	}
 
+	/**
+	 * Getter method for the number in the rating field
+	 * @return The rating to the offer
+	 */
 	public String getWrittenRating() {
 		return this.rating.getText();
 	}
 	
+	/**
+	 * Method that gives you the selected row of the table
+	 * @return The selected comment in the table
+	 * @throws NoRowSelectedException When no row has been selected
+	 */
 	public Opinion getSelection() throws NoRowSelectedException {
 		int selectedRow = this.table.getSelectedRow();
 		
 		return this.dataModel.getRow(selectedRow);
 	}
 
+	/**
+	 * Method that adds a comment to the table
+	 * @param comment Comment to be added
+	 */
 	public void addComment(String comment) {
 		OfferOpinionsTableModel panel = (OfferOpinionsTableModel)table.getModel();
 		panel.addOpinion(new Comment(comment));
 	}
 
+	/**
+	 * Method that adds a rating to the table
+	 * @param numericalRating Rating to be added
+	 */
 	public void addRating(Double numericalRating) {
 		OfferOpinionsTableModel panel = (OfferOpinionsTableModel)table.getModel();
 		panel.addOpinion(new Rating(numericalRating));
