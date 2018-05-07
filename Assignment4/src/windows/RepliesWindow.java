@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import application.opinion.Comment;
 import application.opinion.Opinion;
+import application.opinion.Rating;
 import controllers.RepliesWindowController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.OfferOpinionsTableModel;
@@ -98,11 +99,21 @@ public class RepliesWindow extends JFrame {
 	}
 
 	public String getWrittenComment() {
-		return this.rating.getText();
+		return this.comment.getText();
 	}
 
 	public String getWrittenRating() {
 		return this.rating.getText();
+	}
+
+	public void addRating(Double r) {
+		OfferOpinionsTableModel model = (OfferOpinionsTableModel)table.getModel();
+		model.addOpinion(new Rating(r));
+	}
+
+	public void addReply(String answer) {
+		OfferOpinionsTableModel model = (OfferOpinionsTableModel)table.getModel();
+		model.addOpinion(new Comment(answer));
 	}
 
 }

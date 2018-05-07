@@ -56,6 +56,9 @@ public abstract class Offer implements Serializable{
 	 */
 	private House offeredHouse;
 	
+	/**
+	 * List of suggestions made by the admins
+	 */
 	private List<String> suggestedChanges;
 	/**
 	 * All the opinions about the offer
@@ -107,6 +110,11 @@ public abstract class Offer implements Serializable{
 		return this.status;
 	}
 	
+	/**
+	 * Getter method for the deposit field
+	 * 
+	 * @return The deposit of the offer
+	 */
 	public Double getDeposit() {
 		return this.deposit;
 	}
@@ -134,6 +142,11 @@ public abstract class Offer implements Serializable{
 		return aux;
 	}
 	
+	/**
+	 * Getter method for the changes suggestions of the offer
+	 * 
+	 * @return Suggestions made to the offer
+	 */
 	public List<String> getSuggestedChanges() {
 		return this.suggestedChanges;
 	}

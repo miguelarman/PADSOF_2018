@@ -131,8 +131,12 @@ public class App implements Serializable {
 		return loggedUser;
 	}
 	
+	
 	/**
+	 * Method that returns the changes request
 	 * 
+	 * @param o Offer to be analyzed
+	 * @return Requests
 	 */
 	public String getRequests(Offer o) {
 		String string = "";
@@ -728,6 +732,7 @@ public class App implements Serializable {
 	 * @throws InvalidDateException When the starting date of the offer is before the date of the system
 	 * @throws NotTheOwnerException When a user that is not the owner of a house tries to create an offer with that house
 	 * @throws OfferAlreadyCreatedException When the same offer is already in the system
+	 * @return Created offer
 	 */
 	public Offer createLivingOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, int numberOfMonths) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;
@@ -773,6 +778,7 @@ public class App implements Serializable {
 	 * @throws InvalidDateException When the starting date of the offer is before the date of the system
 	 * @throws NotTheOwnerException When a user that is not the owner of a house tries to create an offer with that house
 	 * @throws OfferAlreadyCreatedException When the same offer is already in the system
+	 * @return Created offer
 	 */
 	public Offer createHolidayOffer(LocalDate startingDate, Double price, Double deposit, String description, House offeredHouse, LocalDate finishDate) throws InvalidRolException, NoUserLoggedException, InvalidDateException, NotTheOwnerException, OfferAlreadyCreatedException {
 		Offer o= null;		
@@ -1170,6 +1176,11 @@ public class App implements Serializable {
 		return string;
 	}
 
+	/**
+	 * Method that returns all the offers that have been created by the logged user
+	 * 
+	 * @return List of offers
+	 */
 	public List<Offer> getCreatedOffersByLoggerUser() {
 		List<Offer> list = new ArrayList<Offer>();
 		

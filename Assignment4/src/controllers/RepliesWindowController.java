@@ -71,6 +71,10 @@ public class RepliesWindowController implements ActionListener {
 			Comment c = this.window.getComment();
 			try {
 				c.rateComment(rating);
+
+				
+				JOptionPane.showMessageDialog(null, "Your rating has been added succesfully");
+				this.window.addRating(rating);
 			} catch (NoUserLoggedException e) {
 				JOptionPane.showMessageDialog(null, "Please log in before rating comments");
 			}
@@ -84,6 +88,9 @@ public class RepliesWindowController implements ActionListener {
 			Comment c = this.window.getComment();
 			try {
 				c.addReply(answer);
+				
+				JOptionPane.showMessageDialog(null, "Your reply has been added succesfully");
+				this.window.addReply(answer);
 			} catch (NoUserLoggedException e) {
 				JOptionPane.showMessageDialog(null, "Please log in before answering to comments", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -95,11 +102,6 @@ public class RepliesWindowController implements ActionListener {
 
 				if (selectedOpinion.getClass() != Comment.class) {
 					JOptionPane.showMessageDialog(null, "Only text opinions have replies", "Warning", JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				
-				if (((Comment)selectedOpinion).getReplies().size() == 0) {
-					JOptionPane.showMessageDialog(null, "The comment you selected does not have any replies");
 					return;
 				}
 
