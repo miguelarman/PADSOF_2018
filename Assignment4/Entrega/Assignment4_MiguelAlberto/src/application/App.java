@@ -279,7 +279,7 @@ public class App implements Serializable {
 	/**
 	 * Method that searches all the offers with at least the given rating
 	 * 
-	 * @param minRating Minimum rating of the offers
+	 * @param minRating - Minimum rating of the offers
 	 * @return list of offers with at least the given rating
 	 * @throws NoUserLoggedException When a non-logged user tries to search
 	 */
@@ -1063,7 +1063,7 @@ public class App implements Serializable {
 	 * @param creditCard new creditcard number
 	 * @param user The user whose creditcard number is going to be changed
 	 * @throws InvalidRolException When a non-admin user tries to change a card number
-	 * @throws UserStillBannedException When the new credit card number is not valid
+	 * @throws UserStillBannedException 
 	 */
 	public void changeCreditCard(String creditCard, RegisteredUser user) throws InvalidRolException, UserStillBannedException {
 		
@@ -1083,7 +1083,7 @@ public class App implements Serializable {
 	 * 
 	 * @param o Offer to be paid
 	 * @throws RestrictedUserException When a restricted user tries to pay that offer
-	 * @throws InvalidCardNumberException When the credit card number is not valid
+	 * @throws InvalidCardNumberException 
 	 */
 	public void payOffer(Offer o) throws RestrictedUserException, InvalidCardNumberException {
 		if(o.getRestrictedUsers().contains(loggedUser)){
@@ -1117,11 +1117,11 @@ public class App implements Serializable {
 	 * Method that pays a reservation
 	 * 
 	 * @param r Reservation to be paid
-	 * @throws NotTheReserverException  When the logged user is not the reserver
-	 * @throws InvalidCardNumberException  When the credit card number is not valid
-	 * @throws TimeIsUpException When the 5-day period to pay a reservation is up
-	 * @throws RestrictedUserException When a restricted user tries to pay a reservation
-	 * @throws CouldNotPayHostException When the host has an invalid credit card number
+	 * @throws NotTheReserverException 
+	 * @throws InvalidCardNumberException 
+	 * @throws TimeIsUpException 
+	 * @throws RestrictedUserException 
+	 * @throws CouldNotPayHostException 
 	 */
 	public void payReservation(Reservation r) throws NotTheReserverException, InvalidCardNumberException, TimeIsUpException, RestrictedUserException{
 
