@@ -112,7 +112,7 @@ public class RepliesWindowController implements ActionListener {
 				newWindow.setVisible(true);
 
 			} catch (NoRowSelectedException e) {
-				JOptionPane.showMessageDialog(null, "You must select an offer before clicking this button", "Warning",
+				JOptionPane.showMessageDialog(null, "You must select a comment before clicking this button", "Warning",
 						JOptionPane.WARNING_MESSAGE);
 				return;
 			}

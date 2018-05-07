@@ -7,16 +7,39 @@ import javax.swing.table.AbstractTableModel;
 import application.users.RegisteredUser;
 import exceptions.NoRowSelectedException;
 
+/**
+ * Table model for the tables used to present the users that are banned. It has two columns:
+ * <ul>
+ * <li>NIF</li>
+ * <li>Credit card number</li>
+ * </ul>
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class ChangeCardTableModel extends AbstractTableModel {
 	
 	/**
-	 * 
+	 * ID needed for serialization
 	 */
 	private static final long serialVersionUID = 3936695391075292789L;
+	/**
+	 * Names of the column titles
+	 */
 	private Object[] titles;
+	/**
+	 * All the contents of the table. Each offer divided in fields
+	 */
 	private Object[][] contents;
+	/**
+	 * Array of all the users that are represented in the table. Needed to return the selected one
+	 */
 	private RegisteredUser[] bannedUsersArray;
 	
+	/**
+	 * Constructor of the model
+	 * 
+	 * @param bannedUsers List of banned users to be presented
+	 */
 	public ChangeCardTableModel(List<RegisteredUser> bannedUsers) {
 		Object[] titles = {"User NIF", "Creditcard number"};
 		this.titles = titles;
@@ -38,19 +61,16 @@ public class ChangeCardTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		// TODO Auto-generated method stub
 		return this.titles.length;
 	}
 
 	@Override
 	public int getRowCount() {
-		// TODO Auto-generated method stub
 		return this.contents.length;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
 		return this.contents[rowIndex][columnIndex];
 	}
 	
@@ -64,6 +84,13 @@ public class ChangeCardTableModel extends AbstractTableModel {
 		return (String) this.titles[col];
 	}
 	
+	/**
+	 * Method that returns the user that is presented in an specific row
+	 * 
+	 * @param selectedRow Index of the row we want to return
+	 * @return Selected user
+	 * @throws NoRowSelectedException When no row is selected
+	 */
 	public RegisteredUser getRow(int selectedRow) throws NoRowSelectedException {
 		if (selectedRow >= this.bannedUsersArray.length || selectedRow < 0) {
 			throw new NoRowSelectedException();
@@ -72,6 +99,12 @@ public class ChangeCardTableModel extends AbstractTableModel {
 		}
 	}
 
+	/**
+	 * Method that manually removes a user from the table. It is used because it is
+	 * more efficient than building a whole new table
+	 * 
+	 * @param selectedUser User to be removed
+	 */
 	public void delete(RegisteredUser selectedUser) {
 		int index = 0;
 		
@@ -91,6 +124,12 @@ public class ChangeCardTableModel extends AbstractTableModel {
 		this.fireTableDataChanged();
 	}
 
+	/**
+	 * Method that changes the credit card that appears in the table of a specific user
+	 * 
+	 * @param nif NIF of the user
+	 * @param newCreditCard New credit card
+	 */
 	public void updateCCard(String nif, String newCreditCard) {
 		for (int i = 0; i < this.contents.length; i++) {
 			if (contents[i][0].equals(nif)) {
