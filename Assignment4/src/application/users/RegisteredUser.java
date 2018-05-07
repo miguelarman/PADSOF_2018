@@ -101,6 +101,11 @@ public abstract class RegisteredUser implements Serializable {
 		return name;
 	}
 	
+	/**
+	 * Getter method for the booked offers
+	 * 
+	 * @return List of the offers that have been booked by the user
+	 */
 	public List<Reservation> getReservedOffers(){
 		return this.reservedOffers;
 	}
@@ -191,6 +196,12 @@ public abstract class RegisteredUser implements Serializable {
 		return string;
 	}
 
+	/**
+	 * Method to check if the user has booked an offer
+	 * 
+	 * @param offer Offer to be checked
+	 * @return Boolean value representing if the offer has been booked by that user
+	 */
 	public boolean hasBooked(Offer offer) {
 				
 		for (Reservation r : this.reservedOffers) {

@@ -104,6 +104,15 @@ public class HolidayOffer extends Offer {
 		return string;
 	}
 
+	/**
+	 * Method used to modify both the starting date of the offer. It has the two to
+	 * differenciate from the method that modifies the starting date
+	 * 
+	 * @param startingDate New starting date
+	 * @param finishDate New finish date
+	 * @throws InvalidOfferStatusException When the offer cannot be modified because it is not pending for changes
+	 * @throws NotTheOwnerException When the logged user is not the creator of the offer
+	 */
 	public void modifyOffer(LocalDate startingDate, LocalDate finishDate) throws InvalidOfferStatusException, NotTheOwnerException {
 		this.modifyOffer(startingDate);
 		this.finishDate = finishDate;
