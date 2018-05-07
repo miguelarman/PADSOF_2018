@@ -134,6 +134,9 @@ public class MyOffersWindow extends JFrame {
 		model.addOfferToTable(createdOffer);
 	}
 
+	/**
+	 * Method that refreshes the status of the offers in the table
+	 */
 	public void refreshStatus() {
 		MyOffersTableModel model = (MyOffersTableModel) this.table.getModel();
 		model.refreshStatus();

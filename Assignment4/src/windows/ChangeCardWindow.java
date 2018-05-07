@@ -115,6 +115,12 @@ public class ChangeCardWindow extends JFrame {
 		model.delete(selectedUser);
 	}
 
+	/**
+	 * Method that updates the credit card of an user
+	 * 
+	 * @param selectedUser User to be modified
+	 * @param newCreditCard New credit card
+	 */
 	public void updateCCard(RegisteredUser selectedUser, String newCreditCard) {
 		ChangeCardTableModel model = (ChangeCardTableModel) this.table.getModel();
 		model.updateCCard(selectedUser.getNIF(), newCreditCard);
