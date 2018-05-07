@@ -50,7 +50,7 @@ public class RepliesWindowController implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getActionCommand().equals("Rate this comment")) {
 			
-			for(Opinion r: this.window.getComment().getComments()) {
+			for(Opinion r: this.window.getComment().getRatings()) {
 				if(r.getClass() == Rating.class) {
 					if(App.getLoggedUser().getNIF().equals(r.getCommenter().getNIF())) {
 						JOptionPane.showMessageDialog(null, "You can only rate a comment once",
