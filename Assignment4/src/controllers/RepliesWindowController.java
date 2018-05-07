@@ -71,6 +71,10 @@ public class RepliesWindowController implements ActionListener {
 			Comment c = this.window.getComment();
 			try {
 				c.rateComment(rating);
+
+				
+				JOptionPane.showMessageDialog(null, "Your rating has been added succesfully");
+				this.window.addRating(rating);
 			} catch (NoUserLoggedException e) {
 				JOptionPane.showMessageDialog(null, "Please log in before rating comments");
 			}
@@ -84,6 +88,9 @@ public class RepliesWindowController implements ActionListener {
 			Comment c = this.window.getComment();
 			try {
 				c.addReply(answer);
+				
+				JOptionPane.showMessageDialog(null, "Your reply has been added succesfully");
+				this.window.addReply(answer);
 			} catch (NoUserLoggedException e) {
 				JOptionPane.showMessageDialog(null, "Please log in before answering to comments", "Error", JOptionPane.ERROR_MESSAGE);
 			}
