@@ -8,23 +8,47 @@ import application.offer.Offer;
 import application.offer.OfferStatus;
 import exceptions.NoRowSelectedException;
 
+/**
+ * Table model for the tables used to present the offers from a specific user. It has six columns:
+ * <ul>
+ * <li>ZIP code</li>
+ * <li>Starting date</li>
+ * <li>Price</li>
+ * <li>Average rating</li>
+ * <li>Type of offer</li>
+ * <li>Satus of the offer</li>
+ * </ul>
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class MyOffersTableModel extends AbstractTableModel {
 
 	/**
-	 * 
+	 * ID needed for serialization
 	 */
 	private static final long serialVersionUID = -6080066385334434387L;
-	// In this example table data are attributes of the class
+	/**
+	 * Names of the column titles
+	 */
 	private Object[] titles;
+	/**
+	 * All the contents of the table. Each offer divided in fields
+	 */
 	private Object[][] contents;
+	/**
+	 * Array of all the offers that are represented in the table. Needed to return the selected one
+	 */
 	private Offer[] offersArray;
 
+	/**
+	 * Constructor of the model
+	 * 
+	 * @param offers List of offers to be presented
+	 */
 	public MyOffersTableModel(List<Offer> offers) {
-		// Create an array of column titles
 		Object[] titles = {"ZIP code", "Starting on", "Price", "Rating", "Offer type", "Status"};
 		this.titles = titles;
 
-		// Create a matrix of table contents
 		Object[][] contents = new Object[offers.size()][this.titles.length];
 		offersArray = new Offer[offers.size()];
 		
@@ -75,6 +99,13 @@ public class MyOffersTableModel extends AbstractTableModel {
 		return (String) this.titles[col];
 	}
 
+	/**
+	 * Method that returns the offer that is presented in an specific row
+	 * 
+	 * @param selectedRow Index of the row we want to return
+	 * @return Selected offer
+	 * @throws NoRowSelectedException When no row is selected
+	 */
 	public Offer getRow(int selectedRow) throws NoRowSelectedException {
 		if (selectedRow >= this.offersArray.length || selectedRow < 0) {
 			throw new NoRowSelectedException();
@@ -83,6 +114,12 @@ public class MyOffersTableModel extends AbstractTableModel {
 		}
 	}
 
+	/**
+	 * Method that manually removes an offer from the table. It is used because it
+	 * is more efficient than building a whole new table
+	 * 
+	 * @param offer Offer to be removed
+	 */
 	public void removeOffer(Offer offer) {
 		int index = 0;
 		
@@ -107,6 +144,12 @@ public class MyOffersTableModel extends AbstractTableModel {
 		this.fireTableDataChanged();
 	}
 
+	/**
+	 * Method that manually adds an offer to the table. It is used because it is
+	 * more efficient than building a whole new table
+	 * 
+	 * @param o Offer to be added
+	 */
 	public void addOfferToTable(Offer o) {
 		Object[][] newContents = new Object[this.contents.length + 1][this.titles.length];
 		Offer[] newOffersArray = new Offer[this.contents.length + 1];
@@ -139,6 +182,9 @@ public class MyOffersTableModel extends AbstractTableModel {
 		this.fireTableDataChanged();
 	}
 
+	/**
+	 * Method that automatically refreshes the status field of all the offers in the table
+	 */
 	public void refreshStatus() {
 		for (int i = 0; i < contents.length; i++) {
 			String strStatus;

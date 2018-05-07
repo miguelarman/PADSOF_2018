@@ -4,32 +4,48 @@ import java.util.HashMap;
 
 import javax.swing.table.AbstractTableModel;
 
-import application.offer.Offer;
-import exceptions.NoRowSelectedException;
-
+/**
+ * Table model for the tables used to present the characteristics of a house. It has two columns:
+ * <ul>
+ * <li>Characteristic</li>
+ * <li>Description</li>
+ * </ul>
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class HouseCharacteristicsTableModel extends AbstractTableModel {
 	
-//	private Object[][] characteristicsArray;
+	/**
+	 * ID needed for serialization
+	 */
+	private static final long serialVersionUID = 1044486726763898935L;
+	/**
+	 * Names of the column titles
+	 */
 	private Object[] titles;
+	/**
+	 * All the contents of the table. Each offer divided in fields
+	 */
 	private Object[][] contents;
 
+	/**
+	 * Constructor of the model
+	 * 
+	 * @param chs Map of characteristics to be presented
+	 */
 	public HouseCharacteristicsTableModel(HashMap<String, String> chs) {
-		// Create an array of column titles
-		// TODO
+		
 		Object[] titles = {"Characteristic", "Description"};
 		this.titles = titles;
 
-		// Create a matrix of table contents
 		Object[][] contents = new Object[chs.size()][2];
-//		characteristicsArray = new Object[chs.size()][2];
 		
 		int i = 0;
 		
-		for (String ch : chs.keySet()) { // TODO
+		for (String ch : chs.keySet()) {
 			Object[] characteristic = {ch, chs.get(ch)};
 
 			contents[i] = characteristic;
-//			characteristicsArray[i] = characteristic;
 			i++;
 		}
 		
@@ -61,6 +77,13 @@ public class HouseCharacteristicsTableModel extends AbstractTableModel {
 		return (String) this.titles[col];
 	}
 	
+	/**
+	 * Method that manually adds a characteristic to the table. It is used because
+	 * it is more efficient than building a whole new table
+	 * 
+	 * @param ch Characteristic to be added
+	 * @param de Description of the characteristic
+	 */
 	public void addCharacteristic(String ch, String de) {
 		Object[][] newContents = new Object[this.contents.length + 1][2];
 		
@@ -76,13 +99,4 @@ public class HouseCharacteristicsTableModel extends AbstractTableModel {
 		
 		this.fireTableDataChanged();
 	}
-
-	/*public Object[] getRow(int selectedRow) throws NoRowSelectedException {
-		if (selectedRow >= this.characteristicsArray.length || selectedRow < 0) {
-			throw new NoRowSelectedException();
-		} else {
-			return characteristicsArray[selectedRow];
-		}
-	}*/
-
 }

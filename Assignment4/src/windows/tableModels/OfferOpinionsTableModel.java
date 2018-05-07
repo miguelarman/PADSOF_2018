@@ -4,29 +4,54 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import application.offer.Offer;
 import application.opinion.*;
 import exceptions.NoRowSelectedException;
 
+/**
+ * Table model for the tables used to present the opinions of an offer. It has three columns:
+ * <ul>
+ * <li>Opinions</li>
+ * <li>Rating</li>
+ * <li>Author</li>
+ * </ul>
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class OfferOpinionsTableModel extends AbstractTableModel {
 
+	/**
+	 * ID needed for serialization
+	 */
+	private static final long serialVersionUID = 2992788647977565646L;
+	/**
+	 * Names of the column titles
+	 */
 	private Object[] titles;
+	/**
+	 * Array of all the opinions that are represented in the table. Needed to return the selected one
+	 */
 	private Opinion[] opinionsArray;
+	/**
+	 * All the contents of the table. Each opinion divided in fields
+	 */
 	private Object[][] contents;
 
+	/**
+	 * Constructor of the model
+	 * 
+	 * @param opinions List of opinions to be presented
+	 */
 	public OfferOpinionsTableModel(List<Opinion> opinions) {
-		// Create an array of column titles
-		// TODO
+		
 		Object[] titles = { "Opinion", "Rating", "Author" };
 		this.titles = titles;
 
-		// Create a matrix of table contents
 		Object[][] contents = new Object[opinions.size()][4];
 		opinionsArray = new Opinion[opinions.size()];
 
 		int i = 0;
 
-		for (Opinion o : opinions) { // TODO
+		for (Opinion o : opinions) {
 
 			if (o.getClass() == Comment.class) {
 				Comment c = (Comment) o;
@@ -71,6 +96,13 @@ public class OfferOpinionsTableModel extends AbstractTableModel {
 		return (String) this.titles[col];
 	}
 
+	/**
+	 * Method that returns the opinion that is presented in an specific row
+	 * 
+	 * @param selectedRow Index of the row we want to return
+	 * @return Selected Opinion
+	 * @throws NoRowSelectedException When no row is selected
+	 */
 	public Opinion getRow(int selectedRow) throws NoRowSelectedException {
 		if (selectedRow >= this.opinionsArray.length || selectedRow < 0) {
 			throw new NoRowSelectedException();
@@ -79,6 +111,12 @@ public class OfferOpinionsTableModel extends AbstractTableModel {
 		}
 	}
 
+	/**
+	 * Method that manually adds an opinion to the table. It is used because it is
+	 * more efficient than building a whole new table
+	 * 
+	 * @param o Opinion to be added
+	 */
 	public void addOpinion(Opinion o) {
 
 		Object[][] newContents = new Object[this.contents.length + 1][this.titles.length];
