@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -20,25 +19,63 @@ import application.dates.ModifiableDate;
 import application.users.RegisteredUser;
 import controllers.GoBackController;
 import controllers.SearchBoxController;
+import controllers.SearchController;
 
-
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class SearchWindow extends JFrame {
 	
 	/**
-	 * 
-	 */
+	* ID needed for the class to be Serializable
+	*/
 	private static final long serialVersionUID = 5035536669428890618L;
+	
+	/**
+	 * JComboBox that shows the types of searches
+	 */
 	final private JComboBox<String> options;
 	
+	/**
+	 * Button to search
+	 */
 	private JButton searchButton;
+	
+	/**
+	 * Button to go to the previous window
+	 */
 	private JButton goBackButton;
 	
+	/**
+	 * Field to introduce a ZIP code to search for
+	 */
 	final private JTextField zipCodeField;
+	
+	/**
+	 * JComboBox that shows the types of offers
+	 */
 	final private JComboBox<String> offerTypeBox;
+	
+	/**
+	 * Field to introduce a average rating to search for
+	 */
 	final private JTextField avgRatingField;
+	
+	/**
+	 * Calendar to introduce the initial date to search for
+	 */
 	private JCalendar iniDate;
+	
+	/**
+	 * Calendar to introduce the ending date to search for
+	 */
 	private JCalendar endDate;
 	
+	/**
+	 * Constructor of the class SearchWindow
+	 * @param user User that is logged
+	 */
 	public SearchWindow(RegisteredUser user) {
 		super("Search offers");
 		
@@ -105,23 +142,42 @@ public class SearchWindow extends JFrame {
 		this.setVisible(false);
 	}
 
+	/**
+	 * Method to set up the controller for the options comboBox
+	 * @param s Controller that contains an itemListener for the options comboBox
+	 */
 	public void setBoxController(SearchBoxController s) {
 		options.addItemListener(s);
 	}
 	
-	public void setSearchController(ActionListener b) {
+	/**
+	 * Method that assigns the searchButton with the SearchController
+	 * @param b Controller that allows you to do the needed functionality
+	 */
+	public void setSearchController(SearchController b) {
 		searchButton.addActionListener(b);
 		
 	}
 	
+	/**
+	 * Method that assigns the goBackButton with the goBackController
+	 * @param g Controller that allows you to go to the previous window
+	 */
 	public void setGoBackController(GoBackController g) {
 		this.goBackButton.addActionListener(g);
 	}
 	
+	/**
+	 * Method that returns the current selected option in options
+	 * @return Selected type of search
+	 */
 	public String getCurrentBoxOption() {
 		return (String)this.options.getSelectedItem();
 	}
 	
+	/**
+	 * Method that puts visible the zipCodeField and hides all the other ones
+	 */
 	public void setVisibleZipCodeField() {
 		this.offerTypeBox.setVisible(false);
 		this.avgRatingField.setVisible(false);
@@ -130,6 +186,9 @@ public class SearchWindow extends JFrame {
 		this.zipCodeField.setVisible(true);
 	}
 	
+	/**
+	 * Method that puts visible the offerTypeBox and hides all the other ones
+	 */
 	public void setVisibleOfferTypeBox() {
 		this.zipCodeField.setVisible(false);
 		this.avgRatingField.setVisible(false);
@@ -138,6 +197,9 @@ public class SearchWindow extends JFrame {
 		this.offerTypeBox.setVisible(true);
 	}
 	
+	/**
+	 * Method that puts visible iniDate and endDate and hides all the other ones
+	 */
 	public void setVisibleDates() {
 		this.zipCodeField.setVisible(false);
 		this.avgRatingField.setVisible(false);
@@ -147,6 +209,9 @@ public class SearchWindow extends JFrame {
 
 	}
 	
+	/**
+	 * Method that puts visible the avgRatingField and hides all the other ones
+	 */
 	public void setVisibleRating() {
 		this.zipCodeField.setVisible(false);
 		this.offerTypeBox.setVisible(false);
@@ -156,6 +221,9 @@ public class SearchWindow extends JFrame {
 
 	}
 	
+	/**
+	 * Method that hides all the fields
+	 */
 	public void hideAll() {
 		this.zipCodeField.setVisible(false);
 		this.avgRatingField.setVisible(false);
@@ -164,26 +232,49 @@ public class SearchWindow extends JFrame {
 		this.offerTypeBox.setVisible(false);
 	}
 	
+	/**
+	 * Getter method for the offerTypeBox
+	 * @return offerTypeBox
+	 */
 	public JComboBox<String> getOfferTypeBox() {
 		return this.offerTypeBox;
 	}
 	
+	/**
+	 * Getter method for the zipCodeField
+	 * @return zipCodeField
+	 */
 	public JTextField getZipCodeField() {
 		return this.zipCodeField;
 	}
 	
+	/**
+	 * Getter method for the iniDate
+	 * @return iniDate
+	 */
 	public JCalendar getIniDate() {
 		return this.iniDate;
 	}
 	
+	/**
+	 * Getter method for the endDate
+	 * @return endDate
+	 */
 	public JCalendar getEndDate() {
 		return this.endDate;
 	}
 	
+	/**
+	 * Getter method for the avgRatingField
+	 * @return avgRatingField
+	 */
 	public JTextField getAvgRatingField() {
 		return this.avgRatingField;
 	}
 	
+	/**
+	 * Method that prepares the visibility of all the elements when the window is showed for the first time
+	 */
 	public void setUp() {
 		this.setVisible(true);
 		iniDate.setVisible(false);

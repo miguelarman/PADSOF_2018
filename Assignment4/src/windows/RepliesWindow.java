@@ -19,21 +19,61 @@ import controllers.RepliesWindowController;
 import exceptions.NoRowSelectedException;
 import windows.tableModels.OfferOpinionsTableModel;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class RepliesWindow extends JFrame {
 
 	/**
-	 * 
-	 */
+	* ID needed for the class to be Serializable
+	*/
 	private static final long serialVersionUID = -8771376063056966740L;
+	
+	/**
+	 * Field to introduce a comment to a comment
+	 */
 	private JTextField comment;
+	
+	/**
+	 * Field to introduce a rating to a comment
+	 */
 	private JTextField rating;
+	
+	/**
+	 * Button to add a rating to a comment
+	 */
 	private JButton addRating;
+	
+	/**
+	 * Button to add a reply to a comment
+	 */
 	private JButton addReply;
+	
+	/**
+	 * Button to view the replies to a comment
+	 */
 	private JButton viewReplies;
+	
+	/**
+	 * Model to show the replies to a comment
+	 */
 	private OfferOpinionsTableModel dataModel;
+	
+	/**
+	 * Structure to deploy the replies to a comment
+	 */
 	private JTable table;
+	
+	/**
+	 * Comment whose replies are displayed on screen
+	 */
 	private Comment opinion;
 
+	/**
+	 * Constructor of the class RepliesWindow
+	 * @param opinion Comment displayed on screen
+	 */
 	public RepliesWindow(Comment opinion) {
 		
 		super("Replies");
@@ -82,35 +122,64 @@ public class RepliesWindow extends JFrame {
 		this.setVisible(false);
 	}
 
+	/**
+	 * Method that assigns the addRating, addReply and viewReplies with the RepliesWindowController
+	 * @param r Controller that allows you to do the needed functionality
+	 */
 	public void setController(RepliesWindowController r) {
 		this.addRating.addActionListener(r);
 		this.addReply.addActionListener(r);
 		this.viewReplies.addActionListener(r);
 	}
 
+	/**
+	 * Method that gives you the selected row of the table
+	 * @return The selected opinion in the table
+	 * @throws NoRowSelectedException When no row has been selected
+	 */
 	public Opinion getSelection() throws NoRowSelectedException {
 		int selectedRow = this.table.getSelectedRow();
 		
 		return this.dataModel.getRow(selectedRow);
 	}
 
+	/**
+	 * Getter method for the comment
+	 * @return The comment whose replies are displayed on screen
+	 */
 	public Comment getComment() {
 		return this.opinion;
 	}
 
+	/**
+	 * Getter method for the text in the comment field
+	 * @return The reply that is being introduced
+	 */
 	public String getWrittenComment() {
 		return this.comment.getText();
 	}
 
+	/**
+	 * Getter method for the text in the rating field
+	 * @return The rating that is being introduced
+	 */
 	public String getWrittenRating() {
 		return this.rating.getText();
 	}
 
+	/**
+	 * Method to add a rating to the table
+	 * @param r Rating to be added
+	 */
 	public void addRating(Double r) {
 		OfferOpinionsTableModel model = (OfferOpinionsTableModel)table.getModel();
 		model.addOpinion(new Rating(r));
 	}
 
+	/**
+	 * Method to add a comment to the table
+	 * @param answer Comment to be added
+	 */
 	public void addReply(String answer) {
 		OfferOpinionsTableModel model = (OfferOpinionsTableModel)table.getModel();
 		model.addOpinion(new Comment(answer));
