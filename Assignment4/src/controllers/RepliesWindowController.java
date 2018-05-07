@@ -1,6 +1,5 @@
 package controllers;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,11 +13,34 @@ import exceptions.NoRowSelectedException;
 import exceptions.NoUserLoggedException;
 import windows.RepliesWindow;
 
+/**
+ * Controller for RepliesWindow. When the user clicks on a button, this
+ * controller performs one of this actions:
+ * <ul>
+ * <li>Add a reply to the comment</li>
+ * <li>Add a rating to the comment</li>
+ * </ul>
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez
+ *         (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class RepliesWindowController implements ActionListener {
 
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
+	/**
+	 * View field for the controller. Contains the RepliesWindow
+	 */
 	private RepliesWindow window;
 
+	/**
+	 * Constructor of the RepliesWindowController
+	 * 
+	 * @param app Model for the controller
+	 * @param w View for the controller
+	 */
 	public RepliesWindowController(App app, RepliesWindow w) {
 		this.app = app;
 		this.window = w;
@@ -84,7 +106,6 @@ public class RepliesWindowController implements ActionListener {
 				// Show the next window
 				RepliesWindow newWindow = new RepliesWindow((Comment) selectedOpinion);
 				RepliesWindowController r = new RepliesWindowController(app, newWindow);
-				GoBackController g = new GoBackController(this.window, newWindow);
 				newWindow.setController(r);
 				newWindow.setVisible(true);
 
