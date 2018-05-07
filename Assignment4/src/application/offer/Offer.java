@@ -60,6 +60,7 @@ public abstract class Offer implements Serializable{
 	 * List of suggestions made by the admins
 	 */
 	private List<String> suggestedChanges;
+	
 	/**
 	 * All the opinions about the offer
 	 */
