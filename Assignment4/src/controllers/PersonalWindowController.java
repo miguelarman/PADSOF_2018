@@ -9,19 +9,55 @@ import application.offer.House;
 import application.users.Host;
 import application.users.MultiRoleUser;
 import application.users.RegisteredUser.Role;
-import windows.BookedOffersWindow;
-import windows.ChangeCardWindow;
-import windows.MyHousesWindow;
-import windows.MyOffersWindow;
-import windows.PendingOffersWindow;
-import windows.PersonalWindow;
-import windows.SearchWindow;
+import windows.*;
 
+/**
+ * Controller for the PersonalWindow. Can perform several actions:
+ * <ul>
+ * <li>Personal window:
+ * <ul>
+ * <li>Search offers in the system</li>
+ * </ul>
+ * </li>
+ * <li>Guest window:
+ * <ul>
+ * <li>View booked offers of the user</li>
+ * </ul>
+ * </li>
+ * <li>Host window:
+ * <ul>
+ * <li>View offers of the user</li>
+ * <li>View houses of the user</li>
+ * </ul>
+ * </li>
+ * <li>Admin window:
+ * <ul>
+ * <li>Review pending offers (approve, deny, suggest changes...)</li>
+ * <li>Modify credit card of banned users</li>
+ * </ul>
+ * </li>
+ * </ul>
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez
+ *         (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class PersonalWindowController implements ActionListener {
 
+	/**
+	 * View field for the controller. Contains the PersonalWindow
+	 */
 	private PersonalWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
 
+	/**
+	 * Constructor of the PersonalWindowController
+	 * 
+	 * @param app Model for the controller
+	 * @param w View for the controller
+	 */
 	public PersonalWindowController(App app, PersonalWindow w) {
 		this.window = w;
 		this.app = app;

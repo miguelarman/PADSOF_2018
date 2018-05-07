@@ -11,18 +11,32 @@ import application.offer.House;
 import application.users.Host;
 import application.users.MultiRoleUser;
 import application.users.RegisteredUser.Role;
-import exceptions.InvalidRolException;
-import exceptions.NoRowSelectedException;
-import exceptions.NoUserLoggedException;
-import exceptions.NotTheOwnerException;
+import exceptions.*;
 import windows.HouseWindow;
 import windows.MyHousesWindow;
 
+/**
+ * Controller for the MyHousesWindow. Wait for the user to click a button trying to view a house or add a new house
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class MyHousesController implements ActionListener {
 
+	/**
+	 * View field for the controller. Contains the MyHousesWindow
+	 */
 	private MyHousesWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
 
+	/**
+	 * Constructor of the MyHousesController
+	 * 
+	 * @param app Model for the controller
+	 * @param window View for the controller
+	 */
 	public MyHousesController(App app, MyHousesWindow window) {
 		this.window = window;
 		this.app = app;

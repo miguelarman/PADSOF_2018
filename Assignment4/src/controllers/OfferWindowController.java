@@ -2,9 +2,7 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
@@ -12,52 +10,89 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JCalendar;
 
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+
 import application.App;
 import application.dates.ModifiableDate;
-import application.offer.HolidayOffer;
-import application.offer.LivingOffer;
-import application.offer.Offer;
-import application.offer.OfferStatus;
-import application.offer.OfferType;
-import application.offer.Reservation;
-import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import exceptions.InvalidOfferStatusException;
-import exceptions.InvalidRolException;
-import exceptions.NotTheOwnerException;
-import exceptions.NotTheReserverException;
-import exceptions.RestrictedUserException;
-import exceptions.TimeIsUpException;
-import windows.HouseWindow;
-import windows.LoginWindow;
-import windows.MyOffersWindow;
-import windows.OfferOpinionsWindow;
-import windows.OfferWindow;
-import windows.SearchResultWindow;
-import windows.SuggestionsWindow;
+import application.offer.*;
+import exceptions.*;
+import windows.*;
 
+/**
+ * Controller for the OfferWindow. This controller waits for the user to click
+ * any buttons regarding actions to be applied to the offer:
+ * <ul>
+ * <li><b>View house: </b> The controller creates a window to visualize the
+ * content of that house</li>
+ * <li><b>View opinions: </b> The controller creates a window to visualize the
+ * opinions of this offer</li>
+ * <li><b>Book this offer: </b> The controller books this offer</li>
+ * <li><b>Purchase this offer: </b> The controller purchases this offer. Is the
+ * user is banned, it automatically logs out</li>
+ * <li><b>View suggestions: </b> The controller creates a window to visualize
+ * the suggestions for the offer to be approved</li>
+ * <li><b>Modify offer: </b> The controller creates a dialog to modify the
+ * offer</li>
+ * </ul>
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez
+ *         (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class OfferWindowController implements ActionListener {
-
+	
+	/**
+	 * View field for the controller. Contains the OfferWindow
+	 */
 	private OfferWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
+	/**
+	 * Previous window when accesing from the MyOffersWindow. Used to refresh the table
+	 */
 	private MyOffersWindow previousMyOffersWindow;
+	/**
+	 * Previous window when accesing from the SearchResultWindow. Used to refresh the table
+	 */
 	private SearchResultWindow previousSearchWindow;
 	
+	/**
+	 * Constructor of the OfferWindowController class when accessing from MyOffersWindow
+	 * 
+	 * @param app Model for the controller
+	 * @param window View for the controller
+	 * @param mow Previous window
+	 */
 	public OfferWindowController(App app, OfferWindow window, MyOffersWindow mow) {
 		this.app = app;
 		this.window = window;
 		this.previousMyOffersWindow = mow;
 	}
 	
+	/**
+	 * Constructor of the OfferWindowController class when accessing from SearchResultWindow
+	 * 
+	 * @param app Model for the controller
+	 * @param window View for the controller
+	 * @param srw Previous window
+	 */
 	public OfferWindowController(App app, OfferWindow window, SearchResultWindow srw) {
 		this.app = app;
 		this.window = window;
 		this.previousSearchWindow = srw;
 	}
 	
+	/**
+	 * General constructor of this class, used mainly for testing purposes
+	 * 
+	 * @param app Model for the controller
+	 * @param window View for the controller
+	 */
 	public OfferWindowController(App app, OfferWindow window) {
 		this(app, window, (SearchResultWindow)null);
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		switch(arg0.getActionCommand()) {

@@ -16,11 +16,28 @@ import exceptions.NoUserLoggedException;
 import windows.SearchResultWindow;
 import windows.SearchWindow;
 
+/**
+ * Controller for the SearchWindow. Searches for offers in the system according to the type of search selected and the values the user has written
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class SearchController implements ActionListener {
 	
+	/**
+	 * View field for the controller. Contains the OfferWindow
+	 */
 	SearchWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	App app;
 	
+	/**
+	 * Constructor of the SearchController
+	 * 
+	 * @param a Model for the controller
+	 * @param w View for the controller
+	 */
 	public SearchController(App a, SearchWindow w) {
 		window = w;
 		app = a;

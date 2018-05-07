@@ -6,17 +6,32 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import application.App;
-import exceptions.AUserIsAlreadyLoggedException;
-import exceptions.IncorrectPasswordException;
-import exceptions.UnexistentUserException;
-import exceptions.UserIsBannedException;
+import exceptions.*;
 import windows.LoginWindow;
 import windows.PersonalWindow;
 
+/**
+ * Controller for LoginWindow. Waits for the user to try to log in and, then calls the login method in the app.
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class LoginController implements ActionListener {
+	
+	/**
+	 * View field for the controller. Contains the LoginWindow
+	 */
 	private LoginWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
 	
+	/**
+	 * Constructor of the LoginController class
+	 * 
+	 * @param app Model for the controller
+	 * @param w View for the controller
+	 */
 	public LoginController(App app, LoginWindow w) {
 		this.window = w;
 		this.app = app;

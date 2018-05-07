@@ -7,29 +7,52 @@ import javax.swing.JOptionPane;
 
 import application.App;
 import application.offer.Offer;
-import application.opinion.Comment;
-import application.opinion.Opinion;
-import application.opinion.Rating;
+import application.opinion.*;
 import exceptions.NoRowSelectedException;
 import exceptions.NoUserLoggedException;
-import windows.OfferOpinionsWindow;
-import windows.OfferWindow;
-import windows.RepliesWindow;
+import windows.*;
 
+/**
+ * Controller for the OfferOpinionsWindow. This controller waits until the user
+ * wants to reply or rate an offer, or view its replies
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez
+ *         (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class OfferOpinionsWindowController implements ActionListener {
 
+	/**
+	 * View field for the controller. Contains the OfferOpinionsWindow
+	 */
 	private OfferOpinionsWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
+	/**
+	 * Offer which is being displayed on the window. Needed to perform operations
+	 */
 	private Offer offer;
+	/**
+	 * Previous window. Needed to refresh its table
+	 */
 	private OfferWindow previousWindow;
 
+	/**
+	 * Constructor of the OfferOpinionsWindowController class
+	 * 
+	 * @param app Model for the controller
+	 * @param w View for the controller
+	 * @param o Displayed offer
+	 * @param ow Previous window
+	 */
 	public OfferOpinionsWindowController(App app, OfferOpinionsWindow w, Offer o, OfferWindow ow) {
 		this.app = app;
 		this.window = w;
 		this.offer = o;
 		this.previousWindow = ow;
 	}
-
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
@@ -91,7 +114,6 @@ public class OfferOpinionsWindowController implements ActionListener {
 				// Show the next window
 				RepliesWindow newWindow = new RepliesWindow((Comment)selectedOpinion);
 				RepliesWindowController r = new RepliesWindowController(app, newWindow);
-				GoBackController g = new GoBackController(this.window, newWindow);
 				newWindow.setController(r);
 				newWindow.setVisible(true);
 				this.window.setVisible(false);

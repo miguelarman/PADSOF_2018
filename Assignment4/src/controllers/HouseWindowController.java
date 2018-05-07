@@ -11,12 +11,34 @@ import application.offer.House;
 import exceptions.DuplicateCharacteristicException;
 import windows.HouseWindow;
 
+/**
+ * Controller for the HouseWindow. Listens for the user to try to add a characteristic to the house
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class HouseWindowController implements ActionListener {
 
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
+	@SuppressWarnings("unused")
 	private App app;
+	/**
+	 * View field for the controller. Contains the HouseWindow
+	 */
 	private HouseWindow window;
+	/**
+	 * House that is displayed. Needed to add characteristics
+	 */
 	private House house;
 
+	/**
+	 * Constructor of the HouseWindowController
+	 * 
+	 * @param app Model for the controller
+	 * @param window View for the controller
+	 * @param house House to be displayed
+	 */
 	public HouseWindowController(App app, HouseWindow window, House house) {
 		this.app = app;
 		this.window = window;

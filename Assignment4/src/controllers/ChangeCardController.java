@@ -8,20 +8,32 @@ import javax.swing.JTextField;
 
 import application.App;
 import application.users.RegisteredUser;
-import exceptions.InvalidRolException;
-import exceptions.NoRowSelectedException;
-import exceptions.UserStillBannedException;
+import exceptions.*;
 import windows.ChangeCardWindow;
 
 /**
+ * Controller for the ChangeCardWindow. Listens for the admin to modify a creditcard number
+ * 
  * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
  *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
  */
 public class ChangeCardController implements ActionListener {
 	
+	/**
+	 * View field for the controller. Contains the ChangeCardWindow
+	 */
 	private ChangeCardWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
 	
+	/**
+	 * Constructor of the ChangeCardController
+	 * 
+	 * @param app Model for the controller
+	 * @param w View for the controller
+	 */
 	public ChangeCardController(App app, ChangeCardWindow w) {
 		this.window = w;
 		this.app = app;

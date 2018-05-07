@@ -31,11 +31,30 @@ import exceptions.OfferAlreadyCreatedException;
 import windows.MyOffersWindow;
 import windows.OfferWindow;
 
+/**
+ * Controller for the MyOffersWindow. This controller waits for the user to
+ * click on buttons to view or create offers
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez
+ *         (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class MyOffersController implements ActionListener {
 
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
+	/**
+	 * View field for the controller. Contains the MyOffersWindow
+	 */
 	private MyOffersWindow window;
 
+	/**
+	 * Constructor of the MyOffersController class
+	 * 
+	 * @param app Model for the controller
+	 * @param w View for the controller
+	 */
 	public MyOffersController(App app, MyOffersWindow w) {
 		this.app = app;
 		this.window = w;

@@ -11,11 +11,28 @@ import exceptions.NoRowSelectedException;
 import windows.OfferWindow;
 import windows.SearchResultWindow;
 
+/**
+ * Controller for the SearchResultWindow. When the user selects an offer and clicks the button, this controller opens a new window to visualize it
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class SearchResultController implements ActionListener {
 	
+	/**
+	 * View field for the controller. Contains the SearchResultWindow
+	 */
 	private SearchResultWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
 
+	/**
+	 * Constructor of the SearchResultController
+	 * 
+	 * @param app Model for the controller
+	 * @param w View for the controller
+	 */
 	public SearchResultController(App app, SearchResultWindow w) {
 		this.window = w;
 		this.app = app;

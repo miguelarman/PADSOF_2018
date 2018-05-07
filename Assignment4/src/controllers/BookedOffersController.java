@@ -4,28 +4,44 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 import application.App;
 import application.offer.Offer;
-import application.users.RegisteredUser;
-import es.uam.eps.padsof.telecard.InvalidCardNumberException;
-import exceptions.InvalidRolException;
-import exceptions.NoRowSelectedException;
-import exceptions.NotTheReserverException;
-import exceptions.TimeIsUpException;
+import exceptions.*;
 import windows.BookedOffersWindow;
 import windows.OfferWindow;
 
+import es.uam.eps.padsof.telecard.InvalidCardNumberException;
+
+
+/**
+ * Controller for the BookedOffersWindow. Waits for the user to click buttons to either view an offer or purchase a reservation.
+ *
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) Alberto Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class BookedOffersController implements ActionListener {
 
+	/**
+	 * View field for the controller. Contains the BookedOffersWindow
+	 */
 	private BookedOffersWindow window;
+	/**
+	 * Model field for the controller. Contains our app in its current state
+	 */
 	private App app;
 	
+	/**
+	 * Constructor of the BookedOffersController
+	 * 
+	 * @param app Model for the controller
+	 * @param window View for the controller
+	 */
 	public BookedOffersController(App app, BookedOffersWindow window) {
 		this.window = window;
 		this.app = app;
 	}
+	
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Offer selectedOffer;
