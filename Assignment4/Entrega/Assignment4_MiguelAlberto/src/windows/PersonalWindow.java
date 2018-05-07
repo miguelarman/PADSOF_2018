@@ -214,7 +214,7 @@ public class PersonalWindow extends JFrame {
 	
 	/**
 	 * Method that assigns all the buttons to the PersonalWindowController
-	 * @param c
+	 * @param c Controller that allows you to do the needed functionality
 	 */
 	public void setController(PersonalWindowController c) {
 		this.searchButton.addActionListener(c);
