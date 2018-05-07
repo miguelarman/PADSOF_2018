@@ -107,8 +107,9 @@ public class Reservation implements Serializable{
 	 * @throws InvalidCardNumberException When the credit card is not valid
 	 * @throws CouldNotPayHostException When the app could not pay host
 	 * @throws TimeIsUpException When the five-day period to pay a reservation has passed
+	 * @throws RestrictedUserException 
 	 */
-	public void payReservation() throws NotTheReserverException, InvalidCardNumberException, CouldNotPayHostException, TimeIsUpException {
+	public void payReservation() throws NotTheReserverException, InvalidCardNumberException, CouldNotPayHostException, TimeIsUpException, RestrictedUserException {
 
 		LocalDate changesDate = getBookingDate();
 		LocalDate currentDate = ModifiableDate.getModifiableDate();
@@ -120,6 +121,13 @@ public class Reservation implements Serializable{
 		if (!this.client.equals(App.getLoggedUser())) {
 			throw new NotTheReserverException(App.getLoggedUser());
 		} else {
+			
+			for (RegisteredUser u : this.getBookedOffer().getRestrictedUsers()) {
+				if (u.getNIF().equals(App.getLoggedUser().getNIF())) {
+					throw new RestrictedUserException(u.getNIF());
+				}
+			}
+			
 			try {
 				this.bookedOffer.payOffer();
 			} catch (NoUserLoggedException e) {

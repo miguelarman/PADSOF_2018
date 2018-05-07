@@ -145,8 +145,6 @@ public class PersonalWindow extends JFrame {
 		
 		personalPanel.add(searchLabel); personalPanel.add(searchButton);
 		
-		// TODO JLabel personalIcon = new JLabel(); personalIcon.setIcon(new ImageIcon("icons/personalZoneIcon.png")); personalPanel.add(personalIcon, BorderLayout.EAST);
-		
 		pestanias.addTab("Personal zone", null, personalPanel);
 		
 		// We add panels depending on the user's role
@@ -158,9 +156,7 @@ public class PersonalWindow extends JFrame {
 			bookedOffersButton = new JButton("Booked offers");
 			
 			guestPanel.add(bookedOffersLabel); guestPanel.add(bookedOffersButton);
-			
-			// TODO JLabel icon = new JLabel(); icon.setIcon(new ImageIcon("icons/guestPersonalZoneIcon.png")); guestPanel.add(icon, BorderLayout.EAST);
-			
+						
 			pestanias.addTab("Guest zone", null, guestPanel);
 		}
 		
@@ -181,9 +177,7 @@ public class PersonalWindow extends JFrame {
 			bottomPanel.add(housesLabel); bottomPanel.add(housesButton);
 			
 			hostPanel.add(topPanel); hostPanel.add(bottomPanel);
-			
-			// TODO JLabel icon = new JLabel(); icon.setIcon(new ImageIcon("icons/hostPersonalZoneIcon.png")); hostPanel.add(icon, BorderLayout.EAST);
-			
+						
 			pestanias.addTab("Host zone", null, hostPanel);
 		}
 		
@@ -198,9 +192,7 @@ public class PersonalWindow extends JFrame {
 			
 			adminPanel.add(pendingLabel); adminPanel.add(pendingButton);
 			adminPanel.add(creditCardLabel); adminPanel.add(creditCardButton);
-			
-			// TODO JLabel icon = new JLabel(); icon.setIcon(new ImageIcon("icons/adminPersonalZoneIcon.png")); adminPanel.add(icon, BorderLayout.EAST);
-			
+						
 			pestanias.addTab("Admin zone", null, adminPanel);
 		}
 

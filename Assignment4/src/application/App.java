@@ -656,6 +656,20 @@ public class App implements Serializable {
 					
 					if (currentDate.minusDays(5).isEqual(bookingDate) || currentDate.minusDays(5).isAfter(bookingDate)) { // User has exceeded 5 days without paying
 						iterator2.remove();
+						r.getBookedOffer().getRestrictedUsers().add(user);
+						r.getBookedOffer().modifyOffer(OfferStatus.APPROVED);
+					}
+				}
+			} else if (user.getRole() == RegisteredUser.Role.MULTIROLE) {
+				for (Iterator<Reservation> iterator2 = ((MultiRoleUser) user).getReservedOffers().iterator(); iterator2.hasNext(); ) {
+					Reservation r = iterator2.next();
+					LocalDate bookingDate = r.getBookingDate();
+					LocalDate currentDate = App.getCurrentDate();
+					
+					if (currentDate.minusDays(5).isEqual(bookingDate) || currentDate.minusDays(5).isAfter(bookingDate)) { // User has exceeded 5 days without paying
+						iterator2.remove();
+						r.getBookedOffer().getRestrictedUsers().add(user);
+						r.getBookedOffer().modifyOffer(OfferStatus.APPROVED);
 					}
 				}
 			}
@@ -1106,9 +1120,10 @@ public class App implements Serializable {
 	 * @throws NotTheReserverException 
 	 * @throws InvalidCardNumberException 
 	 * @throws TimeIsUpException 
+	 * @throws RestrictedUserException 
 	 * @throws CouldNotPayHostException 
 	 */
-	public void payReservation(Reservation r) throws NotTheReserverException, InvalidCardNumberException, TimeIsUpException{
+	public void payReservation(Reservation r) throws NotTheReserverException, InvalidCardNumberException, TimeIsUpException, RestrictedUserException{
 
 		try {
 			r.payReservation();

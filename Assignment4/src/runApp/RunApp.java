@@ -1,6 +1,7 @@
 package runApp;
 
 import application.App;
+import application.dates.ModifiableDate;
 import controllers.LoginController;
 import windows.LoginWindow;
 
@@ -15,6 +16,8 @@ public class RunApp {
 	 * @param args Arguments received by the main
 	 */
 	public static void main(String[] args) {
+//		ModifiableDate.plusDays(10);
+		
 		App app = App.openApp();
 		
 		LoginWindow w = new LoginWindow();

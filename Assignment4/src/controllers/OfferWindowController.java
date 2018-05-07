@@ -164,6 +164,8 @@ public class OfferWindowController implements ActionListener {
 						} catch (TimeIsUpException e1) {
 							JOptionPane.showMessageDialog(null, "The 5-day period to pay this offer has finished.\nYou cannot book or pay this offer again", "Error", JOptionPane.ERROR_MESSAGE);
 							e1.printStackTrace();
+						} catch (RestrictedUserException e) {
+							JOptionPane.showMessageDialog(null, "You cannot purchase this offer", "Error", JOptionPane.ERROR_MESSAGE);
 						}
 						
 					} else {
@@ -174,7 +176,7 @@ public class OfferWindowController implements ActionListener {
 			}
 			Offer selectedOffer = this.window.getOffer();
 
-			Object[] content = { "This operation will cost" + selectedOffer.getAmount() + "\n" + "The operation will be executed with the creditcard " + App.getLoggedUser().getCreditCard() + "\n" + "Do you want to buy the offer?"};
+			Object[] content = { "This operation will cost " + selectedOffer.getAmount() + "\n" + "The operation will be executed with the creditcard " + App.getLoggedUser().getCreditCard() + "\n" + "Do you want to buy the offer?"};
 			
 			int option = JOptionPane.showConfirmDialog(null, content, "Payment", JOptionPane.OK_CANCEL_OPTION);
 			if (option == JOptionPane.OK_OPTION) {
@@ -202,7 +204,7 @@ public class OfferWindowController implements ActionListener {
 					newWindow2.setVisible(true);
 					JOptionPane.showMessageDialog(null, "Your credit card number was not valid. You are now banned from the system", "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (RestrictedUserException e) {
-					JOptionPane.showMessageDialog(null, "You cannot contract this offer", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "You cannot purchase this offer", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			} else {

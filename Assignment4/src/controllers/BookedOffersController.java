@@ -85,11 +85,12 @@ public class BookedOffersController implements ActionListener {
 					} catch (InvalidCardNumberException e1) {
 						JOptionPane.showMessageDialog(null, "Your credit card number was not valid. You are now banned from the system", "Error", JOptionPane.ERROR_MESSAGE);
 					} catch (NotTheReserverException e1) {
-						// TODO A ver que se ve al saltar estas excepciones
 						e1.printStackTrace();
 					} catch (TimeIsUpException e1) {
 						JOptionPane.showMessageDialog(null, "The 5-day period to pay this offer has finished.\nYou cannot book or pay this offer again", "Error", JOptionPane.ERROR_MESSAGE);
 						e1.printStackTrace();
+					} catch (RestrictedUserException e1) {
+						JOptionPane.showMessageDialog(null, "You cannot pay this offer", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					
 				} else {
