@@ -107,7 +107,7 @@ public class Reservation implements Serializable{
 	 * @throws InvalidCardNumberException When the credit card is not valid
 	 * @throws CouldNotPayHostException When the app could not pay host
 	 * @throws TimeIsUpException When the five-day period to pay a reservation has passed
-	 * @throws RestrictedUserException 
+	 * @throws RestrictedUserException When the user is restricted on this offer
 	 */
 	public void payReservation() throws NotTheReserverException, InvalidCardNumberException, CouldNotPayHostException, TimeIsUpException, RestrictedUserException {
 
