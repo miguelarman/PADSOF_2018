@@ -13,19 +13,54 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import application.offer.Offer;
-import application.users.RegisteredUser.Role;
 import controllers.GoBackController;
 import controllers.WatchOfferController;
 
+/**
+ * @author Miguel Arconada (miguel.arconada@estudiante.uam.es) y Alberto
+ *         Gonzalez (alberto.gonzalezk@estudiante.uam.es)
+ */
 public class WatchOfferWindow extends JFrame{
 	
+	/**
+	* ID needed for the class to be Serializable
+	*/
+	private static final long serialVersionUID = -4624058926786461881L;
+	
+	/**
+	 * Offer displayed on screen
+	 */
 	private Offer offer;
+	
+	/**
+	 * Button to view the house of the offer
+	 */
 	private JButton viewHouseButton;
+	
+	/**
+	 * Button to approve the offer
+	 */
 	private JButton approveButton;
+	
+	/**
+	 * Button to deny the offer
+	 */
 	private JButton denyButton;
+	
+	/**
+	 * Button to suggest changes
+	 */
 	private JButton suggestChangesButton;
+	
+	/**
+	 * Button to go to the previous window
+	 */
 	private JButton goBackButton;
 	
+	/**
+	 * Constructor of the class WatchOfferWindow
+	 * @param offer Offer pending for approval
+	 */
 	public WatchOfferWindow(Offer offer) {
 		super("Offer");
 		
@@ -82,6 +117,10 @@ public class WatchOfferWindow extends JFrame{
 		this.setVisible(false);
 	}
 
+	/**
+	 * Method that assigns all the buttons with the WatchOfferController
+	 * @param c Controller that allows you to do the needed functionality
+	 */
 	public void setController(WatchOfferController c) {
 		approveButton.addActionListener(c);
 		denyButton.addActionListener(c);
@@ -90,10 +129,18 @@ public class WatchOfferWindow extends JFrame{
 		
 	}
 
+	/**
+	 * Method that assigns the goBackButton with the goBackController
+	 * @param g Controller that allows you to go to the previous window
+	 */
 	public void setGoBackController(GoBackController g) {
 		goBackButton.addActionListener(g);
 	}
 	
+	/**
+	 * Getter method for the offer
+	 * @return Offer to be approved
+	 */
 	public Offer getOffer() {
 		return this.offer;
 	}
