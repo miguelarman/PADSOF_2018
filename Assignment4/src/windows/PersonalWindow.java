@@ -30,7 +30,7 @@ public class PersonalWindow extends JFrame {
 	/**
 	 * Tabs to display the information needed depending on the type of user
 	 */
-	private JTabbedPane pestanias;
+	private JTabbedPane tabs;
 	
 	/**
 	 * Component that contains the buttons that all users can use
@@ -127,13 +127,13 @@ public class PersonalWindow extends JFrame {
 	 * @param role Role of the logged user
 	 */
 	public PersonalWindow(Role role) {
-		super("Pestañas");
+		super("Personal window");
 		
 		this.role = role;
 		
 		Container cont = super.getContentPane();
 		cont.setLayout(new BorderLayout());
-		pestanias = new JTabbedPane();
+		tabs = new JTabbedPane();
 		
 		logoutButton = new JButton("Log out");
 		
@@ -145,7 +145,7 @@ public class PersonalWindow extends JFrame {
 		
 		personalPanel.add(searchLabel); personalPanel.add(searchButton);
 		
-		pestanias.addTab("Personal zone", null, personalPanel);
+		tabs.addTab("Personal zone", null, personalPanel);
 		
 		// We add panels depending on the user's role
 		if (role == Role.GUEST || role == Role.MULTIROLE) {
@@ -157,7 +157,7 @@ public class PersonalWindow extends JFrame {
 			
 			guestPanel.add(bookedOffersLabel); guestPanel.add(bookedOffersButton);
 						
-			pestanias.addTab("Guest zone", null, guestPanel);
+			tabs.addTab("Guest zone", null, guestPanel);
 		}
 		
 		if (role == Role.HOST || role == Role.MULTIROLE) {
@@ -178,7 +178,7 @@ public class PersonalWindow extends JFrame {
 			
 			hostPanel.add(topPanel); hostPanel.add(bottomPanel);
 						
-			pestanias.addTab("Host zone", null, hostPanel);
+			tabs.addTab("Host zone", null, hostPanel);
 		}
 		
 		if (role == Role.ADMIN) {
@@ -193,10 +193,10 @@ public class PersonalWindow extends JFrame {
 			adminPanel.add(pendingLabel); adminPanel.add(pendingButton);
 			adminPanel.add(creditCardLabel); adminPanel.add(creditCardButton);
 						
-			pestanias.addTab("Admin zone", null, adminPanel);
+			tabs.addTab("Admin zone", null, adminPanel);
 		}
 
-		cont.add(pestanias,BorderLayout.CENTER);
+		cont.add(tabs,BorderLayout.CENTER);
 		cont.add(logoutButton, BorderLayout.SOUTH);
 		
 		this.setSize(400, 500);
